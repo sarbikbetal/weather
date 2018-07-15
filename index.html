@@ -1,0 +1,172 @@
+<script src="js/material.min.js"></script>
+<script src="js/chart.js"></script>
+<link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen, projection" />
+<link type="text/css" rel="stylesheet" href="fonts/material-icons.css" />
+<link type="text/css" rel="stylesheet" href="css/weather-icons.css" />
+<link type="text/css" rel="stylesheet" href="css/weather-icons-wind.css" />
+<link type="text/css" rel="stylesheet" href="styles.css" media="screen, projection" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<HTML>
+
+<HEAD>
+    <TITLE>Weather Forecast</TITLE>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+</HEAD>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header class="mdl-layout__header hide-on-med-and-up z-depth-3">
+            <div class="mdl-layout__header-row">
+                <img src="images/favicon-32x32.png">
+                <span class="mdl-layout-title teal-text">The Weather App</span>
+                <div class="mdl-layout-spacer"></div>
+                <!--div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp">
+                    </div>
+                </div-->
+                <button id="mob-menu" class="mdl-button mdl-js-button mdl-button--icon main-menu">
+                    <i class="material-icons">more_vert</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="mob-menu">
+                    <li class="mdl-menu__item">Some Action</li>
+                    <li class="mdl-menu__item">Another Action</li>
+                    <li disabled class="mdl-menu__item">Disabled Action</li>
+                    <li class="mdl-menu__item">Yet Another Action</li>
+                </ul>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer" style="left: 0;">
+            <header class="nav-drawer-header">
+                <img src="images/sun.png" class="nav-avatar">
+            </header>
+            <span class="mdl-layout-title site-title">The Weather App</span>
+            <nav class="mdl-navigation my-nav">
+                <a class="mdl-navigation__link nav-active" href="">
+                    <img src="images/show.png" class="nav-icon">Link</a>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/map.png" class="nav-icon">Maps</a>
+                <a class="mdl-navigation__link" href="">Home</a>
+            </nav>
+
+            <nav class="mdl-navigation my-nav hide-on-large-only">
+                <span class="mdl-layout-title">Locations</span>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/show.png" class="nav-icon">Link</a>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/map.png" class="nav-icon">Maps</a>
+                <span class="mdl-layout-title">Settings</span>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/unit.png" class="nav-icon">Units
+                    <form class="prefs" style="padding-left: 20px;">
+                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                            <label>
+                                <input name="tempunit" type="radio" class="with-gap" value="metric" onclick="tempUnit(this.value)" checked />
+                                <span>Metric</span>
+                            </label>
+                        </p>
+                        <p style="margin: 0px;">
+                            <label>
+                                <input name="tempunit" type="radio" class="with-gap" value="imperial" onclick="tempUnit(this.value)" />
+                                <span>Imperial</span>
+                            </label>
+                        </p>
+                    </form>
+                </a>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/theme.png" class="nav-icon">Theme
+                    <form style="padding-left: 20px;">
+                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                            <label>
+                                <input name="theme" type="radio" class="with-gap" value="light" onclick="" checked />
+                                <span>Light</span>
+                            </label>
+                        </p>
+                        <p style="margin: 0px;">
+                            <label>
+                                <input name="theme" type="radio" class="with-gap" value="dark" onclick="" />
+                                <span>Dark</span>
+                            </label>
+                        </p>
+                    </form>
+                </a>
+            </nav>
+        </div>
+        <div class="mdl-layout__drawer drawer-right hide-on-med-and-down">
+            <header class="nav-drawer-header">
+                <img src="images/sun.png" class="nav-avatar">
+            </header>
+            <span class="mdl-layout-title site-title">The Weather App</span>
+            <nav class="mdl-navigation my-nav">
+                <span class="mdl-layout-title">Locations</span>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/show.png" class="nav-icon">Link</a>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/map.png" class="nav-icon">Maps</a>
+                <span class="mdl-layout-title">Settings</span>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/unit.png" class="nav-icon">Units
+                    <form class="prefs" style="padding-left: 20px;">
+                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                            <label>
+                                <input name="tempunit" type="radio" class="with-gap" value="metric" onclick="tempUnit(this.value)" checked />
+                                <span>Metric</span>
+                            </label>
+                        </p>
+                        <p style="margin: 0px;">
+                            <label>
+                                <input name="tempunit" type="radio" class="with-gap" value="imperial" onclick="tempUnit(this.value)" />
+                                <span>Imperial</span>
+                            </label>
+                        </p>
+                    </form>
+                </a>
+                <a class="mdl-navigation__link" href="">
+                    <img src="images/theme.png" class="nav-icon">Theme
+                    <form style="padding-left: 20px;">
+                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                            <label>
+                                <input name="theme" type="radio" class="with-gap" value="light" onclick="" checked />
+                                <span>Light</span>
+                            </label>
+                        </p>
+                        <p style="margin: 0px;">
+                            <label>
+                                <input name="theme" type="radio" class="with-gap" value="dark" onclick="" />
+                                <span>Dark</span>
+                            </label>
+                        </p>
+                    </form>
+                </a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Main content goes here -->
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card z-depth-2">
+                            <div class="card-image">
+                                <img src="images/hills.jpg">
+                                <span class="card-title">Card Title</span>
+                            </div>
+                            <div class="card-content">
+                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient
+                                    because I require little markup to use effectively.</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">This is a link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
