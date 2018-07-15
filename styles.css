@@ -70,6 +70,7 @@
     position: absolute;
     top: 0;
     right: 0;
+    left: initial;
 }
 
 /* Statistics UI */
@@ -298,6 +299,7 @@ body .ui_box:hover {
     max-height: 100%;
     position: absolute;
     top: 0;
+    left: 0;
     box-sizing: border-box;
     background: rgb(250, 250, 250);
     -webkit-transform: translateX(-250px);
