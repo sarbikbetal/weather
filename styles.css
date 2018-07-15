@@ -157,6 +157,7 @@ body .ui_box__inner .progress_bar {
     float: left;
     background: #4FA584;
     -webkit-animation: bar 2s;
+    animation: bar 2s;
 }
 
 body .ui_box h2 {
@@ -1220,6 +1221,7 @@ body .ui_box:hover {
 
 input.mdl-button[type="submit"] {
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .mdl-button .material-icons {
