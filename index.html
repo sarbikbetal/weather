@@ -1,5 +1,3 @@
-<script src="js/material.min.js"></script>
-<script src="js/chart.js"></script>
 <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen, projection" />
 <link type="text/css" rel="stylesheet" href="fonts/material-icons.css" />
 <link type="text/css" rel="stylesheet" href="css/weather-icons.css" />
@@ -11,6 +9,8 @@
 <HEAD>
     <TITLE>Weather Forecast</TITLE>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <script src="js/material.min.js"></script>
+    <script src="js/materialize.min.js"></script>
 </HEAD>
 
 <body>
@@ -21,15 +21,6 @@
                 <img src="images/favicon-32x32.png">
                 <span class="mdl-layout-title teal-text">The Weather App</span>
                 <div class="mdl-layout-spacer"></div>
-                <!--div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-                    <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp">
-                    </div>
-                </div-->
                 <button id="mob-menu" class="mdl-button mdl-js-button mdl-button--icon main-menu">
                     <i class="material-icons">more_vert</i>
                 </button>
@@ -42,11 +33,17 @@
                 </ul>
             </div>
         </header>
+
+        <!--Right Side Nav Drawer-->
+
         <div class="mdl-layout__drawer drawer-right hide-on-med-and-down">
-            <header class="nav-drawer-header">
-                <img src="images/sun.png" class="nav-avatar">
-            </header>
-            <span class="mdl-layout-title site-title">The Weather App</span>
+            <div class="my-date">
+                <span id="wday">TUESDAYG</span>
+                <h2 id="mdate">32</h2>
+                <div class="moye"><span id="month">Jul</span><span id="year">&nbsp;2018</span></div>
+                <p style="text-align: center; color: #e8e8e89c; font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Time</p>
+            </div>
+            <span class="mdl-layout-title site-title">Locations</span>
             <nav class="mdl-navigation my-nav">
                 <span class="mdl-layout-title">Locations</span>
                 <a class="mdl-navigation__link" href="">
@@ -90,6 +87,8 @@
                 </a>
             </nav>
         </div>
+
+        <!--Mobile side Nav-->
 
         <div class="mdl-layout__drawer">
             <header class="nav-drawer-header">
@@ -149,6 +148,7 @@
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
+
                 <!-- Main content goes here -->
 
                 <div class="row">
@@ -159,7 +159,7 @@
                                 <span class="card-title">Card Title</span>
                             </div>
                             <div class="card-content">
-                                <p>I am a very simple card. I am good at containing small bits of information. I am convenient
+                                <p class="flow-text">I am a very simple card. I am good at containing small bits of information. I am convenient
                                     because I require little markup to use effectively.</p>
                             </div>
                             <div class="card-action">

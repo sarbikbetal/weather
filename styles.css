@@ -1,10 +1,15 @@
 /* Wariables */
 
 :root {
-    --highlight: #000000ad;
+    --highlight: #424242;
 }
 
 /* My Styles */
+
+@font-face {
+    font-family: 'ProductSans';
+    src: url('fonts/ProductSans.ttf') format('truetype');
+}
 
 .main-card .mdl-card__title {
     color: #fff;
@@ -66,6 +71,7 @@
     padding: 0px;
     text-align: center;
 }
+
 .mdl-layout__drawer.drawer-right {
     position: absolute;
     top: 0;
@@ -73,9 +79,51 @@
     left: initial;
 }
 
+.my-date {
+    width: 100%;
+    height: 240px;
+    background-color: #58b2a4;
+}
+
+.my-date h2 {
+    margin: 5px auto;
+    width: 25%;
+}
+
+#wday {
+    display: block;
+    font-size: 20px;
+    width: 40%;
+    margin: 40px auto 0px auto;
+}
+
+#month {
+    font-size: 28px;
+}
+
+#year {
+    padding-left: 10px;
+    font-size: 28px;
+    font-weight: 100;
+}
+
+.moye {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.mdl-layout__drawer {
+    font-family: 'ProductSans', Fallback, sans-serif;
+}
+
+.card p{
+font-weight: 300;
+}
+
 /* Statistics UI */
 
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600);
 body {
     background: #ededeb;
 }
@@ -229,6 +277,7 @@ body .ui_box:hover {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
     letter-spacing: 0;
     opacity: 0.87;
 }
@@ -269,7 +318,7 @@ body .ui_box:hover {
 .mdl-layout-title {
     display: block;
     position: relative;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-family: "ProductSans", "Roboto", "Helvetica", sans-serif;
     padding-left: 15px;
     font-size: 22px;
     font-weight: 500;
@@ -705,6 +754,7 @@ body .ui_box:hover {
 .mdl-layout__container.has-scrolling-header .mdl-layout__content {
     overflow: visible;
 }
+
 @media screen and (max-width: 1024px) {
     .mdl-layout--fixed-drawer>.mdl-layout__content {
         margin-left: 240px;
@@ -714,7 +764,8 @@ body .ui_box:hover {
         overflow-y: auto;
         overflow-x: hidden;
     }
-  }
+}
+
 @media screen and (max-width: 720px) {
     .mdl-layout--fixed-drawer>.mdl-layout__content {
         margin-left: 0;
@@ -725,9 +776,9 @@ body .ui_box:hover {
         overflow-x: hidden;
     }
 }
+
 @media screen and (min-width: 1300px) {
     .mdl-layout--fixed-drawer>.mdl-layout__content {
-        
         padding-left: 10%;
         padding-right: 10%;
     }
@@ -736,6 +787,7 @@ body .ui_box:hover {
         overflow-x: hidden;
     }
 }
+
 @media screen and (min-width: 1700px) {
     .mdl-layout--fixed-drawer>.mdl-layout__content {
         width: 880px;
