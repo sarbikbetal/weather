@@ -1,7 +1,7 @@
 <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen, projection" />
 <link type="text/css" rel="stylesheet" href="fonts/material-icons.css" />
-<link type="text/css" rel="stylesheet" href="css/weather-icons.css" />
-<link type="text/css" rel="stylesheet" href="css/weather-icons-wind.css" />
+<!--link type="text/css" rel="stylesheet" href="css/weather-icons.css" />
+<link type="text/css" rel="stylesheet" href="css/weather-icons-wind.css" /-->
 <link type="text/css" rel="stylesheet" href="styles.css" media="screen, projection" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <HTML>
@@ -9,8 +9,6 @@
 <HEAD>
     <TITLE>Weather Forecast</TITLE>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <script src="js/material.min.js"></script>
-    <script src="js/materialize.min.js"></script>
 </HEAD>
 
 <body>
@@ -43,48 +41,12 @@
                 <div class="moye"><span id="month">Jul</span><span id="year">&nbsp;2018</span></div>
                 <p style="text-align: center; color: #e8e8e89c; font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Time</p>
             </div>
-            <span class="mdl-layout-title site-title">Locations</span>
+            <span class="mdl-layout-title site-title"><img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
             <nav class="mdl-navigation my-nav">
-                <span class="mdl-layout-title">Locations</span>
                 <a class="mdl-navigation__link" href="">
                     <img src="images/show.png" class="nav-icon">Link</a>
                 <a class="mdl-navigation__link" href="">
                     <img src="images/map.png" class="nav-icon">Maps</a>
-                <span class="mdl-layout-title">Settings</span>
-                <a class="mdl-navigation__link" href="">
-                    <img src="images/unit.png" class="nav-icon">Units
-                    <form class="prefs" style="padding-left: 20px;">
-                        <p style="margin-bottom: 8px; margin-top: 10px;">
-                            <label>
-                                <input name="tempunit" type="radio" class="with-gap" value="metric" onclick="tempUnit(this.value)" checked />
-                                <span>Metric</span>
-                            </label>
-                        </p>
-                        <p style="margin: 0px;">
-                            <label>
-                                <input name="tempunit" type="radio" class="with-gap" value="imperial" onclick="tempUnit(this.value)" />
-                                <span>Imperial</span>
-                            </label>
-                        </p>
-                    </form>
-                </a>
-                <a class="mdl-navigation__link" href="">
-                    <img src="images/theme.png" class="nav-icon">Theme
-                    <form style="padding-left: 20px;">
-                        <p style="margin-bottom: 8px; margin-top: 10px;">
-                            <label>
-                                <input name="theme" type="radio" class="with-gap" value="light" onclick="" checked />
-                                <span>Light</span>
-                            </label>
-                        </p>
-                        <p style="margin: 0px;">
-                            <label>
-                                <input name="theme" type="radio" class="with-gap" value="dark" onclick="" />
-                                <span>Dark</span>
-                            </label>
-                        </p>
-                    </form>
-                </a>
             </nav>
         </div>
 
@@ -96,21 +58,23 @@
             </header>
             <span class="mdl-layout-title site-title">The Weather App</span>
             <nav class="mdl-navigation my-nav">
-                <a class="mdl-navigation__link nav-active" href="">
+                <a class="mdl-navigation__link nav-active waves-effect" href="">
                     <img src="images/show.png" class="nav-icon">Link</a>
-                <a class="mdl-navigation__link" href="">
+                <a class="mdl-navigation__link waves-effect" href="">
                     <img src="images/map.png" class="nav-icon">Maps</a>
-                <a class="mdl-navigation__link" href="">Home</a>
+                <a class="mdl-navigation__link waves-effect" href="">Home</a>
             </nav>
 
             <nav class="mdl-navigation my-nav hide-on-large-only">
-                <span class="mdl-layout-title">Locations</span>
+                <span class="mdl-layout-title subtitle"><img src="images/place.png" class="nav-icon2">Locations</span>
                 <a class="mdl-navigation__link" href="">
                     <img src="images/show.png" class="nav-icon">Link</a>
                 <a class="mdl-navigation__link" href="">
                     <img src="images/map.png" class="nav-icon">Maps</a>
-                <span class="mdl-layout-title">Settings</span>
-                <a class="mdl-navigation__link" href="">
+            </nav>
+            <nav class="mdl-navigation my-nav">
+                <span class="mdl-layout-title subtitle"><img src="images/Gear.png" class="nav-icon2">Settings</span>
+                <a class="mdl-navigation__link" style="cursor: default;" href="">
                     <img src="images/unit.png" class="nav-icon">Units
                     <form class="prefs" style="padding-left: 20px;">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
@@ -127,7 +91,7 @@
                         </p>
                     </form>
                 </a>
-                <a class="mdl-navigation__link" href="">
+                <a class="mdl-navigation__link" href="" style="cursor: default;">
                     <img src="images/theme.png" class="nav-icon">Theme
                     <form style="padding-left: 20px;">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
@@ -168,7 +132,13 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </main>
     </div>
+    
+    <script src="js/material.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+
 </body>
