@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen, projection" />
 <link type="text/css" rel="stylesheet" href="fonts/material-icons.css" />
 <!--link type="text/css" rel="stylesheet" href="css/weather-icons.css" />
@@ -38,15 +39,17 @@
             <div class="my-date">
                 <span id="wday">TUESDAYG</span>
                 <h2 id="mdate">32</h2>
-                <div class="moye"><span id="month">Jul</span><span id="year">&nbsp;2018</span></div>
-                <p style="text-align: center; color: #e8e8e89c; font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Time</p>
+                <div class="moye">
+                    <span id="month">Jul</span>
+                    <span id="year">&nbsp;2018</span>
+                </div>
+                <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Time</p>
             </div>
-            <span class="mdl-layout-title site-title"><img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
+            <span class="mdl-layout-title site-title">
+                <img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
             <nav class="mdl-navigation my-nav">
-                <a class="mdl-navigation__link" href="">
-                    <img src="images/show.png" class="nav-icon">Link</a>
-                <a class="mdl-navigation__link" href="">
-                    <img src="images/map.png" class="nav-icon">Maps</a>
+                <a class="mdl-navigation__link" href="">Mahishadal</a>
+                <a class="mdl-navigation__link" href="">Kolkata</a>
             </nav>
         </div>
 
@@ -66,26 +69,28 @@
             </nav>
 
             <nav class="mdl-navigation my-nav hide-on-large-only">
-                <span class="mdl-layout-title subtitle"><img src="images/place.png" class="nav-icon2">Locations</span>
+                <span class="mdl-layout-title subtitle">
+                    <img src="images/place.png" class="nav-icon2">Locations</span>
                 <a class="mdl-navigation__link" href="">
                     <img src="images/show.png" class="nav-icon">Link</a>
                 <a class="mdl-navigation__link" href="">
                     <img src="images/map.png" class="nav-icon">Maps</a>
             </nav>
             <nav class="mdl-navigation my-nav">
-                <span class="mdl-layout-title subtitle"><img src="images/Gear.png" class="nav-icon2">Settings</span>
+                <span class="mdl-layout-title subtitle">
+                    <img src="images/Gear.png" class="nav-icon2">Settings</span>
                 <a class="mdl-navigation__link" style="cursor: default;" href="">
                     <img src="images/unit.png" class="nav-icon">Units
                     <form class="prefs" style="padding-left: 20px;">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
                             <label>
-                                <input name="tempunit" type="radio" class="with-gap" value="metric" onclick="tempUnit(this.value)" checked />
+                                <input name="tempunit" type="radio" checked class="with-gap" value="metric" onclick="dataFormat()" />
                                 <span>Metric</span>
                             </label>
                         </p>
                         <p style="margin: 0px;">
                             <label>
-                                <input name="tempunit" type="radio" class="with-gap" value="imperial" onclick="tempUnit(this.value)" />
+                                <input name="tempunit" type="radio" class="with-gap" value="imperial" onclick="dataFormat()" />
                                 <span>Imperial</span>
                             </label>
                         </p>
@@ -120,11 +125,70 @@
                         <div class="card z-depth-2">
                             <div class="card-image">
                                 <img src="images/hills.jpg">
-                                <span class="card-title">Card Title</span>
+                                <span id="location" class="card-title">Mahishadal Forecast</span>
                             </div>
-                            <div class="card-content">
-                                <p class="flow-text">I am a very simple card. I am good at containing small bits of information. I am convenient
-                                    because I require little markup to use effectively.</p>
+                            <div id="card" class="card-content" style="padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col s2">
+                                        <h2 style="margin: 0px; Float:right;">
+                                            <span id="mainIcon" class="card-title"></span>
+                                        </h2>
+                                    </div>
+                                    <div class="col s10">
+                                        <h4 style="margin: 0px; margin-top: 5px;">
+                                            <span id="title" class="col s9 l10 card-title ui-text truncate">No data available..</span>
+                                        </h4>
+                                        <h4 style="margin: 0px; margin-top: 5px;">
+                                            <span id="temp" class="col s3 l2 card-title ui-text">--</span>
+                                        </h4>
+                                        <!--p class="col s10 offset-s1 grey-text text-lighten-1" id="desc">Error connecting to server</p-->
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="row" style="margin: 0px; padding-bottom: 10px">
+                                    <div class='ui'>
+                                        <div class="col s6 m4 offset-s3">
+                                            <div class='ui_box col s12'>
+                                                <h5>
+                                                    <i class="wi wi-barometer"></i>&nbsp;&nbsp;&nbsp;Pressure</h5>
+                                                <div class='ui_box__inner' style="padding-top: 60px; padding-left:5% ">
+                                                    <div class='stat'>
+                                                        <span style="float: left;" id="pressure">--</span>
+                                                    </div>
+                                                    <div class='progress' style="height: 0px"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s6 m4 offset-s3">
+                                            <div class='ui_box col s12'>
+                                                <h5>
+                                                    <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Humidity</h5>
+                                                <div class='ui_box__inner' style="padding-top: 60px">
+                                                    <div class='stat'>
+                                                        <span style="float: left" id="humid">--</span>
+                                                    </div>
+                                                    <div class='progress'>
+                                                        <div class='progress_bar' id="humidBar"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s6 m4 offset-s3">
+                                            <div class='ui_box col s12'>
+                                                <h5>
+                                                    <i class="wi wi-strong-wind"></i>&nbsp;&nbsp;&nbsp;Wind&nbsp;&nbsp;&nbsp;
+                                                    <i id="windDir" style="float: right;" class="wi wi-wind towards-0-deg"></i>
+                                                </h5>
+                                                <div class='ui_box__inner' style="padding-top: 60px">
+                                                    <div class='stat'>
+                                                        <span style="float: left;" id="wind">--</span>
+                                                    </div>
+                                                    <div class='progress' style="height: 0px"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-action">
                                 <a href="#">This is a link</a>
@@ -137,8 +201,8 @@
             </div>
         </main>
     </div>
-    
     <script src="js/material.min.js"></script>
+    <script src="script.js"></script>
     <script src="js/materialize.min.js"></script>
 
 </body>

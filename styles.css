@@ -165,9 +165,27 @@ body .ui {
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
-    font-family: 'Source Sans Pro', sans-serif;
-    color: white;
+    color: var(--highlight);
     box-shadow: none;
+}
+
+.ui .ui_box h5{
+    font-weight: 300;
+    float: left;
+}
+.ui .ui_box h6{
+    font-weight: 300;
+    margin-top: 0%;
+    padding-top: 20px;
+    
+}
+
+.ui .col{
+    padding: 0px;
+}
+
+.ui-text{
+    color: #4FA584;
 }
 
 body .ui ul {
@@ -182,7 +200,7 @@ body .ui ul {
 body .ui_box {
     height: 150px;
     position: relative;
-    background: #3d3d3d;
+    background: #fff;
     float: left;
     cursor: pointer;
     -webkit-transform: scale(1);
@@ -196,7 +214,6 @@ body .ui_box {
 body .ui_box__inner {
     padding-left: 10%;
     padding-bottom: 12px;
-    padding-right: 8px;
 }
 
 body .ui_box__inner span {
@@ -205,7 +222,7 @@ body .ui_box__inner span {
 }
 
 body .ui_box__inner .progress {
-    width: 100%;
+    width: 90%;
     margin-top: 10px;
     height: 6px;
     background: rgba(0, 0, 0, 0.3);
@@ -237,6 +254,7 @@ body .ui_box p {
 
 body .ui_box:hover {
     background: #4FA584;
+    color: #fff;
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
     transition-property: background, -webkit-transform;
