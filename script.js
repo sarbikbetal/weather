@@ -68,10 +68,6 @@ function pFormat() {
 }
 
 
-
-
-
-
 // Graphing Functions
 
 /* var xhrg = new XMLHttpRequest();

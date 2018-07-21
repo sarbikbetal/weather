@@ -1,7 +1,22 @@
-/* Wariables */
+/* Variables */
 
 :root {
+    --body: #efefef;
     --highlight: #424242;
+    --theme: #4fa584;
+    --selected: #ededeb;
+    --base: #fafafa;
+    --widget: #009688;
+    --text: #585858;
+    
+    /*--body: #3d3d3dd1;
+    --widget: #009688;
+    --highlight:#f3f3f3;
+    --theme: #00acc1;
+    --selected: #2b2b2b;
+    --base: #3d3d3d;
+    --text: #ececec;
+    */
 }
 
 /* My Styles */
@@ -10,11 +25,12 @@
     font-family: 'ProductSans';
     src: url('fonts/ProductSans.ttf') format('truetype');
 }
+.main-card{
+    background-color: var(--base);
+}
 
-.main-card .mdl-card__title {
-    color: #fff;
-    height: 200px;
-    background: url('/images/hills.jpg') center / cover;
+body{
+    background-color: var(--body);
 }
 
 .nav-avatar {
@@ -45,7 +61,7 @@
 }
 
 .my-nav .nav-active {
-    background-color: #ededeb;
+    background-color: var(--selected);
 }
 
 .nav-icon{
@@ -89,7 +105,7 @@
 .my-date {
     width: 100%;
     height: 240px;
-    background-color: #58b2a4;
+    background-color: var(--widget);
 }
 
 .my-date h2 {
@@ -136,10 +152,6 @@
 
 /* Statistics UI */
 
-body {
-    background: #ededeb;
-}
-
 body .title {
     width: 600px;
     margin: 0 auto;
@@ -165,7 +177,7 @@ body .ui {
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
-    color: var(--highlight);
+    color: var(--text);
     box-shadow: none;
 }
 
@@ -185,7 +197,7 @@ body .ui {
 }
 
 .ui-text{
-    color: #4FA584;
+    color: var(--theme);
 }
 
 body .ui ul {
@@ -200,7 +212,7 @@ body .ui ul {
 body .ui_box {
     height: 150px;
     position: relative;
-    background: #fff;
+    background: var(--base);
     float: left;
     cursor: pointer;
     -webkit-transform: scale(1);
@@ -232,7 +244,7 @@ body .ui_box__inner .progress {
 body .ui_box__inner .progress_bar {
     height: 6px;
     float: left;
-    background: #4FA584;
+    background: var(--theme);
     -webkit-animation: bar 2s;
     animation: bar 2s;
 }
@@ -253,7 +265,7 @@ body .ui_box p {
 }
 
 body .ui_box:hover {
-    background: #4FA584;
+    background: var(--theme);
     color: #fff;
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
@@ -356,6 +368,7 @@ body .ui_box:hover {
     letter-spacing: 0.02em;
     font-weight: 400;
     box-sizing: border-box;
+    color: var(--text);
 }
 
 .mdl-layout-spacer {
@@ -381,7 +394,7 @@ body .ui_box:hover {
     top: 0;
     left: 0;
     box-sizing: border-box;
-    background: rgb(250, 250, 250);
+    background: var(--base);
     -webkit-transform: translateX(-250px);
     transform: translateX(-250px);
     -webkit-transform-style: preserve-3d;
@@ -392,7 +405,7 @@ body .ui_box:hover {
     transition-property: -webkit-transform;
     transition-property: transform;
     transition-property: transform, -webkit-transform;
-    color: rgb(66, 66, 66);
+    color: var(--text);
     overflow: visible;
     overflow-y: auto;
     z-index: 5;
@@ -445,7 +458,7 @@ body .ui_box:hover {
 }
 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
-    background-color: rgb(224, 224, 224);
+    background-color: var(--selected);
 }
 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link--current {
@@ -536,7 +549,7 @@ body .ui_box:hover {
     min-height: 64px;
     max-height: 1000px;
     z-index: 3;
-    background-color: #fafafa;
+    background-color: var(--base);
     color: rgb(255, 255, 255);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     transition-duration: 0.2s;

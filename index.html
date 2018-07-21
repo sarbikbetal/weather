@@ -18,7 +18,7 @@
         <header class="mdl-layout__header hide-on-med-and-up z-depth-3">
             <div class="mdl-layout__header-row">
                 <img src="images/favicon-32x32.png">
-                <span class="mdl-layout-title teal-text">The Weather App</span>
+                <span class="mdl-layout-title">The Weather App</span>
                 <div class="mdl-layout-spacer"></div>
                 <button id="mob-menu" class="mdl-button mdl-js-button mdl-button--icon main-menu">
                     <i class="material-icons">more_vert</i>
@@ -45,9 +45,16 @@
                 </div>
                 <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Time</p>
             </div>
-            <span class="mdl-layout-title site-title">
+            <span class="mdl-layout-title site-title" style="margin-top: 10px;">
                 <img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
             <nav class="mdl-navigation my-nav">
+                <form style="margin: 0px 7%; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                    <div class="input-field">
+                        <i class="material-icons prefix">add</i>
+                        <input id="location" type="text" class="validate">
+                        <label style="width: auto" for="location">Add location</label>
+                    </div>
+                </form>
                 <a class="mdl-navigation__link" href="">Mahishadal</a>
                 <a class="mdl-navigation__link" href="">Kolkata</a>
             </nav>
@@ -122,7 +129,7 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <div class="card z-depth-2">
+                        <div class="card z-depth-2 main-card">
                             <div class="card-image">
                                 <img src="images/hills.jpg">
                                 <span id="location" class="card-title">Mahishadal Forecast</span>
@@ -201,7 +208,7 @@
             </div>
         </main>
     </div>
-    <script src="js/material.min.js"></script>
+    <script src="js/material.js"></script>
     <script src="script.js"></script>
     <script src="js/materialize.min.js"></script>
 
