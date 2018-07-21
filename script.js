@@ -1,3 +1,4 @@
+//var location = "mahishadal"
 var xhr = new XMLHttpRequest();
 
 xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7", true);
@@ -13,7 +14,38 @@ xhr.onreadystatechange = function () {
 //var gunit = "metric";
 //var ajaxTimer = window.setInterval(apiCall, 5000, gunit);
 
-function dataFormat() {
+// React to theme radio button
+var root = document.querySelector(':root');
+
+function themer(){
+
+    if (document.getElementsByName("theme")[1].checked) {
+        //dark
+        root.style.setProperty('--body', '#3d3d3dd1');
+        root.style.setProperty('--widget', '#4caf50e6');
+        root.style.setProperty('--highlight', '#f3f3f3');
+        root.style.setProperty('--theme', '#00acc1');
+        root.style.setProperty('--selected', '#2b2b2b');
+        root.style.setProperty('--base', '#3d3d3d');
+        root.style.setProperty('--text', '#ececec');
+        root.style.setProperty('--listtext', '#bfbfbf');
+    }
+    else {
+        //light - default
+        root.style.setProperty('--body', '#efefef');
+        root.style.setProperty('--widget', '#009688');
+        root.style.setProperty('--highlight', '#424242');
+        root.style.setProperty('--theme', '#4fa584');
+        root.style.setProperty('--selected', '#ededeb');
+        root.style.setProperty('--base', '#fafafa');
+        root.style.setProperty('--text', '#585858');
+        root.style.setProperty('--listtext', '#757575');
+
+    }    
+}
+
+// react to units radio button
+function dataFormat(loc) {
     if (document.getElementsByName("tempunit")[0].checked) {
         unit = "metric";
     }
@@ -21,7 +53,7 @@ function dataFormat() {
         unit = "imperial";
     }
     
-    xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units="+unit+"&appid=17a6438b1d63d5b05f7039e7cb52cde7", true);
+    xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+loc+",in&units="+unit+"&appid=17a6438b1d63d5b05f7039e7cb52cde7", true);
     xhr.send();
 
     xhr.onreadystatechange = function () {
@@ -32,6 +64,16 @@ function dataFormat() {
 
 };
 
+var locationList = document.querySelectorAll('.location-link');
+
+locationList.forEach(function(locationList) {
+    locationList.addEventListener('click', function(e){
+        loc = e.target.innerHTML;
+        dataFormat(loc);
+    })
+});
+
+// main function
 function pFormat() {
     
     // Units Definition
@@ -46,10 +88,12 @@ function pFormat() {
 
     
     var weatherData = JSON.parse(xhr.responseText);
+    document.getElementById("location").innerHTML = weatherData.name + " Forecast";
+
     document.getElementById("title").innerHTML = weatherData.weather[0].main;
     //document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
     document.getElementById("temp").innerHTML = weatherData.main.temp.toFixed(0) + tu;
-    document.getElementById("mainIcon").setAttribute("class", "white-text wi wi-owm-" + weatherData.weather[0].id);
+    document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + weatherData.weather[0].id);
     
     document.getElementById("humid").innerHTML = weatherData.main.humidity + "%";
     document.getElementById("humidBar").style.width = weatherData.main.humidity + "%";
@@ -67,6 +111,54 @@ function pFormat() {
     console.log(weatherData);
 }
 
+
+// toggle class functions
+
+
+function hasClass(elem, className) {
+    return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+}
+
+function addClass(elem, className) {
+    if (!hasClass(elem, className)) {
+        elem.className += ' ' + className;
+    }
+}
+
+function removeClass(elem, className) {
+    var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
+    if (hasClass(elem, className)) {
+        while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+            newClass = newClass.replace(' ' + className + ' ', ' ');
+        }
+        elem.className = newClass.replace(/^\s+|\s+$/g, '');
+    }
+}
+
+function toggleClass(elem, className) {
+    var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ' ) + ' ';
+    if (hasClass(elem, className)) {
+        while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+            newClass = newClass.replace( ' ' + className + ' ' , ' ' );
+        }
+        elem.className = newClass.replace(/^\s+|\s+$/g, '');
+    } else {
+        elem.className += ' ' + className;
+    }
+}
+
+
+function toggle(){
+    toggleClass( document.getElementById("scale"), 'scale-out');
+}
+
+
+document.getElementById("addLocation").addEventListener('focusin', function(){
+   toggle();
+});
+document.getElementById("addLocation").addEventListener('focusout', function(){
+    toggle();
+ });
 
 // Graphing Functions
 
