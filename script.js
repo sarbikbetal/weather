@@ -160,6 +160,7 @@ document.getElementById("addLocation").addEventListener('focusout', function(){
     toggle();
  });
 
+ 
 // Graphing Functions
 
 /* var xhrg = new XMLHttpRequest();
