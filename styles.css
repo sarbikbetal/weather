@@ -34,6 +34,23 @@
     color: var(--text);
 }
 
+#locationList .material-icons{
+    font-size: 24px;
+    color: var(--text);
+    position: absolute;
+    top: 16px;
+    right: -12;
+}
+
+.location-link{
+    position: relative;
+    cursor: default;
+}
+
+.location-link .material-icons:hover{
+ color: #e51c23 !important;
+}
+
 body{
     background-color: var(--body);
 }
@@ -203,7 +220,7 @@ body .ui {
 }
 
 .ui-text{
-    color: var(--theme);
+    color: var(--text);
 }
 
 body .ui ul {
@@ -272,7 +289,7 @@ body .ui_box p {
 
 body .ui_box:hover {
     background: var(--theme);
-    color: #fff;
+    color: var(--base);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
     transition-property: background, -webkit-transform;
@@ -287,9 +304,8 @@ body .ui_box:hover {
     color: #b3dacb;
 }
 
-.ui_box:hover>.ui_box__inner .progress .progress_bar,
-.ui_box:hover>.ui_box__inner .progress .progress_bar--two {
-    background: white;
+body .ui_box:hover .ui_box__inner .progress .progress_bar {
+    background: var(--base);
 }
 
 @-webkit-keyframes bar {

@@ -79,9 +79,13 @@ function dataFormat() {
 var locList = document.querySelectorAll('.location-link');
 
 locList.forEach(function (locationList) {
+    locationList.querySelector('i').addEventListener('click', function (c) {
+        c.target.parentNode.remove(0);
+        console.log(c.target.parentNode);
+    });
     
     locationList.addEventListener('click', function (e) {
-        loc = e.target.innerHTML;
+        loc = e.target.getAttribute("place");
         locFormat(loc);
         locList.forEach(function (locList) {
             removeClass(locList, "z-depth-1-half");
