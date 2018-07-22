@@ -1,23 +1,30 @@
-//var location = "mahishadal"
-var xhr = new XMLHttpRequest();
+var myHeaders = new Headers();
 
-xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7", true);
-xhr.send();
-
-unit = "metric"
-xhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        pFormat();
-    }
+var myInit = {
+    method: 'GET',
+    headers: myHeaders,
+    mode: 'cors',
+    cache: 'default'
 };
 
-//var gunit = "metric";
-//var ajaxTimer = window.setInterval(apiCall, 5000, gunit);
+var myRequest = new Request('http://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
+
+unit = "metric";
+loc = document.querySelectorAll('.location-link')[0].innerHTML;
+addClass(document.querySelectorAll('.location-link')[0], "z-depth-1-half");
+
+fetch(myRequest).then(function (response) {
+    return response.json();
+}).then(function (myJson) {
+    pFormat(myJson);
+});
+
+
 
 // React to theme radio button
 var root = document.querySelector(':root');
 
-function themer(){
+function themer() {
 
     if (document.getElementsByName("theme")[1].checked) {
         //dark
@@ -41,41 +48,53 @@ function themer(){
         root.style.setProperty('--text', '#585858');
         root.style.setProperty('--listtext', '#757575');
 
-    }    
+    }
+}
+
+function locFormat(loc){
+    loc = loc;
+    dataFormat();
 }
 
 // react to units radio button
-function dataFormat(loc) {
+function dataFormat() {
     if (document.getElementsByName("tempunit")[0].checked) {
         unit = "metric";
     }
     else {
         unit = "imperial";
     }
-    
-    xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+loc+",in&units="+unit+"&appid=17a6438b1d63d5b05f7039e7cb52cde7", true);
-    xhr.send();
 
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            pFormat();
-        }
-    };
+
+    var myRequest = new Request("http://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
+
+    fetch(myRequest).then(function (response) {
+        return response.json();
+    }).then(function (myJson) {
+        pFormat(myJson);
+    });
 
 };
 
-var locationList = document.querySelectorAll('.location-link');
+var locList = document.querySelectorAll('.location-link');
 
-locationList.forEach(function(locationList) {
-    locationList.addEventListener('click', function(e){
+locList.forEach(function (locationList) {
+    
+    locationList.addEventListener('click', function (e) {
         loc = e.target.innerHTML;
-        dataFormat(loc);
+        locFormat(loc);
+        locList.forEach(function (locList) {
+            removeClass(locList, "z-depth-1-half");
+        });
+        addClass(locationList, "z-depth-1-half");
     })
 });
 
+
+
 // main function
-function pFormat() {
-    
+function pFormat(weatherData) {
+
     // Units Definition
     if (unit == "metric") {
         tu = "&degC";
@@ -86,28 +105,28 @@ function pFormat() {
         su = "Mph";
     }
 
-    
-    var weatherData = JSON.parse(xhr.responseText);
+
+    //var weatherData = JSON.parse(xhr.responseText);
     document.getElementById("location").innerHTML = weatherData.name + " Forecast";
 
     document.getElementById("title").innerHTML = weatherData.weather[0].main;
     //document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
     document.getElementById("temp").innerHTML = weatherData.main.temp.toFixed(0) + tu;
     document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + weatherData.weather[0].id);
-    
+
     document.getElementById("humid").innerHTML = weatherData.main.humidity + "%";
     document.getElementById("humidBar").style.width = weatherData.main.humidity + "%";
-    
+
     document.getElementById("wind").innerHTML = weatherData.wind.speed.toFixed(1) + "&nbsp;<h6 style=\"float: right\">" + su + "</h6>";
     document.getElementById("windDir").setAttribute("class", "wi wi-wind towards-" + weatherData.wind.deg.toFixed(0) + "-deg");
-    
+
     document.getElementById("pressure").innerHTML = weatherData.main.pressure.toFixed(1) + "&nbsp;<h6 style=\"float: right\">hPa</h6>";
-    
+
     //document.getElementById("card").innerHTML = htmlCode;
-    
+
     //document.getElementById("cloudCover").innerHTML = weatherData.clouds.all + "%";
     //document.getElementById("cloudBar").style.width = weatherData.clouds.all + "%"
-    
+
     console.log(weatherData);
 }
 
@@ -126,9 +145,9 @@ function addClass(elem, className) {
 }
 
 function removeClass(elem, className) {
-    var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
+    var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
     if (hasClass(elem, className)) {
-        while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+        while (newClass.indexOf(' ' + className + ' ') >= 0) {
             newClass = newClass.replace(' ' + className + ' ', ' ');
         }
         elem.className = newClass.replace(/^\s+|\s+$/g, '');
@@ -136,10 +155,10 @@ function removeClass(elem, className) {
 }
 
 function toggleClass(elem, className) {
-    var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ' ) + ' ';
+    var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
     if (hasClass(elem, className)) {
-        while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
-            newClass = newClass.replace( ' ' + className + ' ' , ' ' );
+        while (newClass.indexOf(' ' + className + ' ') >= 0) {
+            newClass = newClass.replace(' ' + className + ' ', ' ');
         }
         elem.className = newClass.replace(/^\s+|\s+$/g, '');
     } else {
@@ -148,19 +167,19 @@ function toggleClass(elem, className) {
 }
 
 
-function toggle(){
-    toggleClass( document.getElementById("scale"), 'scale-out');
+function toggle() {
+    toggleClass(document.getElementById("scale"), 'scale-out');
 }
 
 
-document.getElementById("addLocation").addEventListener('focusin', function(){
-   toggle();
-});
-document.getElementById("addLocation").addEventListener('focusout', function(){
+document.getElementById("addLocation").addEventListener('focusin', function () {
     toggle();
- });
+});
+document.getElementById("addLocation").addEventListener('focusout', function () {
+    toggle();
+});
 
- 
+
 // Graphing Functions
 
 /* var xhrg = new XMLHttpRequest();
