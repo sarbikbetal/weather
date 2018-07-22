@@ -79,19 +79,22 @@ function dataFormat() {
 var locList = document.querySelectorAll('.location-link');
 
 locList.forEach(function (locationList) {
-    locationList.querySelector('i').addEventListener('click', function (c) {
-        c.target.parentNode.remove(0);
-        console.log(c.target.parentNode);
-    });
-    
-    locationList.addEventListener('click', function (e) {
+
+    locationList.addEventListener('click', function(e) {
         loc = e.target.getAttribute("place");
-        locFormat(loc);
+        if (loc != null) {
+           locFormat(loc);
         locList.forEach(function (locList) {
             removeClass(locList, "z-depth-1-half");
         });
-        addClass(locationList, "z-depth-1-half");
+        addClass(locationList, "z-depth-1-half"); 
+        }
     })
+
+    locationList.querySelector('i').addEventListener('click', function (c) {
+        c.target.parentNode.remove(0);
+        //document.querySelector('.page-content').innerHTML = "<h1>Click on a location or add a new location to view Weather Info.</h1>"
+    });
 });
 
 
@@ -135,6 +138,16 @@ function pFormat(weatherData) {
 }
 
 
+// add location
+document.getElementById('fab').addEventListener('click', function(e) {
+    console.log(document.getElementById('addLocation').value);
+    toggleClass(document.getElementById('addLocation'), 'valid');
+    removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
+    document.getElementById('addLocation').value = "";
+    toggle();
+});
+
+
 // toggle class functions
 
 
@@ -172,15 +185,19 @@ function toggleClass(elem, className) {
 
 
 function toggle() {
-    toggleClass(document.getElementById("scale"), 'scale-out');
+    toggleClass(document.getElementById("fab"), 'scale-out');
 }
 
 
 document.getElementById("addLocation").addEventListener('focusin', function () {
-    toggle();
+    if (document.getElementById('addLocation').value == "") {
+        toggle();   
+    }
 });
 document.getElementById("addLocation").addEventListener('focusout', function () {
-    toggle();
+    if (document.getElementById('addLocation').value == "") {
+        toggle();   
+    }
 });
 
 
