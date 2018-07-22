@@ -7,7 +7,7 @@ var myInit = {
     cache: 'default'
 };
 
-var myRequest = new Request('http://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
+var myRequest = new Request('https://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
 
 unit = "metric";
 loc = document.querySelectorAll('.location-link')[0].innerHTML;
@@ -66,7 +66,7 @@ function dataFormat() {
     }
 
 
-    var myRequest = new Request("http://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
+    var myRequest = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
 
     fetch(myRequest).then(function (response) {
         return response.json();
