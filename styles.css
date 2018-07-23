@@ -8,6 +8,7 @@
     --widget: #009688;
     --text: #585858;
     --listtext: #757575;
+    --elevation: #ededeb66;
     
     /*--body: #3d3d3dd1;
     --widget: #4caf50e6;
@@ -40,6 +41,23 @@
     position: absolute;
     top: 16px;
     right: -12;
+}
+
+#fab{
+    background-color: var(--widget);
+}
+
+#addLocation {
+    border-bottom: 1px solid var(--widget);
+}
+#addLocation:focus:not([readonly]) + label {
+    color: var(--widget);
+}
+
+#addLocation:focus:not([readonly]) {
+    border-bottom: 1px solid var(--widget);
+    -webkit-box-shadow: 0 1px 0 0 var(--widget);
+    box-shadow: 0 1px 0 0 var(--widget);
 }
 
 .location-link{
@@ -122,6 +140,9 @@ body{
     top: 0;
     right: 0;
     left: initial;
+    z-index: 2;
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);  
 }
 
 .my-date {
@@ -141,6 +162,15 @@ body{
     font-size: 20px;
     width: 40%;
     margin: 40px auto 0px auto;
+}
+
+@media screen and (max-width: 1024px){
+    #wday {
+        margin: 96px auto 0px auto;
+    }
+    .my-date {
+        height: 296px;
+    }
 }
 
 #month {
@@ -488,7 +518,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     color: rgb(0, 0, 0);
 }
 
-@media screen and (min-width: 721px) {
+@media screen and (min-width: 1025px) {
     .mdl-layout--fixed-drawer>.mdl-layout__drawer {
         -webkit-transform: translateX(0);
         transform: translateX(0);
@@ -822,8 +852,8 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
 
 @media screen and (max-width: 1024px) {
     .mdl-layout--fixed-drawer>.mdl-layout__content {
-        margin-left: 240px;
-        margin-right: 0px;
+        margin-left: 0px;
+        margin-right: 240px;
     }
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;

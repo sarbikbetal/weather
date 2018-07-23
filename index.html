@@ -17,8 +17,9 @@
 <body>
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        <header class="mdl-layout__header hide-on-med-and-up z-depth-3">
+        <header class="mdl-layout__header hide-on-large-only z-depth-3" style="display: fixed;">
             <div class="mdl-layout__header-row">
+                <div class="mdl-layout-spacer"></div>
                 <img src="images/favicon-32x32.png">
                 <span class="mdl-layout-title">The Weather App</span>
                 <div class="mdl-layout-spacer"></div>
@@ -37,7 +38,7 @@
 
         <!--Right Side Nav Drawer-->
 
-        <div class="mdl-layout__drawer drawer-right hide-on-med-and-down">
+        <div class="mdl-layout__drawer mdl-layout--fixed-drawer drawer-right hide-on-small-and-down">
             <div class="my-date">
                 <span id="wday">TUESDAYG</span>
                 <h2 id="mdate">32</h2>
@@ -57,7 +58,7 @@
                     <i class="material-icons">close</i>
                 </a>
                 <form style="margin: 0px 7%; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
-                    <div class="input-field" style="margin-top: 20px;">
+                    <div class="input-field" style="margin-top: 30px;">
                         <input id="addLocation" type="text" class="validate" style="color: var(--text)">
                         <label style="width: auto" for="addLocation">Add location</label>
                     </div>
@@ -81,15 +82,6 @@
                 <a class="mdl-navigation__link waves-effect" href="">
                     <img src="images/map.png" class="nav-icon">Maps</a>
                 <a class="mdl-navigation__link waves-effect" href="">Home</a>
-            </nav>
-
-            <nav class="mdl-navigation my-nav hide-on-large-only">
-                <span class="mdl-layout-title subtitle">
-                    <img src="images/place.png" class="nav-icon2">Locations</span>
-                <a class="mdl-navigation__link" href="">
-                    <img src="images/show.png" class="nav-icon">Link</a>
-                <a class="mdl-navigation__link" href="">
-                    <img src="images/map.png" class="nav-icon">Maps</a>
             </nav>
             <nav class="mdl-navigation my-nav">
                 <span class="mdl-layout-title subtitle">

@@ -10,15 +10,12 @@ var myInit = {
 var myRequest = new Request('https://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
 
 unit = "metric";
-loc = document.querySelectorAll('.location-link')[0].innerHTML;
-addClass(document.querySelectorAll('.location-link')[0], "z-depth-1-half");
 
 fetch(myRequest).then(function (response) {
     return response.json();
 }).then(function (myJson) {
     pFormat(myJson);
 });
-
 
 
 // React to theme radio button
@@ -36,6 +33,7 @@ function themer() {
         root.style.setProperty('--base', '#3d3d3d');
         root.style.setProperty('--text', '#ececec');
         root.style.setProperty('--listtext', '#bfbfbf');
+        root.style.setProperty('--elevation', '#ffffff14');
     }
     else {
         //light - default
@@ -47,9 +45,13 @@ function themer() {
         root.style.setProperty('--base', '#fafafa');
         root.style.setProperty('--text', '#585858');
         root.style.setProperty('--listtext', '#757575');
-
+        root.style.setProperty('--elevation', '#ededeb66');
     }
 }
+
+
+addClass(document.querySelectorAll('.location-link')[0], "z-depth-1-half");
+document.querySelectorAll('.location-link')[0].style.setProperty('background-color','var(--elevation)')
 
 function locFormat(loc){
     loc = loc;
@@ -86,8 +88,10 @@ locList.forEach(function (locationList) {
            locFormat(loc);
         locList.forEach(function (locList) {
             removeClass(locList, "z-depth-1-half");
+            locList.style.setProperty('background-color','transparent')
         });
-        addClass(locationList, "z-depth-1-half"); 
+        addClass(locationList, "z-depth-1-half");
+        locationList.style.setProperty('background-color','var(--elevation)') 
         }
     })
 
