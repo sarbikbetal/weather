@@ -52,14 +52,20 @@ function themer() {
 
 addClass(document.querySelectorAll('.location-link')[0], "z-depth-1-half");
 document.querySelectorAll('.location-link')[0].style.setProperty('background-color','var(--elevation)')
-
+var f = 0;
 function locFormat(loc){
     loc = loc;
     dataFormat();
+    f = 1;
+}
+if (f==0) {
+    loc = document.querySelectorAll('.location-link')[0].getAttribute("place");
 }
 
 // react to units radio button
 function dataFormat() {
+
+ 
     if (document.getElementsByName("tempunit")[0].checked) {
         unit = "metric";
     }
@@ -67,6 +73,8 @@ function dataFormat() {
         unit = "imperial";
     }
 
+        console.log(loc);
+        console.log(f);
 
     var myRequest = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
 
@@ -144,7 +152,9 @@ function pFormat(weatherData) {
 
 // add location
 document.getElementById('fab').addEventListener('click', function(e) {
-    console.log(document.getElementById('addLocation').value);
+    loc = document.getElementById('addLocation').value;
+    console.log(loc);
+    locFormat(loc);
     toggleClass(document.getElementById('addLocation'), 'valid');
     removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
     document.getElementById('addLocation').value = "";
