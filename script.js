@@ -51,21 +51,21 @@ function themer() {
 
 
 addClass(document.querySelectorAll('.location-link')[0], "z-depth-1-half");
-document.querySelectorAll('.location-link')[0].style.setProperty('background-color','var(--elevation)')
+document.querySelectorAll('.location-link')[0].style.setProperty('background-color', 'var(--elevation)')
 var f = 0;
-function locFormat(loc){
+function locFormat(loc) {
     loc = loc;
     dataFormat();
     f = 1;
 }
-if (f==0) {
+if (f == 0) {
     loc = document.querySelectorAll('.location-link')[0].getAttribute("place");
 }
 
 // react to units radio button
 function dataFormat() {
 
- 
+
     if (document.getElementsByName("tempunit")[0].checked) {
         unit = "metric";
     }
@@ -73,42 +73,44 @@ function dataFormat() {
         unit = "imperial";
     }
 
-        console.log(loc);
-        console.log(f);
-
     var myRequest = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
 
-    fetch(myRequest).then(function (response) {
-        return response.json();
-    }).then(function (myJson) {
-        pFormat(myJson);
-    });
+    fetch(myRequest)
+        .then(function (response) {
+            return response.json();
+        }).then(function (myJson) {
+            pFormat(myJson);
+        }).catch(function (err) {
+            console.log(err);
+        });
 
 };
 
 var locList = document.querySelectorAll('.location-link');
+locationAdd();
 
-locList.forEach(function (locationList) {
+function locationAdd() {
+    locList.forEach(function (locationList) {
 
-    locationList.addEventListener('click', function(e) {
-        loc = e.target.getAttribute("place");
-        if (loc != null) {
-           locFormat(loc);
-        locList.forEach(function (locList) {
-            removeClass(locList, "z-depth-1-half");
-            locList.style.setProperty('background-color','transparent')
+        locationList.addEventListener('click', function (e) {
+            loc = e.target.getAttribute("place");
+            if (loc != null) {
+                locFormat(loc);
+                locList.forEach(function (locList) {
+                    removeClass(locList, "z-depth-1-half");
+                    locList.style.setProperty('background-color', 'transparent')
+                });
+                addClass(locationList, "z-depth-1-half");
+                locationList.style.setProperty('background-color', 'var(--elevation)')
+            }
+        })
+
+        locationList.querySelector('i').addEventListener('click', function (c) {
+            c.target.parentNode.remove(0);
+            //document.querySelector('.page-content').innerHTML = "<h1>Click on a location or add a new location to view Weather Info.</h1>"
         });
-        addClass(locationList, "z-depth-1-half");
-        locationList.style.setProperty('background-color','var(--elevation)') 
-        }
-    })
-
-    locationList.querySelector('i').addEventListener('click', function (c) {
-        c.target.parentNode.remove(0);
-        //document.querySelector('.page-content').innerHTML = "<h1>Click on a location or add a new location to view Weather Info.</h1>"
     });
-});
-
+}
 
 
 // main function
@@ -151,15 +153,47 @@ function pFormat(weatherData) {
 
 
 // add location
-document.getElementById('fab').addEventListener('click', function(e) {
+var locNode = document.getElementById('locationList');
+var newItem = document.createElement("a");
+var close = document.createElement('i');
+
+document.getElementById('fab').addEventListener('click', function (e) {
     loc = document.getElementById('addLocation').value;
     console.log(loc);
     locFormat(loc);
+
+    //Fab animations
     toggleClass(document.getElementById('addLocation'), 'valid');
     removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
     document.getElementById('addLocation').value = "";
     toggle();
+
+    //adding new location
+    var newLocName = document.createTextNode(loc);
+    newItem.appendChild(newLocName);
+    locNode.insertBefore(newItem, locNode.childNodes[0]);
+    addClass(locNode.childNodes[0], "mdl-navigation__link location-link");
+
+    //adding the close button
+    newItem.appendChild(close);
+    addClass(locNode.childNodes[0].querySelector('i'), "material-icons");
+    locNode.childNodes[0].querySelector('i').appendChild(document.createTextNode("close"))
+
+
+    locList.forEach(function (locList) {
+        removeClass(locList, "z-depth-1-half");
+        locList.style.setProperty('background-color', 'transparent')
+    });
+
+    addClass(locNode.childNodes[0], "z-depth-1-half");
+    locNode.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
+
+    locNode.childNodes[0].querySelector('i').addEventListener('click', function (c) {
+        c.target.parentNode.remove(0);
+    });
+    locationAdd();
 });
+
 
 
 // toggle class functions
@@ -205,12 +239,12 @@ function toggle() {
 
 document.getElementById("addLocation").addEventListener('focusin', function () {
     if (document.getElementById('addLocation').value == "") {
-        toggle();   
+        toggle();
     }
 });
 document.getElementById("addLocation").addEventListener('focusout', function () {
     if (document.getElementById('addLocation').value == "") {
-        toggle();   
+        toggle();
     }
 });
 
