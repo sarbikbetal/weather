@@ -34,6 +34,7 @@ function themer() {
         root.style.setProperty('--text', '#ececec');
         root.style.setProperty('--listtext', '#bfbfbf');
         root.style.setProperty('--elevation', '#ffffff14');
+        Chart.defaults.global.defaultFontColor = '#ececec';
     }
     else {
         //light - default
@@ -46,6 +47,7 @@ function themer() {
         root.style.setProperty('--text', '#585858');
         root.style.setProperty('--listtext', '#757575');
         root.style.setProperty('--elevation', '#ededeb66');
+        Chart.defaults.global.defaultFontColor = '#585858';
     }
 }
 
@@ -335,7 +337,7 @@ xhrg.onreadystatechange = function () {
             ccArray.push(graphData.list[i].clouds);
         };
 
-        Chart.defaults.global.defaultFontColor = 'white';
+        
         var config = {
             type: 'line',
             data: {
@@ -357,11 +359,7 @@ xhrg.onreadystatechange = function () {
                 }]
             },
             options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Temperature variation over the next 7 days'
-                },
+                maintainAspectRatio: false,
                 tooltips: {
                     mode: 'index',
                     intersect: false,
@@ -394,7 +392,6 @@ xhrg.onreadystatechange = function () {
 
         // Cloud chart
 
-        Chart.defaults.global.defaultFontColor = 'white';
         var cloudConfig = {
             type: 'line',
             data: {
@@ -408,11 +405,7 @@ xhrg.onreadystatechange = function () {
                 }]
             },
             options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Cloud cover over the next 7 days'
-                },
+                maintainAspectRatio: false,
                 tooltips: {
                     mode: 'index',
                     intersect: false,

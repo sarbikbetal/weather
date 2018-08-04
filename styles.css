@@ -1,4 +1,5 @@
 /* Variables */
+
 :root {
     --body: #efefef;
     --highlight: #424242;
@@ -9,7 +10,6 @@
     --text: #585858;
     --listtext: #757575;
     --elevation: #ededeb66;
-    
     /*--body: #3d3d3dd1;
     --widget: #4caf50e6;
     --highlight:#f3f3f3;
@@ -27,15 +27,16 @@
     font-family: 'ProductSans';
     src: url('fonts/ProductSans.ttf') format('truetype');
 }
-.main-card{
+
+.main-card {
     background-color: var(--base);
 }
 
-#mainIcon{
+#mainIcon {
     color: var(--text);
 }
 
-#locationList .location-link .material-icons{
+#locationList .location-link .material-icons {
     font-size: 24px;
     color: var(--text);
     position: absolute;
@@ -43,14 +44,15 @@
     right: -12;
 }
 
-#fab{
+#fab {
     background-color: var(--widget);
 }
 
 #addLocation {
     border-bottom: 1px solid var(--widget);
 }
-#addLocation:focus:not([readonly]) + label {
+
+#addLocation:focus:not([readonly])+label {
     color: var(--widget);
 }
 
@@ -60,16 +62,16 @@
     box-shadow: 0 1px 0 0 var(--widget);
 }
 
-.location-link{
+.location-link {
     position: relative;
     cursor: default;
 }
 
-.location-link .material-icons:hover{
- color: #e51c23 !important;
+.location-link .material-icons:hover {
+    color: #e51c23 !important;
 }
 
-body{
+body {
     background-color: var(--body);
 }
 
@@ -104,7 +106,7 @@ body{
     background-color: var(--selected);
 }
 
-.nav-icon{
+.nav-icon {
     margin-right: 32px;
     vertical-align: middle;
     width: 36px;
@@ -142,7 +144,7 @@ body{
     left: initial;
     z-index: 2;
     transform: translateX(0px);
-    -webkit-transform: translateX(0px);  
+    -webkit-transform: translateX(0px);
 }
 
 .my-date {
@@ -164,7 +166,7 @@ body{
     margin: 40px auto 0px auto;
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     #wday {
         margin: 96px auto 0px auto;
     }
@@ -187,18 +189,18 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family:  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .mdl-layout__drawer {
     font-family: 'ProductSans', Fallback, sans-serif;
 }
 
-.card p{
+.card p {
     font-weight: 300;
 }
 
-.subtitle{
+.subtitle {
     display: inline;
     margin: 25px 0 10px 0;
 }
@@ -208,7 +210,14 @@ body{
     right: 7% !important;
     bottom: 10%;
     left: auto;
-  }
+}
+
+.chartbox {
+    position: relative;
+    margin: auto;
+    height: 40vh;
+    width: 80vw;
+}
 
 /* Statistics UI */
 
@@ -241,22 +250,22 @@ body .ui {
     box-shadow: none;
 }
 
-.ui .ui_box h5{
+.ui .ui_box h5 {
     font-weight: 300;
     float: left;
 }
-.ui .ui_box h6{
+
+.ui .ui_box h6 {
     font-weight: 300;
     margin-top: 0%;
     padding-top: 20px;
-    
 }
 
-.ui .col{
+.ui .col {
     padding: 0px;
 }
 
-.ui-text{
+.ui-text {
     color: var(--text);
 }
 
