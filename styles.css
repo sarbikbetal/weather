@@ -203,6 +203,13 @@ body{
     margin: 25px 0 10px 0;
 }
 
+#toast-container {
+    top: auto !important;
+    right: 7% !important;
+    bottom: 10%;
+    left: auto;
+  }
+
 /* Statistics UI */
 
 body .title {
@@ -505,7 +512,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
 
 @media screen and (max-width: 1024px) {
     .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
-        padding: 16px 40px;
+        padding: 8px 40px;
     }
 }
 
@@ -897,8 +904,8 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
 
 @media screen and (max-width: 720px) {
     .mdl-layout--fixed-drawer>.mdl-layout__content {
-        padding-left: 5%;
-        padding-right: 5%;
+        padding-left: 2%;
+        padding-right: 2%;
     }
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;

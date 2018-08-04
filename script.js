@@ -53,11 +53,14 @@ function themer() {
 addClass(document.querySelectorAll('.location-link')[0], "z-depth-1-half");
 document.querySelectorAll('.location-link')[0].style.setProperty('background-color', 'var(--elevation)')
 var f = 0;
+var p = 0;
+
 function locFormat(loc) {
     loc = loc;
     dataFormat();
     f = 1;
 }
+
 if (f == 0) {
     loc = document.querySelectorAll('.location-link')[0].getAttribute("place");
 }
@@ -75,42 +78,55 @@ function dataFormat() {
 
     var myRequest = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
 
-    fetch(myRequest)
+    /*fetch(myRequest)
         .then(function (response) {
             return response.json();
         }).then(function (myJson) {
             pFormat(myJson);
         }).catch(function (err) {
             console.log(err);
+        });*/
+
+        fetch(myRequest).then(function (response) {
+            if (response.ok) {
+                return response;
+            }
+            throw Error(response.statusText);
+        }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            pFormat(json);
+        }).catch(function (error) {
+           console.log('Request failed:', error.message);
+           M.toast({html: 'Location not found', classes: 'rounded'});
         });
+    
 
 };
 
 var locList = document.querySelectorAll('.location-link');
-locationAdd();
 
-function locationAdd() {
-    locList.forEach(function (locationList) {
+locList.forEach(function (locationList) {
 
-        locationList.addEventListener('click', function (e) {
-            loc = e.target.getAttribute("place");
-            if (loc != null) {
-                locFormat(loc);
-                locList.forEach(function (locList) {
-                    removeClass(locList, "z-depth-1-half");
-                    locList.style.setProperty('background-color', 'transparent')
-                });
-                addClass(locationList, "z-depth-1-half");
-                locationList.style.setProperty('background-color', 'var(--elevation)')
-            }
-        })
+    locationList.addEventListener('click', function (e) {
+        loc = e.target.getAttribute("place");
+        if (loc != null) {
+            locFormat(loc);
+            locList.forEach(function (locList) {
+                removeClass(locList, "z-depth-1-half");
+                locList.style.setProperty('background-color', 'transparent')
+            });
+            addClass(locationList, "z-depth-1-half");
+            locationList.style.setProperty('background-color', 'var(--elevation)')
+        }
+    })
 
-        locationList.querySelector('i').addEventListener('click', function (c) {
-            c.target.parentNode.remove(0);
-            //document.querySelector('.page-content').innerHTML = "<h1>Click on a location or add a new location to view Weather Info.</h1>"
-        });
+    locationList.querySelector('i').addEventListener('click', function (c) {
+        c.target.parentNode.remove(0);
+        //document.querySelector('.page-content').innerHTML = "<h1>Click on a location or add a new location to view Weather Info.</h1>"
     });
-}
+});
+
 
 
 // main function
@@ -121,11 +137,15 @@ function pFormat(weatherData) {
         tu = "&degC";
         su = "m/s";
     }
+
     else {
         tu = "&degF";
         su = "Mph";
     }
 
+    if (p==1) {
+        addSuccess(weatherData.name);
+    }
 
     //var weatherData = JSON.parse(xhr.responseText);
     document.getElementById("location").innerHTML = weatherData.name + " Forecast";
@@ -145,21 +165,19 @@ function pFormat(weatherData) {
 
     //document.getElementById("card").innerHTML = htmlCode;
 
-    //document.getElementById("cloudCover").innerHTML = weatherData.clouds.all + "%";
-    //document.getElementById("cloudBar").style.width = weatherData.clouds.all + "%"
-
+    document.getElementById("cloudCover").innerHTML = weatherData.clouds.all + "%";
+    document.getElementById("cloudBar").style.width = weatherData.clouds.all + "%";
+    p = 0;
     console.log(weatherData);
 }
 
 
 // add location
-var locNode = document.getElementById('locationList');
-var newItem = document.createElement("a");
-var close = document.createElement('i');
 
 document.getElementById('fab').addEventListener('click', function (e) {
     loc = document.getElementById('addLocation').value;
     console.log(loc);
+    p = 1;
     locFormat(loc);
 
     //Fab animations
@@ -168,18 +186,31 @@ document.getElementById('fab').addEventListener('click', function (e) {
     document.getElementById('addLocation').value = "";
     toggle();
 
+});
+
+//Location added
+
+function addSuccess(nm){
+    var locNode = document.getElementById('locationList');
+    var newItem = document.createElement("a");
+    var close = document.createElement('i');
+
     //adding new location
-    var newLocName = document.createTextNode(loc);
+    var newLocName = document.createTextNode(nm.toProperCase());
     newItem.appendChild(newLocName);
     locNode.insertBefore(newItem, locNode.childNodes[0]);
     addClass(locNode.childNodes[0], "mdl-navigation__link location-link");
-
+    var attr = document.createAttribute("place");
+    attr.value = nm;
+    locNode.childNodes[0].setAttributeNode(attr);
+   
     //adding the close button
+
     newItem.appendChild(close);
     addClass(locNode.childNodes[0].querySelector('i'), "material-icons");
-    locNode.childNodes[0].querySelector('i').appendChild(document.createTextNode("close"))
+    locNode.childNodes[0].querySelector('i').appendChild(document.createTextNode("close"));
 
-
+    locList = document.querySelectorAll('.location-link');
     locList.forEach(function (locList) {
         removeClass(locList, "z-depth-1-half");
         locList.style.setProperty('background-color', 'transparent')
@@ -188,13 +219,26 @@ document.getElementById('fab').addEventListener('click', function (e) {
     addClass(locNode.childNodes[0], "z-depth-1-half");
     locNode.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
 
+    locNode.childNodes[0].addEventListener('click', function (e) {
+        loc = e.target.getAttribute("place");
+        if (loc != null) {
+            locFormat(loc);
+            locList.forEach(function (locList) {
+                removeClass(locList, "z-depth-1-half");
+                locList.style.setProperty('background-color', 'transparent')
+            });
+            addClass(e.target, "z-depth-1-half");
+            e.target.style.setProperty('background-color', 'var(--elevation)')
+        }
+    })
     locNode.childNodes[0].querySelector('i').addEventListener('click', function (c) {
         c.target.parentNode.remove(0);
     });
-    locationAdd();
-});
+}
 
-
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+};
 
 // toggle class functions
 
@@ -251,7 +295,7 @@ document.getElementById("addLocation").addEventListener('focusout', function () 
 
 // Graphing Functions
 
-/* var xhrg = new XMLHttpRequest();
+var xhrg = new XMLHttpRequest();
 xhrg.open("GET", "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&zip=721628,in&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7", true);
 xhrg.send();
 
@@ -302,12 +346,14 @@ xhrg.onreadystatechange = function () {
                     borderColor: 'rgba(77, 182, 172, 1)',
                     data: maxTempArray,
                     fill: false,
+                    lineTension: 0,
                 }, {
                     label: 'Min Temp',
                     fill: false,
                     backgroundColor: 'rgba(79, 195, 247, 1)',
                     borderColor: 'rgba(79, 195, 247, 1)',
                     data: minTempArray,
+                    lineTension: 0,
                 }]
             },
             options: {
@@ -398,4 +444,4 @@ xhrg.onreadystatechange = function () {
         window.myLine = new Chart(cld, cloudConfig);
 
     }
-};  */
+}; 
