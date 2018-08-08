@@ -78,16 +78,10 @@ function dataFormat() {
         unit = "imperial";
     }
 
-    var myRequest = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
+    loading();
+    document.getElementById("location").innerHTML = "Weather Forecast"; 
 
-    /*fetch(myRequest)
-        .then(function (response) {
-            return response.json();
-        }).then(function (myJson) {
-            pFormat(myJson);
-        }).catch(function (err) {
-            console.log(err);
-        });*/
+    var myRequest = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
 
         fetch(myRequest).then(function (response) {
             if (response.ok) {
@@ -101,6 +95,7 @@ function dataFormat() {
         }).catch(function (error) {
            console.log('Request failed:', error.message);
            M.toast({html: 'Location not found', classes: 'rounded'});
+           hideLoader();
         });
     
 
@@ -149,6 +144,7 @@ function pFormat(weatherData) {
         addSuccess(weatherData.name);
     }
 
+    hideLoader();
     //var weatherData = JSON.parse(xhr.responseText);
     document.getElementById("location").innerHTML = weatherData.name + " Forecast";
 
@@ -172,128 +168,6 @@ function pFormat(weatherData) {
     p = 0;
     console.log(weatherData);
 }
-
-
-// add location
-
-document.getElementById('fab').addEventListener('click', function (e) {
-    loc = document.getElementById('addLocation').value;
-    console.log(loc);
-    p = 1;
-    locFormat(loc);
-
-    //Fab animations
-    toggleClass(document.getElementById('addLocation'), 'valid');
-    removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
-    document.getElementById('addLocation').value = "";
-    toggle();
-
-});
-
-//Location added
-
-function addSuccess(nm){
-    var locNode = document.getElementById('locationList');
-    var newItem = document.createElement("a");
-    var close = document.createElement('i');
-
-    //adding new location
-    var newLocName = document.createTextNode(nm.toProperCase());
-    newItem.appendChild(newLocName);
-    locNode.insertBefore(newItem, locNode.childNodes[0]);
-    addClass(locNode.childNodes[0], "mdl-navigation__link location-link");
-    var attr = document.createAttribute("place");
-    attr.value = nm;
-    locNode.childNodes[0].setAttributeNode(attr);
-   
-    //adding the close button
-
-    newItem.appendChild(close);
-    addClass(locNode.childNodes[0].querySelector('i'), "material-icons");
-    locNode.childNodes[0].querySelector('i').appendChild(document.createTextNode("close"));
-
-    locList = document.querySelectorAll('.location-link');
-    locList.forEach(function (locList) {
-        removeClass(locList, "z-depth-1-half");
-        locList.style.setProperty('background-color', 'transparent')
-    });
-
-    addClass(locNode.childNodes[0], "z-depth-1-half");
-    locNode.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
-
-    locNode.childNodes[0].addEventListener('click', function (e) {
-        loc = e.target.getAttribute("place");
-        if (loc != null) {
-            locFormat(loc);
-            locList.forEach(function (locList) {
-                removeClass(locList, "z-depth-1-half");
-                locList.style.setProperty('background-color', 'transparent')
-            });
-            addClass(e.target, "z-depth-1-half");
-            e.target.style.setProperty('background-color', 'var(--elevation)')
-        }
-    })
-    locNode.childNodes[0].querySelector('i').addEventListener('click', function (c) {
-        c.target.parentNode.remove(0);
-    });
-}
-
-String.prototype.toProperCase = function () {
-    return this.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
-};
-
-// toggle class functions
-
-
-function hasClass(elem, className) {
-    return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
-}
-
-function addClass(elem, className) {
-    if (!hasClass(elem, className)) {
-        elem.className += ' ' + className;
-    }
-}
-
-function removeClass(elem, className) {
-    var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
-    if (hasClass(elem, className)) {
-        while (newClass.indexOf(' ' + className + ' ') >= 0) {
-            newClass = newClass.replace(' ' + className + ' ', ' ');
-        }
-        elem.className = newClass.replace(/^\s+|\s+$/g, '');
-    }
-}
-
-function toggleClass(elem, className) {
-    var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
-    if (hasClass(elem, className)) {
-        while (newClass.indexOf(' ' + className + ' ') >= 0) {
-            newClass = newClass.replace(' ' + className + ' ', ' ');
-        }
-        elem.className = newClass.replace(/^\s+|\s+$/g, '');
-    } else {
-        elem.className += ' ' + className;
-    }
-}
-
-
-function toggle() {
-    toggleClass(document.getElementById("fab"), 'scale-out');
-}
-
-
-document.getElementById("addLocation").addEventListener('focusin', function () {
-    if (document.getElementById('addLocation').value == "") {
-        toggle();
-    }
-});
-document.getElementById("addLocation").addEventListener('focusout', function () {
-    if (document.getElementById('addLocation').value == "") {
-        toggle();
-    }
-});
-
 
 // Graphing Functions
 
@@ -438,3 +312,132 @@ xhrg.onreadystatechange = function () {
 
     }
 }; 
+
+// add location
+
+document.getElementById('fab').addEventListener('click', function (e) {
+    loc = document.getElementById('addLocation').value;
+    console.log(loc);
+    p = 1;
+    locFormat(loc);
+
+    //Fab animations
+    toggleClass(document.getElementById('addLocation'), 'valid');
+    removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
+    document.getElementById('addLocation').value = "";
+    toggle();
+
+});
+
+//Location added
+
+function addSuccess(nm){
+    var locNode = document.getElementById('locationList');
+    var newItem = document.createElement("a");
+    var close = document.createElement('i');
+
+    //adding new location
+    var newLocName = document.createTextNode(nm.toProperCase());
+    newItem.appendChild(newLocName);
+    locNode.insertBefore(newItem, locNode.childNodes[0]);
+    addClass(locNode.childNodes[0], "mdl-navigation__link location-link");
+    var attr = document.createAttribute("place");
+    attr.value = nm;
+    locNode.childNodes[0].setAttributeNode(attr);
+   
+    //adding the close button
+
+    newItem.appendChild(close);
+    addClass(locNode.childNodes[0].querySelector('i'), "material-icons");
+    locNode.childNodes[0].querySelector('i').appendChild(document.createTextNode("close"));
+
+    locList = document.querySelectorAll('.location-link');
+    locList.forEach(function (locList) {
+        removeClass(locList, "z-depth-1-half");
+        locList.style.setProperty('background-color', 'transparent')
+    });
+
+    addClass(locNode.childNodes[0], "z-depth-1-half");
+    locNode.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
+
+    locNode.childNodes[0].addEventListener('click', function (e) {
+        loc = e.target.getAttribute("place");
+        if (loc != null) {
+            locFormat(loc);
+            locList.forEach(function (locList) {
+                removeClass(locList, "z-depth-1-half");
+                locList.style.setProperty('background-color', 'transparent')
+            });
+            addClass(e.target, "z-depth-1-half");
+            e.target.style.setProperty('background-color', 'var(--elevation)')
+        }
+    })
+    locNode.childNodes[0].querySelector('i').addEventListener('click', function (c) {
+        c.target.parentNode.remove(0);
+    });
+}
+
+// toggle class functions
+
+function hasClass(elem, className) {
+    return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+}
+
+function addClass(elem, className) {
+    if (!hasClass(elem, className)) {
+        elem.className += ' ' + className;
+    }
+}
+
+function removeClass(elem, className) {
+    var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
+    if (hasClass(elem, className)) {
+        while (newClass.indexOf(' ' + className + ' ') >= 0) {
+            newClass = newClass.replace(' ' + className + ' ', ' ');
+        }
+        elem.className = newClass.replace(/^\s+|\s+$/g, '');
+    }
+}
+
+function toggleClass(elem, className) {
+    var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
+    if (hasClass(elem, className)) {
+        while (newClass.indexOf(' ' + className + ' ') >= 0) {
+            newClass = newClass.replace(' ' + className + ' ', ' ');
+        }
+        elem.className = newClass.replace(/^\s+|\s+$/g, '');
+    } else {
+        elem.className += ' ' + className;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////
+function toggle() {
+    toggleClass(document.getElementById("fab"), 'scale-out');
+}
+
+
+document.getElementById("addLocation").addEventListener('focusin', function () {
+    if (document.getElementById('addLocation').value == "") {
+        toggle();
+    }
+});
+document.getElementById("addLocation").addEventListener('focusout', function () {
+    if (document.getElementById('addLocation').value == "") {
+        toggle();
+    }
+});
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+};
+
+function loading(){
+    removeClass(document.getElementById("loader"), 'hide');
+    addClass(document.getElementById("content"), 'hide');
+};
+
+function hideLoader(){
+    addClass(document.getElementById("loader"), 'hide');
+    removeClass(document.getElementById("content"), 'hide');
+};

@@ -28,9 +28,14 @@
     src: url('fonts/ProductSans.ttf') format('truetype');
 }
 
-.main-card {
+.card {
     background-color: var(--base);
 }
+
+.card .card-title {
+    color: var(--text);
+}
+
 
 #mainIcon {
     color: var(--text);

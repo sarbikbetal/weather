@@ -129,73 +129,80 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <div class="card z-depth-2 main-card">
+                        <div class="card z-depth-2 main-card loading">
                             <div class="card-image">
                                 <img src="images/hills.jpg">
                                 <span id="location" class="card-title">Mahishadal Forecast</span>
                             </div>
-                            <div id="card" class="card-content" style="padding-bottom: 0px;">
-                                <div class="row">
-                                    <div class="col s2">
-                                        <h2 style="margin: 0px; padding-left: 10%; Float:left;">
-                                            <span id="mainIcon" class="card-title"></span>
-                                        </h2>
-                                    </div>
-                                    <div class="col s10" style="font-weight: 400;">
-                                        <h4 style="margin: 0px; margin-top: 5px;">
-                                            <span id="title" class="col s9 l10 card-title ui-text truncate">No data available..</span>
-                                        </h4>
-                                        <h4 style="margin: 0px; margin-top: 5px;">
-                                            <span id="temp" class="col s3 l2 card-title ui-text">--</span>
-                                        </h4>
-                                        <!--p class="col s10 offset-s1 grey-text text-lighten-1" id="desc">Error connecting to server</p-->
-                                    </div>
+                            <div class="card-content" style="padding-bottom: 0px;">
+
+                                <div id="loader" class="progress">
+                                    <div class="indeterminate"></div>
                                 </div>
-                                <div class="divider"></div>
-                                <div class="row" style="margin: 0px; padding-bottom: 10px">
-                                    <div class='ui'>
-                                        <div class="col s12 m4 ">
-                                            <div class='ui_box col s12'>
-                                                <div style="padding-left: 20%;">
-                                                    <h5>
-                                                        <i class="wi wi-barometer"></i>&nbsp;&nbsp;&nbsp;Pressure</h5>
-                                                    <div class='ui_box__inner' style="padding-top: 60px; padding-left:5% ">
-                                                        <div class='stat'>
-                                                            <span style="float: left;" id="pressure">--</span>
+
+                                <div id="content" class="hide">
+                                    <div class="row">
+                                        <div class="col s2">
+                                            <h2 style="margin: 0px; padding-left: 10%; Float:left;">
+                                                <span id="mainIcon" class="card-title"></span>
+                                            </h2>
+                                        </div>
+                                        <div class="col s10" style="font-weight: 400;">
+                                            <h4 style="margin: 0px; margin-top: 5px;">
+                                                <span id="title" class="col s9 l10 card-title ui-text truncate">No data available..</span>
+                                            </h4>
+                                            <h4 style="margin: 0px; margin-top: 5px;">
+                                                <span id="temp" class="col s3 l2 card-title ui-text">--</span>
+                                            </h4>
+                                            <!--p class="col s10 offset-s1 grey-text text-lighten-1" id="desc">Error connecting to server</p-->
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <div class="row" style="margin: 0px; padding-bottom: 10px">
+                                        <div class='ui'>
+                                            <div class="col s12 m4 ">
+                                                <div class='ui_box col s12'>
+                                                    <div style="padding-left: 20%;">
+                                                        <h5>
+                                                            <i class="wi wi-barometer"></i>&nbsp;&nbsp;&nbsp;Pressure</h5>
+                                                        <div class='ui_box__inner' style="padding-top: 60px; padding-left:5% ">
+                                                            <div class='stat'>
+                                                                <span style="float: left;" id="pressure">--</span>
+                                                            </div>
+                                                            <div class='progress' style="height: 0px"></div>
                                                         </div>
-                                                        <div class='progress' style="height: 0px"></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col s12 m4 ">
-                                            <div class='ui_box col s12'>
-                                                <div style="padding-left: 20%;">
-                                                    <h5>
-                                                        <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Humidity</h5>
-                                                    <div class='ui_box__inner' style="padding-top: 60px">
-                                                        <div class='stat'>
-                                                            <span style="float: left" id="humid">--</span>
-                                                        </div>
-                                                        <div class='progress'>
-                                                            <div class='progress_bar' id="humidBar"></div>
+                                            <div class="col s12 m4 ">
+                                                <div class='ui_box col s12'>
+                                                    <div style="padding-left: 20%;">
+                                                        <h5>
+                                                            <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Humidity</h5>
+                                                        <div class='ui_box__inner' style="padding-top: 60px">
+                                                            <div class='stat'>
+                                                                <span style="float: left" id="humid">--</span>
+                                                            </div>
+                                                            <div class='progress'>
+                                                                <div class='progress_bar' id="humidBar"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col s12 m4 ">
-                                            <div class='ui_box col s12'>
-                                                <div style="padding-left: 20%;">
-                                                    <h5>
-                                                        <i class="wi wi-strong-wind"></i>&nbsp;&nbsp;&nbsp;Wind&nbsp;&nbsp;&nbsp;
-                                                        <i id="windDir" style="float: right;" class="wi wi-wind towards-0-deg"></i>
-                                                    </h5>
-                                                    <div class='ui_box__inner' style="padding-top: 60px">
-                                                        <div class='stat'>
-                                                            <span style="float: left;" id="wind">--</span>
+                                            <div class="col s12 m4 ">
+                                                <div class='ui_box col s12'>
+                                                    <div style="padding-left: 20%;">
+                                                        <h5>
+                                                            <i class="wi wi-strong-wind"></i>&nbsp;&nbsp;&nbsp;Wind&nbsp;&nbsp;&nbsp;
+                                                            <i id="windDir" style="float: right;" class="wi wi-wind towards-0-deg"></i>
+                                                        </h5>
+                                                        <div class='ui_box__inner' style="padding-top: 60px">
+                                                            <div class='stat'>
+                                                                <span style="float: left;" id="wind">--</span>
+                                                            </div>
+                                                            <div class='progress' style="height: 0px"></div>
                                                         </div>
-                                                        <div class='progress' style="height: 0px"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,11 +237,11 @@
                                 </div>
                                 <div class="col s4">
                                     <div class='ui'>
-                                        <div class='ui_box col s12'>
+                                        <div class='col s12'>
                                             <div style="padding-left: 20%;">
                                                 <h5>
                                                     <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Clouds</h5>
-                                                <div class='ui_box__inner' style="padding-top: 60px">
+                                                <div class='ui_box__inner'>
                                                     <div class='stat'>
                                                         <span style="float: left" id="cloudCover">--</span>
                                                     </div>
@@ -262,8 +269,8 @@
     <script src="js/material.min.js"></script>
     <script src="js/materialize.min.js"></script>
     <script src="script.js"></script>
-    
-    
+
+
 
 </body>
 
