@@ -39,14 +39,17 @@
         <!--Right Side Nav Drawer-->
 
         <div class="mdl-layout__drawer mdl-layout--fixed-drawer drawer-right hide-on-small-and-down">
+
+            <!--Date Widget-->
+
             <div class="my-date">
-                <span id="wday">TUESDAYG</span>
-                <h2 id="mdate">32</h2>
+                <span id="wday" align="center">TUESDAYG</span>
+                <h2 align="center" id="mdate">32</h2>
                 <div class="moye">
                     <span id="month">Jul</span>
                     <span id="year">&nbsp;2018</span>
                 </div>
-                <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Time</p>
+                <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Date</p>
             </div>
             <span class="mdl-layout-title site-title" style="margin-top: 10px;">
                 <img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
@@ -209,9 +212,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
+                                <div class="divider"></div>
                             </div>
                         </div>
 
@@ -235,18 +236,33 @@
                                 <div class="card-content">
                                     <span class="card-title">Cloud cover over the next 7 days</span>
                                 </div>
-                                <div class="col s4">
-                                    <div class='ui'>
-                                        <div class='col s12'>
-                                            <div style="padding-left: 20%;">
-                                                <h5>
-                                                    <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Clouds</h5>
-                                                <div class='ui_box__inner'>
-                                                    <div class='stat'>
-                                                        <span style="float: left" id="cloudCover">--</span>
-                                                    </div>
-                                                    <div class='progress'>
-                                                        <div class='progress_bar' id="cloudBar"></div>
+                                <div class="preloader-wrapper big active" id="cload">
+                                    <div class="spinner-layer spinner-green-only">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="graph">
+                                    <div class="col s4">
+                                        <div class='ui'>
+                                            <div class='col s12'>
+                                                <div style="padding-left: 20%;">
+                                                    <h5>
+                                                        <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Clouds</h5>
+                                                    <div class='ui_box__inner'>
+                                                        <div class='stat'>
+                                                            <span style="float: left" id="cloudCover">--</span>
+                                                        </div>
+                                                        <div class='progress'>
+                                                            <div class='progress_bar' id="cloudBar"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

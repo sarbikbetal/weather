@@ -45,7 +45,6 @@
     font-size: 24px;
     color: var(--text);
     position: absolute;
-    top: 16px;
     right: -12;
 }
 
@@ -161,13 +160,11 @@ body {
 
 .my-date h2 {
     margin: 5px auto;
-    width: 25%;
 }
 
 #wday {
     display: block;
     font-size: 20px;
-    width: 40%;
     margin: 40px auto 0px auto;
 }
 
