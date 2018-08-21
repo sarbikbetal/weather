@@ -23,8 +23,8 @@
                 <img src="images/favicon-32x32.png">
                 <span class="mdl-layout-title">The Weather App</span>
                 <div class="mdl-layout-spacer"></div>
-                <button id="mob-menu" class="mdl-button mdl-js-button mdl-button--icon main-menu">
-                    <i class="material-icons">more_vert</i>
+                <button id="refresh" class="mdl-button mdl-js-button mdl-button--icon main-menu">
+                    <i class="material-icons">refresh</i>
                 </button>
 
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="mob-menu">
@@ -38,16 +38,16 @@
 
         <!--Right Side Nav Drawer-->
 
-        <div class="mdl-layout__drawer mdl-layout--fixed-drawer drawer-right hide-on-small-and-down">
+        <div id="rightNav" class="mdl-layout__drawer mdl-layout--fixed-drawer drawer-right hide-on-small-and-down">
 
             <!--Date Widget-->
 
             <div class="my-date">
-                <span id="wday" align="center">TUESDAYG</span>
-                <h2 align="center" id="mdate">32</h2>
+                <span id="wday" align="center">Day</span>
+                <h2 align="center" id="mdate">00</h2>
                 <div class="moye">
-                    <span id="month">Jul</span>
-                    <span id="year">&nbsp;2018</span>
+                    <span id="month">Month</span>
+                    <span id="year">&nbsp;Year</span>
                 </div>
                 <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Date</p>
             </div>
@@ -80,11 +80,15 @@
             </header>
             <span class="mdl-layout-title site-title">The Weather App</span>
             <nav class="mdl-navigation my-nav">
-                <a class="mdl-navigation__link nav-active waves-effect" href="">
-                    <img src="images/show.png" class="nav-icon">Link</a>
-                <a class="mdl-navigation__link waves-effect" href="">
-                    <img src="images/map.png" class="nav-icon">Maps</a>
-                <a class="mdl-navigation__link waves-effect" href="">Home</a>
+                <a class="mdl-navigation__link nav-active waves-effect">
+                    <img src="images/show.png" class="nav-icon">LuC</a>
+                <a class="mdl-navigation__link waves-effect">
+                    <img src="images/map.png" class="nav-icon">LuC</a>
+                <a class="mdl-navigation__link waves-effect">Link under Construction</a>
+            </nav>
+            <nav id="mobileLocation" class="mdl-navigation my-nav hide-on-med-and-up">
+                <span class="mdl-layout-title subtitle">
+                    <img src="images/place.png" class="nav-icon2">Locations</span>
             </nav>
             <nav class="mdl-navigation my-nav">
                 <span class="mdl-layout-title subtitle">

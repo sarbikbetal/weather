@@ -193,12 +193,12 @@ function pFormat(weatherData) {
     //date widget
 
     var ts = weatherData.dt;
-    var date = new Date(ts * 1000);
+    var date = new Date( ts * 1000);
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var months = ["Jan", "Feb", "March", "April", "May", "June", "July","Aug", "Sep", "Oct", "Nov", "Dec"]; 
     document.getElementById("wday").innerHTML = days[date.getDay()].toUpperCase();
     document.getElementById("mdate").innerHTML = date.getDate();
-    document.getElementById("month").innerHTML = months[date.getMonth()+1];
+    document.getElementById("month").innerHTML = months[date.getMonth()];
     document.getElementById("year").innerHTML = date.getFullYear();
     //Flags
     p = 0;
@@ -343,6 +343,12 @@ function plot(graphData) {
 
 };
 
+//Refresh Button
+
+document.getElementById('refresh').addEventListener('click', function(){
+    locFormat(loc);
+});
+
 // add location
 
 document.getElementById('fab').addEventListener('click', function (e) {
@@ -407,6 +413,23 @@ function addSuccess(nm) {
     });
 }
 
+    var currentLocs = document.getElementById('locationList');
+    var mobLoc = document.getElementById('mobileLocation');
+   
+
+
+function populateLocs(x) {
+    if (x.matches) { // If media query matches
+        mobLoc.appendChild(currentLocs);
+    } else {
+        document.getElementById('rightNav').appendChild(currentLocs);
+    }
+};
+
+var x = window.matchMedia("(max-width: 720px)");
+populateLocs(x);
+x.addListener(populateLocs);
+
 // toggle class functions
 
 function hasClass(elem, className) {
@@ -441,6 +464,28 @@ function toggleClass(elem, className) {
     }
 }
 
+
+// Preloaders
+function loading() {
+    removeClass(document.getElementById("loader"), 'hide');
+    addClass(document.getElementById("content"), 'hide');
+};
+
+function hideLoader() {
+    addClass(document.getElementById("loader"), 'hide');
+    removeClass(document.getElementById("content"), 'hide');
+};
+
+function cload() {
+    removeClass(document.getElementById("cload"), 'hide');
+    addClass(document.getElementById("graph"), 'hide');
+};
+
+function hidecLoad() {
+    addClass(document.getElementById("cload"), 'hide');
+    removeClass(document.getElementById("graph"), 'hide');
+};
+
 //////////////////////////////////////////////////////////////////////
 function toggle() {
     toggleClass(document.getElementById("fab"), 'scale-out');
@@ -462,24 +507,4 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-};
-
-function loading() {
-    removeClass(document.getElementById("loader"), 'hide');
-    addClass(document.getElementById("content"), 'hide');
-};
-
-function hideLoader() {
-    addClass(document.getElementById("loader"), 'hide');
-    removeClass(document.getElementById("content"), 'hide');
-};
-
-function cload() {
-    removeClass(document.getElementById("cload"), 'hide');
-    addClass(document.getElementById("graph"), 'hide');
-};
-
-function hidecLoad() {
-    addClass(document.getElementById("cload"), 'hide');
-    removeClass(document.getElementById("graph"), 'hide');
 };

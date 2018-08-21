@@ -36,12 +36,12 @@
     color: var(--text);
 }
 
-
 #mainIcon {
     color: var(--text);
 }
 
-#locationList .location-link .material-icons {
+#locationList .location-link .material-icons,
+mobileLocation .location-link .material-icons {
     font-size: 24px;
     color: var(--text);
     position: absolute;
@@ -205,6 +205,13 @@ body {
 .subtitle {
     display: inline;
     margin: 25px 0 10px 0;
+}
+
+@media screen and (max-width: 720px) {
+    #toast-container {
+        right: 0 !important;
+        left: 0 !important;  
+    }
 }
 
 #toast-container {
