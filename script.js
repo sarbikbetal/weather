@@ -35,7 +35,7 @@ function themer() {
     if (document.getElementsByName("theme")[1].checked) {
         //dark
         root.style.setProperty('--body', '#3d3d3dd1');
-        root.style.setProperty('--widget', '#4caf50e6');
+        root.style.setProperty('--widget', '#06b87c');
         root.style.setProperty('--highlight', '#f3f3f3');
         root.style.setProperty('--theme', '#00acc1');
         root.style.setProperty('--selected', '#2b2b2b');
@@ -47,7 +47,7 @@ function themer() {
     } else {
         //light - default
         root.style.setProperty('--body', '#efefef');
-        root.style.setProperty('--widget', '#009688');
+        root.style.setProperty('--widget', '#52a3db');
         root.style.setProperty('--highlight', '#424242');
         root.style.setProperty('--theme', '#4fa584');
         root.style.setProperty('--selected', '#ededeb');
@@ -88,6 +88,10 @@ function dataFormat() {
     loading();
     cload();
     document.getElementById("location").innerHTML = "Weather Forecast";
+
+    root.style.setProperty('--bg1', '#2F80ED');
+    root.style.setProperty('--bg2', '#56CCF2');
+
 
     var mainReq = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
 
@@ -169,11 +173,10 @@ function pFormat(weatherData) {
     }
 
     hideLoader();
-    //var weatherData = JSON.parse(xhr.responseText);
     document.getElementById("location").innerHTML = weatherData.name + " Forecast";
 
-    document.getElementById("title").innerHTML = weatherData.weather[0].main;
-    //document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
+    document.getElementById("title").innerHTML = "<b>" + weatherData.weather[0].main + "</b>";
+    document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
     document.getElementById("temp").innerHTML = weatherData.main.temp.toFixed(0) + tu;
     document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + weatherData.weather[0].id);
 
@@ -181,21 +184,31 @@ function pFormat(weatherData) {
     document.getElementById("humidBar").style.width = weatherData.main.humidity + "%";
 
     document.getElementById("wind").innerHTML = weatherData.wind.speed.toFixed(1) + "&nbsp;<h6 style=\"float: right\">" + su + "</h6>";
-    document.getElementById("windDir").setAttribute("class", "wi wi-wind towards-" + weatherData.wind.deg.toFixed(0) + "-deg");
 
-    document.getElementById("pressure").innerHTML = weatherData.main.pressure.toFixed(1) + "&nbsp;<h6 style=\"float: right\">hPa</h6>";
-
-    //document.getElementById("card").innerHTML = htmlCode;
+    //document.getElementById("windDir").setAttribute("class", "wi wi-wind towards-" + weatherData.wind.deg.toFixed(0) + "-deg");
+    //document.getElementById("pressure").innerHTML = weatherData.main.pressure.toFixed(1) + "&nbsp;<h6 style=\"float: right\">hPa</h6>";
 
     document.getElementById("cloudCover").innerHTML = weatherData.clouds.all + "%";
     document.getElementById("cloudBar").style.width = weatherData.clouds.all + "%";
+    //Set Gradient
+
+    gradient(weatherData.weather[0].id);
+
+    //Sunrise & Sunset
+    sr = new Date(weatherData.sys.sunrise * 1000);
+    srf = sr.getHours() + ":" + sr.getMinutes();
+    document.getElementById("sr").innerHTML = "Sunrise:  " + srf;
+
+    ss = new Date(weatherData.sys.sunset * 1000);
+    ssf = ss.getHours() + ":" + ss.getMinutes();
+    document.getElementById("ss").innerHTML = "Sunset:  " + ssf;
 
     //date widget
 
     var ts = weatherData.dt;
-    var date = new Date( ts * 1000);
+    var date = new Date(ts * 1000);
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var months = ["Jan", "Feb", "March", "April", "May", "June", "July","Aug", "Sep", "Oct", "Nov", "Dec"]; 
+    var months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
     document.getElementById("wday").innerHTML = days[date.getDay()].toUpperCase();
     document.getElementById("mdate").innerHTML = date.getDate();
     document.getElementById("month").innerHTML = months[date.getMonth()];
@@ -208,6 +221,9 @@ function pFormat(weatherData) {
 // Graphing Functions
 
 function plot(graphData) {
+    document.getElementById("canvas").innerHTML = "";
+    document.getElementById("cloudCanvas").innerHTML = "";
+
 
     console.log(graphData);
     hidecLoad();
@@ -343,9 +359,41 @@ function plot(graphData) {
 
 };
 
+//Gradient Function
+
+function gradient(wc) {
+    var bg1, bg2, wc;
+
+    if (wc >= 200 & wc < 300) {
+        bg2 = '#859398';
+        bg1 = '#360033';
+    } else if (wc >= 300 & wc < 400) {
+        bg2 = '#26a0da';
+        bg1 = '#314755';
+    } else if (wc >= 500 & wc < 600) {
+        bg2 = '#4b6cb7';
+        bg1 = '#182848';
+    } else if (wc >= 600 & wc < 700) {
+        bg2 = '#076585';
+        bg1 = '#fff';
+    } else if (wc >= 700 & wc < 800) {
+        bg2 = '#2c3e50';
+        bg1 = '#bdc3c7';
+    } else if (wc >= 800 & wc < 900) {
+        bg2 = '#8e9eab';
+        bg1 = '#2F80ED';
+    } else {
+        bg2 = '#56CCF2';
+        bg1 = '#2F80ED';
+    }
+
+    root.style.setProperty('--bg1', bg1);
+    root.style.setProperty('--bg2', bg2);
+}
+
 //Refresh Button
 
-document.getElementById('refresh').addEventListener('click', function(){
+document.getElementById('refresh').addEventListener('click', function () {
     locFormat(loc);
 });
 
@@ -413,9 +461,9 @@ function addSuccess(nm) {
     });
 }
 
-    var currentLocs = document.getElementById('locationList');
-    var mobLoc = document.getElementById('mobileLocation');
-   
+var currentLocs = document.getElementById('locationList');
+var mobLoc = document.getElementById('mobileLocation');
+
 
 
 function populateLocs(x) {
@@ -469,11 +517,15 @@ function toggleClass(elem, className) {
 function loading() {
     removeClass(document.getElementById("loader"), 'hide');
     addClass(document.getElementById("content"), 'hide');
+    addClass(document.getElementById("mainIcon"), 'hide');
+    addClass(document.getElementById("temp"), 'hide');
 };
 
 function hideLoader() {
     addClass(document.getElementById("loader"), 'hide');
     removeClass(document.getElementById("content"), 'hide');
+    removeClass(document.getElementById("mainIcon"), 'hide');
+    removeClass(document.getElementById("temp"), 'hide');
 };
 
 function cload() {
