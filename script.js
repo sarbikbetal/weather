@@ -242,7 +242,7 @@ function plot(graphData) {
     for (let i = 0; i <= 6; i++) {
         var timestamp = graphData.list[i].dt;
         var date = new Date(timestamp * 1000);
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         dayArray.push(days[date.getDay()]);
     };
 
