@@ -7,21 +7,24 @@ var myInit = {
     cache: 'default'
 };
 
-var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?q=mahishadal,in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
 
-fetch(mainReq).then(function (response) {
-    return response.json();
-}).then(function (myJson) {
-    pFormat(myJson);
-});
+function defLoc(ln) {
+    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + ln + ',in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
 
-var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&zip=721628,in&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7', myInit);
+    fetch(mainReq).then(function (response) {
+        return response.json();
+    }).then(function (myJson) {
+        pFormat(myJson);
+    });
 
-fetch(graphReq).then(function (gresponse) {
-    return gresponse.json();
-}).then(function (graph) {
-    plot(graph);
-});
+    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&q=' + ln + ',in&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7', myInit);
+
+    fetch(graphReq).then(function (gresponse) {
+        return gresponse.json();
+    }).then(function (graph) {
+        plot(graph);
+    });
+};
 
 var unit = "metric";
 
@@ -216,6 +219,9 @@ function pFormat(weatherData) {
     //Flags
     p = 0;
     console.log(weatherData);
+    if (f == 1) {
+        lstore();
+    }
 }
 
 // Graphing Functions
@@ -458,6 +464,7 @@ function addSuccess(nm) {
     })
     locNode.childNodes[0].querySelector('i').addEventListener('click', function (c) {
         c.target.parentNode.remove(0);
+        lstore();
     });
 }
 
@@ -560,3 +567,41 @@ String.prototype.toProperCase = function () {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 };
+
+///////////////////////////   LocalStorage  /////////////////////////////
+function lstore() {
+    if (typeof (Storage) !== "undefined") {
+        var lsLocs = [];
+        var i;
+        avlLoc = document.querySelectorAll('.location-link');
+        localStorage.removeItem("locations");
+
+        for (i = 0; i < avlLoc.length; i++) {
+            lsLocs[i] = avlLoc[i].getAttribute("place");
+        };
+
+        localStorage.setItem("locations", JSON.stringify(lsLocs));
+
+    } else {
+        console.log("Sorry! No localStorage support");
+    };
+}
+
+
+if (typeof (Storage) !== "undefined") {
+    if (localStorage.length != 0) {
+        var locStore = JSON.parse(localStorage.getItem("locations"));
+        console.log("Data Found");
+        console.log(locStore);
+        currentLocs.children[0].remove();
+        for (i = locStore.length - 1 ; i >= 0; i--) {
+            addSuccess(locStore[i]);
+        };
+        defLoc(locStore[0]);
+    } else {
+        defLoc("Kolkata");
+    };
+
+} else {
+    defLoc("Kolkata");
+}
