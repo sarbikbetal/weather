@@ -12,7 +12,6 @@
     --elevation: #ededeb66;
     --bg1:#2F80ED;
     --bg2:#56CCF2;
-    --bg3:;
 
     /*--body: #3d3d3dd1;
     --widget: #4caf50e6;
@@ -251,6 +250,7 @@ body {
     #toast-container {
         right: 0 !important;
         left: 0 !important;
+        bottom : 0 !important;
     }
 }
 
