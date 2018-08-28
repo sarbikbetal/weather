@@ -8,22 +8,29 @@ var myInit = {
 };
 
 
-function defLoc(ln) {
-    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?q=' + ln + ',in&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
+function defLoc(lat, lon) {
+    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
 
     fetch(mainReq).then(function (response) {
         return response.json();
     }).then(function (myJson) {
+        loc = myJson.name;
+        console.log(loc);
         pFormat(myJson);
+        currentLocs.children[0].remove();
+        addSuccess(myJson.name);
+        lstore();
     });
 
-    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&q=' + ln + ',in&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7', myInit);
+    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=' + lat + '&lon=' + lon + '&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7', myInit);
 
     fetch(graphReq).then(function (gresponse) {
         return gresponse.json();
     }).then(function (graph) {
         plot(graph);
     });
+
+
 };
 
 var unit = "metric";
@@ -60,6 +67,8 @@ function themer() {
         root.style.setProperty('--elevation', '#ededeb66');
         Chart.defaults.global.defaultFontColor = '#585858';
     }
+    sstore();
+
 }
 
 
@@ -72,10 +81,6 @@ function locFormat(loc) {
     loc = loc;
     dataFormat();
     f = 1;
-}
-
-if (f == 0) {
-    loc = document.querySelectorAll('.location-link')[0].getAttribute("place");
 }
 
 // react to units radio button
@@ -110,8 +115,7 @@ function dataFormat() {
     }).catch(function (error) {
         console.log('Request failed:', error.message);
         M.toast({
-            html: 'Location not found',
-            classes: 'rounded'
+            html: 'Location not found'
         });
         hideLoader();
     });
@@ -222,6 +226,7 @@ function pFormat(weatherData) {
     if (f == 1) {
         lstore();
     }
+    sstore();
 }
 
 // Graphing Functions
@@ -519,8 +524,30 @@ function toggleClass(elem, className) {
     }
 }
 
+function toggle() {
+    toggleClass(document.getElementById("fab"), 'scale-out');
+}
 
-// Preloaders
+
+document.getElementById("addLocation").addEventListener('focusin', function () {
+    if (document.getElementById('addLocation').value == "") {
+        toggle();
+    }
+});
+document.getElementById("addLocation").addEventListener('focusout', function () {
+    if (document.getElementById('addLocation').value == "") {
+        toggle();
+    }
+});
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+};
+
+/////////////////////////////////  Preloaders  ///////////////////////////////////
+
 function loading() {
     removeClass(document.getElementById("loader"), 'hide');
     addClass(document.getElementById("content"), 'hide');
@@ -545,30 +572,53 @@ function hidecLoad() {
     removeClass(document.getElementById("graph"), 'hide');
 };
 
-//////////////////////////////////////////////////////////////////////
-function toggle() {
-    toggleClass(document.getElementById("fab"), 'scale-out');
-}
+/////////////////////////////  GeoLocation  //////////////////////////////
 
-
-document.getElementById("addLocation").addEventListener('focusin', function () {
-    if (document.getElementById('addLocation').value == "") {
-        toggle();
+function getLoc() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPos, showError);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
     }
-});
-document.getElementById("addLocation").addEventListener('focusout', function () {
-    if (document.getElementById('addLocation').value == "") {
-        toggle();
-    }
-});
+};
 
-String.prototype.toProperCase = function () {
-    return this.replace(/\w\S*/g, function (txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+function showPos(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    M.toast({
+        html: "Latitude: " + lat + "<br>Longitude: " + lon
     });
+
+    defLoc(lat, lon);
+};
+
+function showError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            M.toast({
+                html: "User denied the request for Geolocation."
+            });
+            break;
+        case error.POSITION_UNAVAILABLE:
+            M.toast({
+                html: "Location information is unavailable."
+            });
+            break;
+        case error.TIMEOUT:
+            M.toast({
+                html: "The request to get user location timed out."
+            });
+            break;
+        case error.UNKNOWN_ERROR:
+            M.toast({
+                html: "An unknown error occurred."
+            });
+            break;
+    }
 };
 
 ///////////////////////////   LocalStorage  /////////////////////////////
+
 function lstore() {
     if (typeof (Storage) !== "undefined") {
         var lsLocs = [];
@@ -582,26 +632,55 @@ function lstore() {
 
         localStorage.setItem("locations", JSON.stringify(lsLocs));
 
+
     } else {
         console.log("Sorry! No localStorage support");
     };
+}
+
+function sstore() {
+    if (typeof (Storage) !== "undefined") {
+
+        var thm;
+
+        if (document.getElementsByName("theme")[1].checked) {
+            thm = "dark"
+        } else {
+            thm = "light"
+        }
+
+        localStorage.removeItem("theme");
+        localStorage.setItem("theme", thm);
+
+        localStorage.removeItem("unit");
+        localStorage.setItem("unit", unit);
+
+        console.log(unit);
+    }
 }
 
 
 if (typeof (Storage) !== "undefined") {
     if (localStorage.length != 0) {
         var locStore = JSON.parse(localStorage.getItem("locations"));
-        console.log("Data Found");
-        console.log(locStore);
-        currentLocs.children[0].remove();
-        for (i = locStore.length - 1 ; i >= 0; i--) {
-            addSuccess(locStore[i]);
+
+        if (locStore.length != 0) {
+            console.log("Data Found");
+            console.log(locStore);
+            currentLocs.children[0].remove();
+            for (i = locStore.length - 1; i >= 0; i--) {
+                addSuccess(locStore[i]);
+            };
+            loc = document.querySelectorAll('.location-link')[0].getAttribute("place");
+            locFormat(locStore[0]);
+        } else {
+            getLoc();
         };
-        defLoc(locStore[0]);
+
     } else {
-        defLoc("Kolkata");
+        getLoc();
     };
 
 } else {
-    defLoc("Kolkata");
+    defLoc(22.57, 88.36);
 }
