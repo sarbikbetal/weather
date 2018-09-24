@@ -9,7 +9,7 @@ var myInit = {
 
 
 function defLoc(lat, lon) {
-    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&appid=17a6438b1d63d5b05f7039e7cb52cde7', myInit);
+    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&appid=f0ddb2e357205121b141dbde298ae467', myInit);
 
     fetch(mainReq).then(function (response) {
         return response.json();
@@ -22,7 +22,7 @@ function defLoc(lat, lon) {
         lstore();
     });
 
-    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=' + lat + '&lon=' + lon + '&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7', myInit);
+    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=' + lat + '&lon=' + lon + '&appid=f0ddb2e357205121b141dbde298ae467&cnt=7', myInit);
 
     fetch(graphReq).then(function (gresponse) {
         return gresponse.json();
@@ -101,7 +101,7 @@ function dataFormat() {
     root.style.setProperty('--bg2', '#56CCF2');
 
 
-    var mainReq = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=17a6438b1d63d5b05f7039e7cb52cde7", myInit);
+    var mainReq = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=f0ddb2e357205121b141dbde298ae467", myInit);
 
     fetch(mainReq).then(function (response) {
         if (response.ok) {
@@ -120,7 +120,7 @@ function dataFormat() {
         hideLoader();
     });
 
-    var graphReq = new Request("https://api.openweathermap.org/data/2.5/forecast/daily?units=" + unit + "&q=" + loc + ",in&appid=17a6438b1d63d5b05f7039e7cb52cde7&cnt=7", myInit);
+    var graphReq = new Request("https://api.openweathermap.org/data/2.5/forecast/daily?units=" + unit + "&q=" + loc + ",in&appid=f0ddb2e357205121b141dbde298ae467&cnt=7", myInit);
 
     fetch(graphReq).then(function (gresponse) {
         if (gresponse.ok) {
