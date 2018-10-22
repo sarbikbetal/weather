@@ -22,7 +22,7 @@ function defLoc(lat, lon) {
         lstore();
     });
 
-    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=' + lat + '&lon=' + lon + '&appid=f0ddb2e357205121b141dbde298ae467&cnt=7', myInit);
+    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=' + lat + '&lon=' + lon + '&appid=4595fa54578e530eb98a555b672f6185&cnt=7', myInit);
 
     fetch(graphReq).then(function (gresponse) {
         return gresponse.json();
@@ -120,7 +120,7 @@ function dataFormat() {
         hideLoader();
     });
 
-    var graphReq = new Request("https://api.openweathermap.org/data/2.5/forecast/daily?units=" + unit + "&q=" + loc + ",in&appid=f0ddb2e357205121b141dbde298ae467&cnt=7", myInit);
+    var graphReq = new Request("https://api.openweathermap.org/data/2.5/forecast/daily?units=" + unit + "&q=" + loc + ",in&appid=4595fa54578e530eb98a555b672f6185&cnt=7", myInit);
 
     fetch(graphReq).then(function (gresponse) {
         if (gresponse.ok) {
