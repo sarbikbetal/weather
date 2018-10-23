@@ -1,5 +1,4 @@
 /* Variables */
-
 :root {
     --body: #efefef;
     --highlight: #424242;
@@ -10,9 +9,8 @@
     --text: #585858;
     --listtext: #757575;
     --elevation: #ededeb66;
-    --bg1:#2F80ED;
-    --bg2:#56CCF2;
-
+    --bg1: #2F80ED;
+    --bg2: #56CCF2;
     /*--body: #3d3d3dd1;
     --widget: #4caf50e6;
     --highlight:#f3f3f3;
@@ -25,7 +23,6 @@
 }
 
 /* My Styles */
-
 @font-face {
     font-family: 'ProductSans';
     src: url('fonts/ProductSans.ttf') format('truetype');
@@ -38,6 +35,15 @@
 .card .card-title {
     color: var(--text);
     top: 0px !important;
+}
+
+.card .card-image .card-subtitle {
+    color: #fff;
+    position: absolute;
+    top: 40;
+    left: 0;
+    max-width: 100%;
+    padding: 18px;
 }
 
 .card .main-temp {
@@ -63,10 +69,28 @@
     padding: 18px
 }
 
+@media screen and (max-width: 545px) {
+    .xs {
+        width: 100% !important;
+        margin-left: auto;
+        left: auto;
+        right: auto;
+    }
+
+    #graph h5 {
+        font-size: 35px;
+    }
+
+    #graph .material-icons {
+        font-size: 40px;
+    }
+}
+
 @media screen and (max-width: 721px) {
     .card .card-content.info {
         padding: 10px 0px;
     }
+
     .ui .ui_box .stat-text {
         padding-left: 8%;
     }
@@ -197,6 +221,10 @@ body {
     color: var(--highlight);
 }
 
+.my-date p {
+    margin: 40px auto 0px auto;
+}
+
 .my-date h2 {
     margin: 5px auto;
 }
@@ -204,13 +232,18 @@ body {
 #wday {
     display: block;
     font-size: 20px;
-    margin: 40px auto 0px auto;
+}
+
+#time {
+    display: block;
+    font-size: 16px;
 }
 
 @media screen and (max-width: 1024px) {
-    #wday {
-        margin: 96px auto 0px auto;
+    .my-date p {
+        margin: 70px auto 0px auto;
     }
+
     .my-date {
         height: 296px;
     }
@@ -250,7 +283,7 @@ body {
     #toast-container {
         right: 0 !important;
         left: 0 !important;
-        bottom : 0 !important;
+        bottom: 0 !important;
     }
 }
 
@@ -269,7 +302,6 @@ body {
 }
 
 /* Statistics UI */
-
 body .title {
     width: 600px;
     margin: 0 auto;
@@ -407,6 +439,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     from {
         width: 0px;
     }
+
     to {}
 }
 
@@ -414,11 +447,11 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     from {
         width: 0px;
     }
+
     to {}
 }
 
 /* Material Design Lite */
-
 .mdl-navigation {
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -635,6 +668,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     .mdl-layout__drawer-button {
         line-height: 54px;
     }
+
     .mdl-layout--no-desktop-drawer-button .mdl-layout__drawer-button,
     .mdl-layout--fixed-drawer>.mdl-layout__drawer-button,
     .mdl-layout--no-drawer-button .mdl-layout__drawer-button {
@@ -737,6 +771,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     .mdl-layout__header {
         display: none;
     }
+
     .mdl-layout--fixed-header>.mdl-layout__header {
         display: -webkit-flex;
         display: -ms-flexbox;
@@ -812,6 +847,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         height: 56px;
         padding: 0 16px 0 72px;
     }
+
     .mdl-layout--no-drawer-button .mdl-layout__header-row {
         padding-left: 16px;
     }
@@ -886,6 +922,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         visibility: visible;
         pointer-events: none;
     }
+
     .mdl-layout__obfuscator.is-visible {
         pointer-events: auto;
         opacity: 1;
@@ -920,6 +957,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         margin-left: 0px;
         margin-right: 240px;
     }
+
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;
         overflow-x: hidden;
@@ -931,6 +969,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         margin-left: 0;
         margin-right: 0;
     }
+
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;
         overflow-x: hidden;
@@ -942,6 +981,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         padding-left: 10%;
         padding-right: 10%;
     }
+
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;
         overflow-x: hidden;
@@ -954,6 +994,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         margin: auto;
         padding: 0;
     }
+
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;
         overflow-x: hidden;
@@ -965,6 +1006,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
         padding-left: 2%;
         padding-right: 2%;
     }
+
     .mdl-layout__container.has-scrolling-header .mdl-layout__content {
         overflow-y: auto;
         overflow-x: hidden;
