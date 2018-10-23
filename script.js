@@ -8,8 +8,8 @@ var myInit = {
 };
 
 
-function defLoc(lat, lon) {
-    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&appid=f0ddb2e357205121b141dbde298ae467', myInit);
+function defLoc(lat, lon, unit="metric", theme="light") {
+    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=' + unit+ '&appid=4595fa54578e530eb98a555b672f6185', myInit);
 
     fetch(mainReq).then(function (response) {
         return response.json();
@@ -22,7 +22,7 @@ function defLoc(lat, lon) {
         lstore();
     });
 
-    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lat=' + lat + '&lon=' + lon + '&appid=4595fa54578e530eb98a555b672f6185&cnt=7', myInit);
+    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units='+ unit +'&lat=' + lat + '&lon=' + lon + '&appid=4595fa54578e530eb98a555b672f6185&cnt=7', myInit);
 
     fetch(graphReq).then(function (gresponse) {
         return gresponse.json();
@@ -31,6 +31,12 @@ function defLoc(lat, lon) {
     });
 
 
+    if (theme == "dark"){
+        removeClass(document.getElementById('light').nextElementSibling, 'checked');
+        addClass(document.getElementById('dark').nextElementSibling, 'checked');  
+    }
+   
+    themer()
 };
 
 var unit = "metric";
@@ -101,7 +107,7 @@ function dataFormat() {
     root.style.setProperty('--bg2', '#56CCF2');
 
 
-    var mainReq = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + ",in&units=" + unit + "&appid=f0ddb2e357205121b141dbde298ae467", myInit);
+    var mainReq = new Request("https://api.openweathermap.org/data/2.5/weather?q=" + loc + "&units=" + unit + "&appid=4595fa54578e530eb98a555b672f6185", myInit);
 
     fetch(mainReq).then(function (response) {
         if (response.ok) {
@@ -120,7 +126,7 @@ function dataFormat() {
         hideLoader();
     });
 
-    var graphReq = new Request("https://api.openweathermap.org/data/2.5/forecast/daily?units=" + unit + "&q=" + loc + ",in&appid=4595fa54578e530eb98a555b672f6185&cnt=7", myInit);
+    var graphReq = new Request("https://api.openweathermap.org/data/2.5/forecast/daily?units=" + unit + "&q=" + loc + "&appid=4595fa54578e530eb98a555b672f6185&cnt=7", myInit);
 
     fetch(graphReq).then(function (gresponse) {
         if (gresponse.ok) {
@@ -181,6 +187,7 @@ function pFormat(weatherData) {
 
     hideLoader();
     document.getElementById("location").innerHTML = weatherData.name + " Forecast";
+    document.getElementById("country").innerHTML = "<i class=\"material-icons\">location_on</i>" + weatherData.name + ", " + weatherData.sys.country;
 
     document.getElementById("title").innerHTML = "<b>" + weatherData.weather[0].main + "</b>";
     document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
@@ -203,11 +210,11 @@ function pFormat(weatherData) {
 
     //Sunrise & Sunset
     sr = new Date(weatherData.sys.sunrise * 1000);
-    srf = sr.getHours() + ":" + sr.getMinutes();
+    srf = tmFrmt(sr.getHours()) + ":" + tmFrmt(sr.getMinutes());
     document.getElementById("sr").innerHTML = "Sunrise:  " + srf;
 
     ss = new Date(weatherData.sys.sunset * 1000);
-    ssf = ss.getHours() + ":" + ss.getMinutes();
+    ssf = tmFrmt(ss.getHours()) + ":" + tmFrmt(ss.getMinutes());
     document.getElementById("ss").innerHTML = "Sunset:  " + ssf;
 
     //date widget
@@ -216,6 +223,7 @@ function pFormat(weatherData) {
     var date = new Date(ts * 1000);
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    document.getElementById("time").innerHTML = tmFrmt(date.getHours()) + ":" + tmFrmt(date.getMinutes());
     document.getElementById("wday").innerHTML = days[date.getDay()].toUpperCase();
     document.getElementById("mdate").innerHTML = date.getDate();
     document.getElementById("month").innerHTML = months[date.getMonth()];
@@ -261,7 +269,7 @@ function plot(graphData) {
     for (let i = 0; i <= 6; i++) {
         var timestamp = graphData.list[i].dt;
         var date = new Date(timestamp * 1000);
-        dateArray.push(date.getDate() + ' / ' + date.getMonth());
+        dateArray.push(date.getDate());
     };
 
     var ccArray = new Array();
@@ -390,7 +398,7 @@ function gradient(wc) {
     } else if (wc >= 700 & wc < 800) {
         bg2 = '#2c3e50';
         bg1 = '#bdc3c7';
-    } else if (wc >= 800 & wc < 900) {
+    } else if (wc > 800 & wc < 900) {
         bg2 = '#8e9eab';
         bg1 = '#2F80ED';
     } else {
@@ -421,8 +429,32 @@ document.getElementById('fab').addEventListener('click', function (e) {
     removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
     document.getElementById('addLocation').value = "";
     toggle();
-
 });
+
+window.addEventListener('keydown', function (e) {
+    if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+        if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+            e.preventDefault();
+            return false;
+        }
+    }
+}, true);
+
+document.getElementById('addLocation').addEventListener('keyup', function (e) {
+    if (e.keyCode === 13) {
+        loc = document.getElementById('addLocation').value;
+        console.log(loc);
+        p = 1;
+        locFormat(loc);
+
+        //Fab animations
+        toggleClass(document.getElementById('addLocation'), 'valid');
+        removeClass(document.getElementById('addLocation').nextElementSibling, 'active');
+        document.getElementById('addLocation').value = "";
+        toggle();
+
+    }
+}, false);
 
 //Location added
 
@@ -545,6 +577,17 @@ String.prototype.toProperCase = function () {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 };
+
+/////////////////////////////////  Time Formatter  ///////////////////////////////
+
+function tmFrmt(n) {
+    if (n < 10) {
+        n = "0" + n.toString()
+    } else {
+        n = n;
+    }
+    return n;
+}
 
 /////////////////////////////////  Preloaders  ///////////////////////////////////
 
