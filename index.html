@@ -43,19 +43,24 @@
             <!--Date Widget-->
 
             <div class="my-date">
+                <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Last
+                    updated</p>
+                <span id="time" align="center">Time</span>
                 <span id="wday" align="center">Day</span>
                 <h2 align="center" id="mdate">00</h2>
                 <div class="moye">
                     <span id="month">Month</span>
                     <span id="year">&nbsp;Year</span>
                 </div>
-                <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Forecast Date</p>
             </div>
             <span class="mdl-layout-title site-title" style="margin-top: 10px;">
                 <img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
             <nav id="locationList" class="mdl-navigation my-nav">
                 <a class="mdl-navigation__link location-link" place="Kolkata">Kolkata
                     <i class="material-icons">close</i>
+                </a>
+                <a class="mdl-navigation__link location-link" place="Kolkata">Kolkata
+                        <i class="material-icons">close</i>
                 </a>
                 <form style="margin: 0px 7%; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
                     <div class="input-field" style="margin-top: 30px;">
@@ -112,13 +117,14 @@
                     <form style="padding-left: 20px;">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
                             <label>
-                                <input name="theme" type="radio" class="with-gap" value="light" onclick="themer()" checked />
+                                <input id="light" name="theme" type="radio" class="with-gap" value="light" onclick="themer()"
+                                    checked />
                                 <span>Light</span>
                             </label>
                         </p>
                         <p style="margin: 0px;">
                             <label>
-                                <input name="theme" type="radio" class="with-gap" value="dark" onclick="themer()" />
+                                <input id="dark" name="theme" type="radio" class="with-gap" value="dark" onclick="themer()" />
                                 <span>Dark</span>
                             </label>
                         </p>
@@ -136,6 +142,7 @@
                         <div class="card z-depth-2 main-card loading">
                             <div id="grad" class="card-image">
                                 <span id="location" class="card-title">Weather Forecast</span>
+                                <span id="country" class="card-subtitle"></span>
                                 <span id="mainIcon"></span>
                                 <span id="temp" class="main-temp">--</span>
                             </div>
@@ -144,12 +151,13 @@
                                 <div id="loader" class="progress">
                                     <div class="indeterminate"></div>
                                 </div>
-
+                                <div class="divider"></div>
                                 <div id="content" class="hide">
                                     <div class="row">
                                         <div class="col s12" style="font-weight: 400;">
                                             <h4 style="margin: 0px; margin-top: 5px;">
-                                                <span id="title" class="col s12 card-title ui-text truncate">No data available..</span>
+                                                <span id="title" class="col s12 card-title ui-text truncate">No data
+                                                    available..</span>
                                             </h4>
                                             <span id="desc" class="col s12 ui-text" style="font-weight:300; padding: 0 5%"></span>
                                         </div>
@@ -206,17 +214,17 @@
                                     </div>
                                     <div class="divider"></div>
                                     <div style="padding: 12px 5%; display: flex; justify-content: space-between; color: var(--text)">
-                                        <div style="width:115px">
+                                        <div>
                                             <i class="wi wi-sunrise"></i>
                                             <span id="sr">Sunrise:</span>
                                         </div>
-                                        <div style="width:115px">
+                                        <div>
                                             <i class="wi wi-sunset"></i>
                                             <span id="ss">Sunset:</span>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -254,26 +262,25 @@
                                     </div>
                                 </div>
                                 <div id="graph">
-                                    <div class="col s4">
-                                        <div class='ui'>
-                                            <div class='col s12'>
-                                                <div style="padding-left: 20%;">
-                                                    <h5>
-                                                        <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Clouds</h5>
-                                                    <div class='ui_box__inner'>
-                                                        <div class='stat'>
-                                                            <span style="float: left" id="cloudCover">--</span>
-                                                        </div>
-                                                        <div class='progress'>
-                                                            <div class='progress_bar' id="cloudBar"></div>
-                                                        </div>
+                                    <div class="col s4 xs">
+                                        <div class='ui col s12'>
+                                            <div class="stat-text">
+
+                                                <div class='ui_box__inner' style="padding-top: 10px">
+                                                    <div class='stat'>
+                                                        <h5 style="display:inline">
+                                                            <i class="material-icons">cloud_queue</i>&nbsp;Clouds&nbsp;&nbsp;</h5>
+                                                        <span id="cloudCover">--</span>
+                                                    </div>
+                                                    <div class='progress'>
+                                                        <div class='progress_bar' id="cloudBar"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col s8" style="position: relative; height:25vh;">
+                                <div class="col s8 xs" style="position: relative; height:25vh;">
                                     <canvas id="cloudCanvas"></canvas>
                                 </div>
                             </div>
