@@ -8,8 +8,8 @@ var myInit = {
 };
 
 
-function defLoc(lat, lon, unit="metric", theme="light") {
-    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=' + unit+ '&appid=4595fa54578e530eb98a555b672f6185', myInit);
+function defLoc(lat, lon, unit = "metric", theme = "light") {
+    var mainReq = new Request('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=' + unit + '&appid=4595fa54578e530eb98a555b672f6185', myInit);
 
     fetch(mainReq).then(function (response) {
         return response.json();
@@ -22,7 +22,7 @@ function defLoc(lat, lon, unit="metric", theme="light") {
         lstore();
     });
 
-    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units='+ unit +'&lat=' + lat + '&lon=' + lon + '&appid=4595fa54578e530eb98a555b672f6185&cnt=7', myInit);
+    var graphReq = new Request('https://api.openweathermap.org/data/2.5/forecast/daily?units=' + unit + '&lat=' + lat + '&lon=' + lon + '&appid=4595fa54578e530eb98a555b672f6185&cnt=7', myInit);
 
     fetch(graphReq).then(function (gresponse) {
         return gresponse.json();
@@ -31,11 +31,11 @@ function defLoc(lat, lon, unit="metric", theme="light") {
     });
 
 
-    if (theme == "dark"){
+    if (theme == "dark") {
         removeClass(document.getElementById('light').nextElementSibling, 'checked');
-        addClass(document.getElementById('dark').nextElementSibling, 'checked');  
+        addClass(document.getElementById('dark').nextElementSibling, 'checked');
     }
-   
+
     themer()
 };
 
@@ -240,8 +240,8 @@ function pFormat(weatherData) {
 // Graphing Functions
 
 function plot(graphData) {
-    document.getElementById("canvas").innerHTML = "";
-    document.getElementById("cloudCanvas").innerHTML = "";
+    document.getElementById("cloud-chart-container").innerHTML = '<canvas id="cloudCanvas"></canvas>';
+    document.getElementById("chart-container").innerHTML = '<canvas id="canvas"></canvas>';
 
 
     console.log(graphData);
