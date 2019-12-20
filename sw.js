@@ -1,26 +1,27 @@
 const staticCache = 'static-v1';
 const dynamicCache = 'dynamic-v1';
 const assets = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/newScript.js',
-  '/js/material.min.js',
-  '/js/materialize.min.js',
-  '/css/materialize.css',
+  './',
+  'index.html',
+  'styles.css',
+  // 'js/ui.js',
+  // 'js/app.js',
+  'js/material.min.js',
+  'js/materialize.min.js',
+  'css/materialize.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
   'https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2',
-  // '/pages/fallback.html',
-  '/manifest.json',
-  '/images/favicon.ico',
-  '/images/Gear.png',
-  '/images/insight.png',
-  '/images/map.png',
-  '/images/overview.png',
-  '/images/place.png',
-  '/images/show.png',
-  '/images/theme.png',
-  '/images/unit.png'
+  // 'pages/fallback.html',
+  'manifest.json',
+  'images/favicon.ico',
+  'images/Gear.png',
+  'images/insight.png',
+  'images/map.png',
+  'images/overview.png',
+  'images/place.png',
+  'images/show.png',
+  'images/theme.png',
+  'images/unit.png'
 ];
 
 // Cache size limiting functiom
