@@ -11,7 +11,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#4fa584">
-    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- ios support -->
+  <link rel="apple-touch-icon" href="/icons/icon-96x96.png">
+  <meta name="apple-mobile-web-app-status-bar" content="#FFE1C4">
 </HEAD>
 
 <body>
@@ -26,13 +30,6 @@
                 <button id="refresh" class="mdl-button mdl-js-button mdl-button--icon main-menu">
                     <i class="material-icons">refresh</i>
                 </button>
-
-                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="mob-menu">
-                    <li class="mdl-menu__item">Some Action</li>
-                    <li class="mdl-menu__item">Another Action</li>
-                    <li disabled class="mdl-menu__item">Disabled Action</li>
-                    <li class="mdl-menu__item">Yet Another Action</li>
-                </ul>
             </div>
         </header>
 
@@ -43,7 +40,9 @@
             <!--Date Widget-->
 
             <div class="my-date">
-                <p style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">Last
+                <p
+                    style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                    Last
                     updated</p>
                 <span id="time" align="center">Time</span>
                 <span id="wday" align="center">Day</span>
@@ -60,9 +59,10 @@
                     <i class="material-icons">close</i>
                 </a>
                 <a class="mdl-navigation__link location-link" place="Kolkata">Kolkata
-                        <i class="material-icons">close</i>
+                    <i class="material-icons">close</i>
                 </a>
-                <form style="margin: 0px 7%; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                <form
+                    style="margin: 0px 7%; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
                     <div class="input-field" style="margin-top: 30px;">
                         <input id="addLocation" type="text" class="validate" style="color: var(--text)">
                         <label style="width: auto" for="addLocation">Add location</label>
@@ -82,7 +82,7 @@
             </header>
             <span class="mdl-layout-title site-title">The Weather App</span>
             <nav class="mdl-navigation my-nav">
-                
+
             </nav>
             <nav id="mobileLocation" class="mdl-navigation my-nav hide-on-med-and-up">
                 <span class="mdl-layout-title subtitle">
@@ -96,13 +96,15 @@
                     <form class="prefs" style="padding-left: 20px;">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
                             <label>
-                                <input name="tempunit" type="radio" checked class="with-gap" value="metric" onclick="dataFormat()" />
+                                <input name="tempunit" type="radio" checked class="with-gap" value="metric"
+                                    onclick="dataFormat()" />
                                 <span>Metric</span>
                             </label>
                         </p>
                         <p style="margin: 0px;">
                             <label>
-                                <input name="tempunit" type="radio" class="with-gap" value="imperial" onclick="dataFormat()" />
+                                <input name="tempunit" type="radio" class="with-gap" value="imperial"
+                                    onclick="dataFormat()" />
                                 <span>Imperial</span>
                             </label>
                         </p>
@@ -113,14 +115,15 @@
                     <form style="padding-left: 20px;">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
                             <label>
-                                <input id="light" name="theme" type="radio" class="with-gap" value="light" onclick="themer()"
-                                    checked />
+                                <input id="light" name="theme" type="radio" class="with-gap" value="light"
+                                    onclick="themer()" checked />
                                 <span>Light</span>
                             </label>
                         </p>
                         <p style="margin: 0px;">
                             <label>
-                                <input id="dark" name="theme" type="radio" class="with-gap" value="dark" onclick="themer()" />
+                                <input id="dark" name="theme" type="radio" class="with-gap" value="dark"
+                                    onclick="themer()" />
                                 <span>Dark</span>
                             </label>
                         </p>
@@ -155,7 +158,8 @@
                                                 <span id="title" class="col s12 card-title ui-text truncate">No data
                                                     available..</span>
                                             </h4>
-                                            <span id="desc" class="col s12 ui-text" style="font-weight:300; padding: 0 5%"></span>
+                                            <span id="desc" class="col s12 ui-text"
+                                                style="font-weight:300; padding: 0 5%"></span>
                                         </div>
                                     </div>
                                     <div class="divider"></div>
@@ -179,7 +183,8 @@
                                                 <div class='ui_box col s12'>
                                                     <div class="stat-text">
                                                         <h5>
-                                                            <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Humidity</h5>
+                                                            <i class="wi wi-raindrop"></i>&nbsp;&nbsp;&nbsp;Humidity
+                                                        </h5>
                                                         <div class='ui_box__inner' style="padding-top: 60px">
                                                             <div class='stat'>
                                                                 <span style="float: left" id="humid">--</span>
@@ -195,7 +200,8 @@
                                                 <div class='ui_box col s12'>
                                                     <div class="stat-text">
                                                         <h5>
-                                                            <i class="wi wi-strong-wind"></i>&nbsp;&nbsp;&nbsp;Wind&nbsp;&nbsp;&nbsp;
+                                                            <i
+                                                                class="wi wi-strong-wind"></i>&nbsp;&nbsp;&nbsp;Wind&nbsp;&nbsp;&nbsp;
                                                         </h5>
                                                         <div class='ui_box__inner' style="padding-top: 60px">
                                                             <div class='stat'>
@@ -209,7 +215,8 @@
                                         </div>
                                     </div>
                                     <div class="divider"></div>
-                                    <div style="padding: 12px 5%; display: flex; justify-content: space-between; color: var(--text)">
+                                    <div
+                                        style="padding: 12px 5%; display: flex; justify-content: space-between; color: var(--text)">
                                         <div>
                                             <i class="wi wi-sunrise"></i>
                                             <span id="sr">Sunrise:</span>
@@ -265,7 +272,9 @@
                                                 <div class='ui_box__inner' style="padding-top: 10px">
                                                     <div class='stat'>
                                                         <h5 style="display:inline">
-                                                            <i class="material-icons">cloud_queue</i>&nbsp;Clouds&nbsp;&nbsp;</h5>
+                                                            <i
+                                                                class="material-icons">cloud_queue</i>&nbsp;Clouds&nbsp;&nbsp;
+                                                        </h5>
                                                         <span id="cloudCover">--</span>
                                                     </div>
                                                     <div class='progress'>
@@ -276,7 +285,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col s8 xs" style="position: relative; height:25vh;" id="cloud-chart-container">
+                                <div class="col s8 xs" style="position: relative; height:25vh;"
+                                    id="cloud-chart-container">
                                     <canvas id="cloudCanvas"></canvas>
                                 </div>
                             </div>
@@ -289,11 +299,10 @@
         </main>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script src="js/material.min.js"></script>
-    <script src="js/materialize.min.js"></script>
-    <script src="script.js"></script>
-
-
+    <script src="/js/material.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/newScript.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 
 </HTML>
