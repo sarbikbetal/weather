@@ -57,7 +57,7 @@
 }
 
 .ui .ui_box .stat-text {
-    padding-left: 20%;
+    text-align: center;
 }
 
 #mainIcon {
@@ -89,10 +89,6 @@
 @media screen and (max-width: 721px) {
     .card .card-content.info {
         padding: 10px 0px;
-    }
-
-    .ui .ui_box .stat-text {
-        padding-left: 8%;
     }
 }
 
@@ -355,13 +351,7 @@ body .ui {
 
 .ui .ui_box h5 {
     font-weight: 300;
-    float: left;
-}
-
-.ui .ui_box h6 {
-    font-weight: 300;
-    margin-top: 0%;
-    padding-top: 20px;
+    text-align: center;
 }
 
 .ui .col {
@@ -387,6 +377,7 @@ body .ui_box {
     background: var(--base);
     float: left;
     cursor: pointer;
+    border-radius: 4px;
     -webkit-transform: scale(1);
     transform: scale(1);
     transition-property: background, -webkit-transform;
@@ -396,7 +387,6 @@ body .ui_box {
 }
 
 body .ui_box__inner {
-    padding-left: 10%;
     padding-bottom: 12px;
 }
 
@@ -404,13 +394,16 @@ body .ui_box__inner span {
     font-size: 36px;
     font-weight: 700;
 }
+.ui_box__inner span span{
+    font-size: 24px;
+    font-weight: 300;
+}
 
 body .ui_box__inner .progress {
     width: 90%;
-    margin-top: 10px;
+    margin: 10px 5% 15px 5%;
     height: 6px;
     background: rgba(0, 0, 0, 0.3);
-    margin-bottom: 15px;
 }
 
 body .ui_box__inner .progress_bar {
@@ -447,6 +440,8 @@ body .ui_box:hover {
     transition-duration: .3s;
     position: relative;
     z-index: 1;
+    -webkit-box-shadow: 0px 10px 18px -6px var(--theme); 
+    box-shadow: 0px 10px 18px -6px var(--theme);
 }
 
 .ui_box:hover>.ui_box__inner p {
