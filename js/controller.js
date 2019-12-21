@@ -5,7 +5,7 @@ var reqOpts = {
   cache: 'default'
 };
 
-const fetchData = ({ lat, lon, city, unit } = {}) => {
+const fetchData = ({ lat, lon, city, unit = 'metric' } = {}) => {
 
   var url = 'https://api.openweathermap.org/data/2.5/weather?';
   const key = '4595fa54578e530eb98a555b672f6185'
@@ -17,13 +17,10 @@ const fetchData = ({ lat, lon, city, unit } = {}) => {
     } else if (city) {
       url += `q=${city}`;
     } else {
-      reject("No parameter related to location was passed onto the fetch function");
+      reject({ message: "No parameter related to location was passed onto the fetch function" });
     }
 
-    if (unit) {
-      url += `&units=${unit}`;
-    }
-
+    url += `&units=${unit}`;
     url += `&appid=${key}`;
 
     var mainReq = new Request(url, reqOpts);
@@ -32,11 +29,13 @@ const fetchData = ({ lat, lon, city, unit } = {}) => {
       return response.json();
     }).then(json => {
       console.log(json);
-      resolve(json, unit);
+      if (json.cod != 200)
+        reject(json);
+      else
+        resolve(json);
     }).catch(err => {
       reject(err);
     })
-
   });
 }
 
@@ -48,15 +47,10 @@ const fetchData = ({ lat, lon, city, unit } = {}) => {
 
 
 
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////     Helper    //////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////     Helper    /////////////////////////////////////////////////
 ////////////////////////////////////   Functions   //////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Toggle class functions
 
@@ -92,8 +86,24 @@ function toggleClass(elem, className) {
   }
 }
 
+// String Formatter
+String.prototype.toProperCase = function () {
+  return this.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+};
+
+// Time Formatter 
+function tmFrmt(n) {
+  if (n < 10) {
+    n = "0" + n.toString()
+  } else {
+    n = n;
+  }
+  return n;
+}
+
 // Local storage wrapper
 const updateLocalStorage = (name, data) => {
-  localStorage.removeItem(name);
   localStorage.setItem(name, data);
 }

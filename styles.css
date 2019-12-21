@@ -8,7 +8,7 @@
     --widget: #52a3db;
     --text: #585858;
     --listtext: #757575;
-    --elevation: #ededeb66;
+    --elevation: #fff;
     --bg1: #2F80ED;
     --bg2: #56CCF2;
     /*--body: #3d3d3dd1;
@@ -305,18 +305,18 @@ body {
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #a7a7a77c;
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #c2c2c2;
+    background: #acacac85;
     border-radius: 4px; 
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #8f8f8f; 
+    background: #424242d8;
   }
 
 /* Statistics UI */
@@ -717,7 +717,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     min-height: 64px;
     max-height: 1000px;
     z-index: 3;
-    background-color: var(--base);
+    background-color: var(--elevation);
     color: rgb(255, 255, 255);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     transition-duration: 0.2s;

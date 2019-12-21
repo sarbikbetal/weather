@@ -31,15 +31,15 @@ function themer(theme) {
 function paintTheme(theme) {
   if (document.getElementsByName("theme")[1].checked || theme == 'dark') {
     //dark
-    root.style.setProperty('--body', '#3d3d3dd1');
+    root.style.setProperty('--body', '#121212');
     root.style.setProperty('--widget', '#06b87c');
     root.style.setProperty('--highlight', '#f3f3f3');
     root.style.setProperty('--theme', '#00acc1');
     root.style.setProperty('--selected', '#2b2b2b');
-    root.style.setProperty('--base', '#3d3d3d');
+    root.style.setProperty('--base', '#1e1e1e');
     root.style.setProperty('--text', '#ececec');
     root.style.setProperty('--listtext', '#bfbfbf');
-    root.style.setProperty('--elevation', '#ffffff14');
+    root.style.setProperty('--elevation', '#272727');
     Chart.defaults.global.defaultFontColor = '#ececec';
   } else {
     //light - default
@@ -51,7 +51,7 @@ function paintTheme(theme) {
     root.style.setProperty('--base', '#fafafa');
     root.style.setProperty('--text', '#585858');
     root.style.setProperty('--listtext', '#757575');
-    root.style.setProperty('--elevation', '#ededeb66');
+    root.style.setProperty('--elevation', '#fff');
     Chart.defaults.global.defaultFontColor = '#585858';
   }
 }
@@ -63,13 +63,13 @@ const addLocFab = document.getElementById("fab");
 
 addLocTextField.addEventListener('focusin', function () {
   if (addLocTextField.value == "") {
-    toggleClass(addLocFab, 'scale-out');
+    removeClass(addLocFab, 'scale-out');
   }
 });
 
 addLocTextField.addEventListener('focusout', function () {
   if (addLocTextField.value == "") {
-    toggleClass(addLocFab, 'scale-out');
+    addClass(addLocFab, 'scale-out');
   }
 });
 
@@ -130,60 +130,70 @@ const gradient = (wc) => {
   root.style.setProperty('--bg2', bg2);
 }
 
+// Global array of locations set by user 
+var userLocations = [];
 
 // Main Function to update Data in UI
-function updateUI(weatherData, unit = 'metric') {
-
-  // Units Definition
-  if (unit == "metric") {
+function updateUI(data) {
+  var tu, su;
+  if (document.getElementsByName("tempunit")[0].checked) {
     tu = "&degC";
     su = "m/s";
   } else {
     tu = "&degF";
     su = "Mph";
   }
-
-  // if (p == 1) {
-  //   addSuccess(weatherData.name);
-  // }
+  var locationIndex = userLocations.indexOf(data.name);
+  if (locationIndex == -1) {
+    addToLocationList(data.name);
+  } else {
+    locList = document.querySelectorAll('.location-link');
+    locList.forEach(function (locList) {
+      removeClass(locList, "z-depth-1-half");
+      locList.style.setProperty('background-color', 'transparent')
+    });
+    addClass(locList[locationIndex], "z-depth-1-half");
+    locList[locationIndex].style.setProperty('background-color', 'var(--elevation)')
+  }
 
   // Hide Preloaders
   hideLoader();
   hidecLoad();
+
   //Set Gradient
-  gradient(weatherData.weather[0].id);
+  gradient(data.weather[0].id);
 
-  document.getElementById("location").innerHTML = weatherData.name + " Forecast";
-  document.getElementById("country").innerHTML = "<i class=\"material-icons\">location_on</i>" + weatherData.name + ", " + weatherData.sys.country;
+  document.getElementById("location").innerHTML = data.name + " Forecast";
+  document.getElementById("country").innerHTML = "<i class=\"material-icons\">location_on</i>" + data.name + ", " + data.sys.country;
 
-  document.getElementById("title").innerHTML = "<b>" + weatherData.weather[0].main + "</b>";
-  document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
-  document.getElementById("temp").innerHTML = weatherData.main.temp.toFixed(0) + tu;
-  document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + weatherData.weather[0].id);
+  document.getElementById("title").innerHTML = "<b>" + data.weather[0].main + "</b>";
+  document.getElementById("desc").innerHTML = data.weather[0].description.toUpperCase();
+  document.getElementById("temp").innerHTML = data.main.temp.toFixed(0) + tu;
+  document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + data.weather[0].id);
 
-  document.getElementById("humid").innerHTML = weatherData.main.humidity + "%";
-  document.getElementById("humidBar").style.width = weatherData.main.humidity + "%";
+  document.getElementById("humid").innerHTML = data.main.humidity + "%";
+  document.getElementById("humidBar").style.width = data.main.humidity + "%";
 
-  document.getElementById("wind").innerHTML = weatherData.wind.speed.toFixed(1) + "&nbsp;<span>" + su + "</span>";
+  document.getElementById("wind").innerHTML = data.wind.speed.toFixed(1) + "&nbsp;<span>" + su + "</span>";
 
-  //document.getElementById("windDir").setAttribute("class", "wi wi-wind towards-" + weatherData.wind.deg.toFixed(0) + "-deg");
-  //document.getElementById("pressure").innerHTML = weatherData.main.pressure.toFixed(1) + "&nbsp;<h6 style=\"float: right\">hPa</h6>";
+  //document.getElementById("windDir").setAttribute("class", "wi wi-wind towards-" + data.wind.deg.toFixed(0) + "-deg");
+  //document.getElementById("pressure").innerHTML = data.main.pressure.toFixed(1) + "&nbsp;<h6 style=\"float: right\">hPa</h6>";
 
-  document.getElementById("cloudCover").innerHTML = weatherData.clouds.all + "%";
-  document.getElementById("cloudBar").style.width = weatherData.clouds.all + "%";
+  document.getElementById("cloudCover").innerHTML = data.clouds.all + "%";
+  document.getElementById("cloudBar").style.width = data.clouds.all + "%";
 
   //Sunrise & Sunset
-  var sr = new Date(weatherData.sys.sunrise * 1000);
+  var sr = new Date(data.sys.sunrise * 1000);
   var srf = tmFrmt(sr.getHours()) + ":" + tmFrmt(sr.getMinutes());
   document.getElementById("sr").innerHTML = "Sunrise:  " + srf;
 
-  var ss = new Date(weatherData.sys.sunset * 1000);
+  var ss = new Date(data.sys.sunset * 1000);
   var ssf = tmFrmt(ss.getHours()) + ":" + tmFrmt(ss.getMinutes());
   document.getElementById("ss").innerHTML = "Sunset:  " + ssf;
 
   //date widget
 
-  var ts = weatherData.dt;
+  var ts = data.dt;
   var date = new Date(ts * 1000);
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -196,19 +206,142 @@ function updateUI(weatherData, unit = 'metric') {
 
   // //Flags
   // p = 0;
-  // console.log(weatherData);
+  // console.log(data);
   // if (f == 1) {
-  //   lstore();
+  //   storeLocations();
   // }
   // sstore();
 }
+var currentLocs = document.getElementById('locationList');
+var mobLoc = document.getElementById('mobileLocation');
 
-// request data from API
-fetchData({ city: 'kolkata' })
-  .then((data, unit) => {
-    updateUI(data, unit);
-  }).catch(err => {
-    console.log(err);
+function populateLocs(x) {
+  if (x.matches)  // If media query matches
+    mobLoc.appendChild(currentLocs);
+  else
+    document.getElementById('rightNav').appendChild(currentLocs);
+};
+
+var x = window.matchMedia("(max-width: 720px)");
+populateLocs(x);
+x.addListener(populateLocs);
+
+const addToLocationList = (city) => {
+  var newItem = document.createElement("a");
+  var close = document.createElement('i');
+
+  //adding new location
+  var newLocName = document.createTextNode(city.toProperCase());
+  newItem.appendChild(newLocName);
+  currentLocs.insertBefore(newItem, currentLocs.childNodes[0]);
+  addClass(currentLocs.childNodes[0], "mdl-navigation__link location-link");
+  var attr = document.createAttribute("place");
+  attr.value = city;
+  currentLocs.childNodes[0].setAttributeNode(attr);
+
+  //adding the close button
+  newItem.appendChild(close);
+  addClass(currentLocs.childNodes[0].querySelector('i'), "material-icons");
+  currentLocs.childNodes[0].querySelector('i').appendChild(document.createTextNode("close"));
+
+  locList = document.querySelectorAll('.location-link');
+
+  locList.forEach(function (locList) {
+    removeClass(locList, "z-depth-1-half");
+    locList.style.setProperty('background-color', 'transparent')
+  });
+
+  addClass(currentLocs.childNodes[0], "z-depth-1-half");
+  currentLocs.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
+
+  currentLocs.childNodes[0].addEventListener('click', function (e) {
+    loc = e.target.getAttribute("place");
+    if (loc != null) {
+      weatherByCity(loc);
+      locList.forEach(function (locList) {
+        removeClass(locList, "z-depth-1-half");
+        locList.style.setProperty('background-color', 'transparent')
+      });
+      addClass(e.target, "z-depth-1-half");
+      e.target.style.setProperty('background-color', 'var(--elevation)')
+    }
   })
 
+  currentLocs.childNodes[0].querySelector('i').addEventListener('click', function (c) {
+    c.target.parentNode.remove(0);
+    storeLocations();
+  });
 
+  storeLocations();
+}
+
+function storeLocations() {
+  avlLoc = document.querySelectorAll('.location-link');
+
+  userLocations = [];
+  for (i = 0; i < avlLoc.length; i++) {
+    userLocations[i] = avlLoc[i].getAttribute("place");
+  }
+  console.log(userLocations);
+  if (typeof (Storage) !== "undefined") {
+    updateLocalStorage("locations", JSON.stringify(userLocations));
+  }
+}
+
+// Add new Location
+window.addEventListener('keydown', function (e) {
+  if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+    if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
+      e.preventDefault();
+      return false;
+    }
+  }
+}, true);
+
+addLocFab.addEventListener('click', function (e) {
+  fabPushed();
+});
+
+addLocTextField.addEventListener('keyup', function (e) {
+  if (e.keyCode === 13) {
+    fabPushed();
+  }
+}, false);
+
+const fabPushed = () => {
+  loc = addLocTextField.value;
+  console.log(loc);
+  weatherByCity(loc)
+
+  //Fab animations
+  toggleClass(addLocTextField, 'valid');
+  removeClass(addLocTextField.nextElementSibling, 'active');
+  addLocTextField.value = "";
+  addLocTextField.blur();
+  addClass(addLocFab, 'scale-out');
+}
+
+// request data from API
+const weatherByCity = (city) => {
+  loading();
+  cload();
+
+  if (document.getElementsByName("tempunit")[0].checked) {
+    unit = 'metric';
+  } else {
+    unit = 'imperial';
+  }
+  fetchData({ city: city, unit: unit })
+    .then((data) => {
+      updateUI(data);
+    }).catch(err => {
+      console.log(err);
+      M.toast({ html: err.message });
+
+      // Hide Preloaders
+      hideLoader();
+      hidecLoad();
+    })
+}
+
+weatherByCity('chicago');
