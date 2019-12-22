@@ -3,10 +3,10 @@ const dynamicCache = 'dynamic-v1';
 const assets = [
   './',
   'index.html',
-  // 'styles.css',
-  // 'js/ui.js',
-  // 'js/app.js',
-  // 'js/controller.js',
+  'styles.css',
+  'js/ui.js',
+  'js/app.js',
+  'js/controller.js',
   'js/material.min.js',
   'js/materialize.min.js',
   'css/materialize.css',
@@ -14,7 +14,9 @@ const assets = [
   'https://fonts.googleapis.com/css?family=Roboto:300,500',
   'https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
   'manifest.json',
+  'icons/icon144.png',
   'images/favicon.ico',
+  'images/favicon-32x32.png',
   'images/Gear.png',
   'images/insight.png',
   'images/map.png',
@@ -69,9 +71,9 @@ self.addEventListener('fetch', evt => {
   evt.respondWith(
     caches.match(evt.request).then(res => {
       return res || fetch(evt.request).then(async fetchRes => {
-        const cache = await caches.open(dynamicCache);
-        cache.put(evt.request.url, fetchRes.clone());
-        limitCache(dynamicCache, 2);
+        // const cache = await caches.open(dynamicCache);
+        // cache.put(evt.request.url, fetchRes.clone());
+        // limitCache(dynamicCache, 2);
         return fetchRes;
       });
     }).catch(() => {

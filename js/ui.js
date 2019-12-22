@@ -505,7 +505,7 @@ async function showPos(position) {
   }
   // request data from API by latitude and longitude
   fetchData({ lat: lat, lon: lon, unit: unit })
-    .then((response) => {
+    .then((data) => {
       updateUI(data[0]);
       plot(data[1]);
     }).catch(err => {
@@ -559,7 +559,7 @@ if (typeof (Storage) !== "undefined") {
           lastLoc = userLocations[0];
         }
       }
-      weatherByCity(lastLoc);
+      weatherByCity(lastLoc || userLocations[0]);
 
     } else // If no locations are stored in locations
       getLocation();
