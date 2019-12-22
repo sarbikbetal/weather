@@ -8,34 +8,57 @@ var reqOpts = {
 const fetchData = ({ lat, lon, city, unit = 'metric' } = {}) => {
 
   var url = 'https://api.openweathermap.org/data/2.5/weather?';
+  var graphUrl = 'https://api.openweathermap.org/data/2.5/forecast/daily?';
   const key = '4595fa54578e530eb98a555b672f6185'
 
   return new Promise((resolve, reject) => {
 
     if (lat && lon) {
       url += `lat=${lat}&lon=${lon}`;
-    } else if (city) {
+      graphUrl += `lat=${lat}&lon=${lon}`;
+    }
+    else if (city) {
       url += `q=${city}`;
+      graphUrl += `q=${city}`;
     } else {
-      reject({ message: "No parameter related to location was passed onto the fetch function" });
+      reject({ message: "No location parameter was passed onto the fetch function" });
     }
 
     url += `&units=${unit}`;
     url += `&appid=${key}`;
+    graphUrl += `&units=${unit}`;
+    graphUrl += `&appid=${key}`;
 
     var mainReq = new Request(url, reqOpts);
+    var graphReq = new Request(graphUrl, reqOpts);
 
-    fetch(mainReq).then(function (response) {
-      return response.json();
-    }).then(json => {
-      console.log(json);
-      if (json.cod != 200)
-        reject(json);
-      else
-        resolve(json);
-    }).catch(err => {
-      reject(err);
-    })
+
+    Promise.all([mainReq, graphReq].map(url => fetch(url)))
+      .then((response) => {
+        return Promise.all([response[0].json(), response[1].json()]);
+      })
+      .then((data) => {
+        if (data[0].cod != 200)
+          reject(data[0]);
+        else {
+          console.log(data[1]);
+          resolve(data);
+        }
+      })
+      .catch(err => {
+        reject(err);
+      })
+
+    // fetch(mainReq).then(function (response) {
+    //   return response.json();
+    // }).then(json => {
+    //   if (json.cod != 200)
+    //     reject(json);
+    //   else
+    //     resolve(json);
+    // }).catch(err => {
+    //   reject(err);
+    // })
   });
 }
 
@@ -47,10 +70,10 @@ const fetchData = ({ lat, lon, city, unit = 'metric' } = {}) => {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////     Helper    /////////////////////////////////////////////////
-////////////////////////////////////   Functions   //////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////     Helper    ///////////////////////
+////////////////////////////////////   Functions   ////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 // Toggle class functions
 

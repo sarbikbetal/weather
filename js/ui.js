@@ -99,7 +99,7 @@ function hidecLoad() {
   removeClass(document.getElementById("graph"), 'hide');
 };
 
-// Background Gradient setting function
+//////////////////////////// Background Gradient setting function  //////////////////////////////
 const gradient = (wc) => {
   var bg1, bg2;
 
@@ -130,10 +130,30 @@ const gradient = (wc) => {
   root.style.setProperty('--bg2', bg2);
 }
 
+///// Function to append the User Locations List to //////
+// corresponding navigation drawer based on screen size //
+var currentLocs = document.getElementById('locationList');
+var mobLoc = document.getElementById('mobileLocation');
+
+function populateLocs(x) {
+  if (x.matches)  // If media query matches
+    mobLoc.appendChild(currentLocs);
+  else
+    document.getElementById('rightNav').appendChild(currentLocs);
+};
+
+var x = window.matchMedia("(max-width: 720px)");
+populateLocs(x);
+x.addListener(populateLocs);
+
+
+
 // Global array of locations set by user 
 var userLocations = [];
 
+/////////////////////////////////////////
 // Main Function to update Data in UI
+/////////////////////////////////////////
 function updateUI(data) {
   var tu, su;
   if (document.getElementsByName("tempunit")[0].checked) {
@@ -202,30 +222,9 @@ function updateUI(data) {
   document.getElementById("mdate").innerHTML = date.getDate();
   document.getElementById("month").innerHTML = months[date.getMonth()];
   document.getElementById("year").innerHTML = date.getFullYear();
-
-
-  // //Flags
-  // p = 0;
-  // console.log(data);
-  // if (f == 1) {
-  //   storeLocations();
-  // }
-  // sstore();
 }
-var currentLocs = document.getElementById('locationList');
-var mobLoc = document.getElementById('mobileLocation');
 
-function populateLocs(x) {
-  if (x.matches)  // If media query matches
-    mobLoc.appendChild(currentLocs);
-  else
-    document.getElementById('rightNav').appendChild(currentLocs);
-};
-
-var x = window.matchMedia("(max-width: 720px)");
-populateLocs(x);
-x.addListener(populateLocs);
-
+// Function to add new city to location list
 const addToLocationList = (city) => {
   var newItem = document.createElement("a");
   var close = document.createElement('i');
@@ -287,7 +286,141 @@ function storeLocations() {
   }
 }
 
-// Add new Location
+//////////////////////////////////////////
+// Main Function to update Graphs in UI
+/////////////////////////////////////////
+function plot(graphData) {
+  document.getElementById("cloud-chart-container").innerHTML = '<canvas id="cloudCanvas"></canvas>';
+  document.getElementById("chart-container").innerHTML = '<canvas id="canvas"></canvas>';
+
+  var maxTempArray = new Array();
+  var minTempArray = new Array();
+
+  for (let i = 0; i <= 6; i++) {
+    maxTempArray.push(graphData.list[i].temp.max);
+    minTempArray.push(graphData.list[i].temp.min);
+  };
+
+  var dayArray = new Array();
+  for (let i = 0; i <= 6; i++) {
+    var timestamp = graphData.list[i].dt;
+    var date = new Date(timestamp * 1000);
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    dayArray.push(days[date.getDay()]);
+  };
+
+  var dateArray = new Array();
+  for (let i = 0; i <= 6; i++) {
+    var timestamp = graphData.list[i].dt;
+    var date = new Date(timestamp * 1000);
+    dateArray.push(date.getDate());
+  };
+
+  var ccArray = new Array();
+  for (let i = 0; i <= 6; i++) {
+    ccArray.push(graphData.list[i].clouds);
+  };
+
+  var config = {
+    type: 'line',
+    data: {
+      labels: dayArray,
+      datasets: [{
+        label: 'Max Temp',
+        backgroundColor: 'rgba(77, 182, 172, 1)',
+        borderColor: 'rgba(77, 182, 172, 1)',
+        data: maxTempArray,
+        fill: false,
+        lineTension: 0,
+      }, {
+        label: 'Min Temp',
+        fill: false,
+        backgroundColor: 'rgba(79, 195, 247, 1)',
+        borderColor: 'rgba(79, 195, 247, 1)',
+        data: minTempArray,
+        lineTension: 0,
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: ''
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Temperature'
+          }
+        }]
+      }
+    }
+  };
+
+  var ctx = document.getElementById('canvas').getContext('2d');
+  window.myLine = new Chart(ctx, config);
+
+  // Cloud chart
+
+  var cloudConfig = {
+    type: 'line',
+    data: {
+      labels: dateArray,
+      datasets: [{
+        label: 'Cloud cover',
+        backgroundColor: 'rgba(251, 140, 0, 1)',
+        borderColor: 'rgba(251, 140, 0, 1)',
+        data: ccArray,
+        fill: false,
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Date'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Percentage'
+          }
+        }]
+      }
+    }
+  };
+  var cld = document.getElementById('cloudCanvas').getContext('2d');
+  window.myLine = new Chart(cld, cloudConfig);
+};
+
+
+/////////////////// Add new Location  ///////////////////////
 window.addEventListener('keydown', function (e) {
   if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
     if (e.target.nodeName == 'INPUT' && e.target.type == 'text') {
@@ -335,7 +468,8 @@ const weatherByCity = (city) => {
   }
   fetchData({ city: city, unit: unit })
     .then((data) => {
-      updateUI(data);
+      updateUI(data[0]);
+      plot(data[1]);
     }).catch(err => {
       console.log(err);
       M.toast({ html: err.message });
@@ -371,8 +505,9 @@ async function showPos(position) {
   }
   // request data from API by latitude and longitude
   fetchData({ lat: lat, lon: lon, unit: unit })
-    .then((data) => {
-      updateUI(data);
+    .then((response) => {
+      updateUI(data[0]);
+      plot(data[1]);
     }).catch(err => {
       console.log(err);
       M.toast({ html: err.message });
