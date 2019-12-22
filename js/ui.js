@@ -276,13 +276,12 @@ const addToLocationList = (city) => {
 }
 
 function storeLocations() {
-  avlLoc = document.querySelectorAll('.location-link');
-
+  var avlLoc = document.querySelectorAll('.location-link');
+  var len = avlLoc.length;
   userLocations = [];
-  for (i = 0; i < avlLoc.length; i++) {
+  for (i = 0; i < len; i++) {
     userLocations[i] = avlLoc[i].getAttribute("place");
   }
-  console.log(userLocations);
   if (typeof (Storage) !== "undefined") {
     updateLocalStorage("locations", JSON.stringify(userLocations));
   }
@@ -310,7 +309,6 @@ addLocTextField.addEventListener('keyup', function (e) {
 
 const fabPushed = () => {
   loc = addLocTextField.value;
-  console.log(loc);
   weatherByCity(loc)
 
   //Fab animations
@@ -321,10 +319,14 @@ const fabPushed = () => {
   addClass(addLocFab, 'scale-out');
 }
 
-// request data from API
+// request data from API by city name
 const weatherByCity = (city) => {
   loading();
   cload();
+
+  if (typeof (Storage) !== "undefined") {
+    updateLocalStorage('lastloc', city);
+  }
 
   if (document.getElementsByName("tempunit")[0].checked) {
     unit = 'metric';
@@ -344,4 +346,90 @@ const weatherByCity = (city) => {
     })
 }
 
-weatherByCity('chicago');
+/////////////////////////////  GeoLocation  //////////////////////////////
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPos, showError);
+  } else {
+    console.warn("Geolocation is not supported by this browser.");
+  }
+};
+
+async function showPos(position) {
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+  M.toast({
+    html: "Latitude: " + lat + "<br>Longitude: " + lon
+  });
+
+  var unit;
+  if (document.getElementsByName("tempunit")[0].checked) {
+    unit = 'metric';
+  } else {
+    unit = 'imperial';
+  }
+  // request data from API by latitude and longitude
+  fetchData({ lat: lat, lon: lon, unit: unit })
+    .then((data) => {
+      updateUI(data);
+    }).catch(err => {
+      console.log(err);
+      M.toast({ html: err.message });
+
+      // Hide Preloaders
+      hideLoader();
+      hidecLoad();
+    })
+};
+
+function showError(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      M.toast({ html: "User denied the request for Geolocation." });
+      break;
+    case error.POSITION_UNAVAILABLE:
+      M.toast({ html: "Location information is unavailable." });
+      break;
+    case error.TIMEOUT:
+      M.toast({ html: "The request to get user location timed out." });
+      break;
+    case error.UNKNOWN_ERROR:
+      M.toast({ html: "An unknown error occurred." });
+      break;
+  }
+};
+
+// Get Location data from local storage
+if (typeof (Storage) !== "undefined") {
+  if (localStorage.getItem("locations")) {
+    var locStore = JSON.parse(localStorage.getItem("locations"));
+
+    if (locStore.length != 0) {
+      console.log("Data Found");
+      locStore.slice().reverse().forEach(loc => {
+        addToLocationList(loc);
+      })
+      // for (i = locStore.length - 1; i >= 0; i--) {
+      //   addToLocationList(locStore[i]);
+      // };
+
+      var lastLoc = localStorage.getItem('lastloc');
+      // Chackif lastloc is there
+      if (lastLoc) {
+        var locationIndex = userLocations.indexOf(lastLoc);
+        // Check if lastloc exists in the existing location list
+        if (locationIndex == -1) {
+          localStorage.removeItem('lastloc')
+          lastLoc = userLocations[0];
+        }
+      }
+      weatherByCity(lastLoc);
+
+    } else // If no locations are stored in locations
+      getLocation();
+  } else // If the locations key is not there
+    getLocation();
+} else {
+  weatherByCity('Kolkata');
+};
