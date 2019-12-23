@@ -41,7 +41,6 @@ const fetchData = ({ lat, lon, city, unit = 'metric' } = {}) => {
         if (data[0].cod != 200)
           reject(data[0]);
         else {
-          console.log(data[1]);
           resolve(data);
         }
       })

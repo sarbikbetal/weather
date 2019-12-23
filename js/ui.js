@@ -38,7 +38,6 @@ function paintTheme(theme) {
     root.style.setProperty('--selected', '#2b2b2b');
     root.style.setProperty('--base', '#1e1e1e');
     root.style.setProperty('--text', '#ececec');
-    root.style.setProperty('--listtext', '#bfbfbf');
     root.style.setProperty('--elevation', '#272727');
     Chart.defaults.global.defaultFontColor = '#ececec';
   } else {
@@ -50,7 +49,6 @@ function paintTheme(theme) {
     root.style.setProperty('--selected', '#ededeb');
     root.style.setProperty('--base', '#fafafa');
     root.style.setProperty('--text', '#585858');
-    root.style.setProperty('--listtext', '#757575');
     root.style.setProperty('--elevation', '#fff');
     Chart.defaults.global.defaultFontColor = '#585858';
   }
@@ -449,6 +447,12 @@ const fabPushed = () => {
 
 // request data from API by city name
 const weatherByCity = (city) => {
+
+  locList = document.querySelectorAll('.location-link');
+
+  // Disable all location buttons
+  locList.forEach(locList => addClass(locList, "disabled"));
+  // start showing preloaders
   loading();
   cload();
 
@@ -463,16 +467,22 @@ const weatherByCity = (city) => {
   }
   fetchData({ city: city, unit: unit })
     .then((data) => {
+      enableBtn()
       updateUI(data[0]);
       plot(data[1]);
     }).catch(err => {
       console.log(err);
       M.toast({ html: err.message });
 
+      enableBtn() //enable buttons
       // Hide Preloaders
       hideLoader();
       hidecLoad();
     })
+
+  function enableBtn() {
+    locList.forEach(locList => removeClass(locList, "disabled"));
+  }
 }
 
 /////////////////////////////  GeoLocation  //////////////////////////////

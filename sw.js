@@ -3,10 +3,10 @@ const dynamicCache = 'dynamic-v1';
 const assets = [
   './',
   'index.html',
-  'styles.css',
-  'js/ui.js',
-  'js/app.js',
-  'js/controller.js',
+  // 'styles.css',
+  // 'js/ui.js',
+  // 'js/app.js',
+  // 'js/controller.js',
   'js/material.min.js',
   'js/materialize.min.js',
   'css/materialize.css',
@@ -83,33 +83,46 @@ self.addEventListener('fetch', evt => {
   );
 
   if (evt.request.url.includes("openweathermap")) {
-    evt.waitUntil(update(evt.request)
-      .then(data => { refresh(evt.request.url, data) }));
+    evt.waitUntil(
+      update(evt.request)
+        .then(data => { return refresh(evt.request.url, data) })
+        .catch(err => console.log(err))
+    )
   }
 });
 
-const update = async (request) => {
-  const response = await fetch(request.url);
-  if (!response.ok) {
-    throw new Error('Network error');
-  }
-  const cache = await caches.open(dynamicCache);
-  await cache.put(request.url, response.clone());
-  return response;
+const update = (request) => {
+  return new Promise((resolve, reject) => {
+    try {
+      fetch(request.url).then(async fetchRes => {
+        const cache = await caches.open(dynamicCache);
+        cache.put(request.url, fetchRes.clone());
+        limitCache(dynamicCache, 10);
+        resolve(fetchRes);
+      });
+
+    } catch (error) {
+      console.log(error);
+      reject();
+    }
+  })
 }
 
 const refresh = (url, response) => {
-  return response.json() // read and parse JSON response
-    .then(jsonResponse => {
-      self.clients.matchAll().then(clients => {
-        clients.forEach(client => { // report and send new data to client
-          var type = 'weather';
-          if (url.includes('forecast'))
-            type = 'graph'
+  return new Promise((resolve, reject) => {
+    response.json() // read and parse JSON response
+      .then(jsonResponse => {
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => { // report and send new data to client
+            var type = 'weather';
+            if (url.includes('forecast'))
+              type = 'graph'
 
-          client.postMessage(JSON.stringify({ type: type, data: jsonResponse }))
+            client.postMessage(JSON.stringify({ type: type, data: jsonResponse }))
+          })
         })
+        resolve(jsonResponse.data); // resolve promise with new data
       })
-      return jsonResponse.data; // resolve promise with new data
-    })
+      .catch(err => reject(err));
+  })
 }

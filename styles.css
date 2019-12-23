@@ -7,7 +7,6 @@
     --base: #fafafa;
     --widget: #52a3db;
     --text: #585858;
-    --listtext: #757575;
     --elevation: #fff;
     --bg1: #2F80ED;
     --bg2: #56CCF2;
@@ -127,8 +126,13 @@ mobileLocation .location-link .material-icons {
 
 .location-link {
     position: relative;
-    cursor: default;
+    cursor: pointer;
 }
+.location-link.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #8B8B8B !important;
+  }
 
 .location-link .material-icons:hover {
     color: #e51c23 !important;
@@ -619,7 +623,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     flex-shrink: 0;
     padding: 16px 40px;
     margin: 0;
-    color: var(--listtext);
+    color: var(--text);
 }
 
 @media screen and (max-width: 1024px) {
