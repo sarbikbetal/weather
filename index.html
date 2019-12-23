@@ -236,8 +236,11 @@
                                         <span class="card-title">Temperature variation over the next 7 days</span>
                                     </div>
                                 </div>
-                                <div class="col s12 chartbox" id="chart-container">
-                                    <canvas id="canvas"></canvas>
+                                <div class="col s12 chart-wrapper">
+                                    <div class="chartbox" id="chart-container"
+                                        style="position: relative; height: 40vh;">
+                                        <canvas id="canvas"></canvas>
+                                    </div>
                                 </div>
                             </div>
 
@@ -270,9 +273,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col s8 xs" style="position: relative; height:25vh;"
-                                        id="cloud-chart-container">
-                                        <canvas id="cloudCanvas"></canvas>
+                                    <div class="col s8 xs chart-wrapper" style="position: relative; height:25vh;">
+                                        <div class="chartbox" id="cloud-chart-container">
+                                            <canvas id="cloudCanvas"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

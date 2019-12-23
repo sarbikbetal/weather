@@ -1,5 +1,5 @@
-const staticCache = 'static-v1';
-const dynamicCache = 'dynamic-v1';
+const staticCache = 'static-v2';
+const dynamicCache = 'dynamic-v2';
 const assets = [
   './',
   'index.html',
@@ -70,13 +70,59 @@ self.addEventListener('activate', evt => {
 self.addEventListener('fetch', evt => {
   evt.respondWith(
     caches.match(evt.request).then(res => {
-      return res || fetch(evt.request).then(async fetchRes => {
-        // const cache = await caches.open(dynamicCache);
-        // cache.put(evt.request.url, fetchRes.clone());
-        // limitCache(dynamicCache, 2);
-        return fetchRes;
-      });
-    }).catch(() => {
+      return res ||
+        fetch(evt.request).then(async fetchRes => {
+          const cache = await caches.open(dynamicCache);
+          cache.put(evt.request.url, fetchRes.clone());
+          limitCache(dynamicCache, 10);
+          return fetchRes;
+        });
+    }).catch((err) => {
+      console.log(err);
     })
   );
+
+  if (evt.request.url.includes("openweathermap")) {
+    evt.waitUntil(
+      update(evt.request)
+        .then(data => { return refresh(evt.request.url, data) })
+        .catch(err => console.log(err))
+    )
+  }
 });
+
+const update = (request) => {
+  return new Promise((resolve, reject) => {
+    try {
+      fetch(request.url).then(async fetchRes => {
+        const cache = await caches.open(dynamicCache);
+        cache.put(request.url, fetchRes.clone());
+        limitCache(dynamicCache, 10);
+        resolve(fetchRes);
+      });
+
+    } catch (error) {
+      console.log(error);
+      reject();
+    }
+  })
+}
+
+const refresh = (url, response) => {
+  return new Promise((resolve, reject) => {
+    response.json() // read and parse JSON response
+      .then(jsonResponse => {
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => { // report and send new data to client
+            var type = 'weather';
+            if (url.includes('forecast'))
+              type = 'graph'
+
+            client.postMessage(JSON.stringify({ type: type, data: jsonResponse }))
+          })
+        })
+        resolve(jsonResponse.data); // resolve promise with new data
+      })
+      .catch(err => reject(err));
+  })
+}
