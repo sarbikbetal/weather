@@ -293,14 +293,18 @@ body {
 .chartbox {
     position: relative;
     margin: auto;
-    height: 40vh;
     width: 80vw;
+}
+
+.chart-wrapper{
+    overflow-x: scroll;
 }
 
 /*  Custom Scrollbar  */
 /* width */
 ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
   
   /* Track */

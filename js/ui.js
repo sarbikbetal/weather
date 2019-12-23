@@ -290,36 +290,30 @@ function storeLocations() {
 // Main Function to update Graphs in UI
 /////////////////////////////////////////
 function plot(graphData) {
-  document.getElementById("cloud-chart-container").innerHTML = '<canvas id="cloudCanvas"></canvas>';
   document.getElementById("chart-container").innerHTML = '<canvas id="canvas"></canvas>';
+  document.getElementById("cloud-chart-container").innerHTML = '<canvas id="cloudCanvas"></canvas>';
 
   var maxTempArray = new Array();
   var minTempArray = new Array();
-
-  for (let i = 0; i <= 6; i++) {
-    maxTempArray.push(graphData.list[i].temp.max);
-    minTempArray.push(graphData.list[i].temp.min);
-  };
-
   var dayArray = new Array();
-  for (let i = 0; i <= 6; i++) {
-    var timestamp = graphData.list[i].dt;
-    var date = new Date(timestamp * 1000);
-    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    dayArray.push(days[date.getDay()]);
-  };
-
   var dateArray = new Array();
-  for (let i = 0; i <= 6; i++) {
-    var timestamp = graphData.list[i].dt;
+  var ccArray = new Array();
+  var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  graphData.list.forEach(data => {
+    maxTempArray.push(data.temp.max);
+    minTempArray.push(data.temp.min);
+
+    var timestamp = data.dt;
+    var date = new Date(timestamp * 1000);
+    dayArray.push(days[date.getDay()]);
+
+    var timestamp = data.dt;
     var date = new Date(timestamp * 1000);
     dateArray.push(date.getDate());
-  };
 
-  var ccArray = new Array();
-  for (let i = 0; i <= 6; i++) {
-    ccArray.push(graphData.list[i].clouds);
-  };
+    ccArray.push(data.clouds);
+  });
 
   var config = {
     type: 'line',
@@ -371,7 +365,7 @@ function plot(graphData) {
   };
 
   var ctx = document.getElementById('canvas').getContext('2d');
-  window.myLine = new Chart(ctx, config);
+  var tempChart = new Chart(ctx, config);
 
   // Cloud chart
 
@@ -415,8 +409,9 @@ function plot(graphData) {
       }
     }
   };
+
   var cld = document.getElementById('cloudCanvas').getContext('2d');
-  window.myLine = new Chart(cld, cloudConfig);
+  new Chart(cld, cloudConfig);
 };
 
 
