@@ -297,12 +297,12 @@ body {
 .chartbox {
     position: relative;
     margin: auto;
-    width: 80vw;
+    /* width: 80vw; */
 }
 
-.chart-wrapper{
+/* .chart-wrapper{
     overflow-x: scroll;
-}
+} */
 
 /*  Custom Scrollbar  */
 /* width */

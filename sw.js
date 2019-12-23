@@ -1,12 +1,12 @@
-const staticCache = 'static-v1';
-const dynamicCache = 'dynamic-v1';
+const staticCache = 'static-v2';
+const dynamicCache = 'dynamic-v2';
 const assets = [
   './',
   'index.html',
-  // 'styles.css',
-  // 'js/ui.js',
-  // 'js/app.js',
-  // 'js/controller.js',
+  'styles.css',
+  'js/ui.js',
+  'js/app.js',
+  'js/controller.js',
   'js/material.min.js',
   'js/materialize.min.js',
   'css/materialize.css',
