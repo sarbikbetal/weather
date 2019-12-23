@@ -1,12 +1,12 @@
 const staticCache = 'static-v1';
 const dynamicCache = 'dynamic-v1';
 const assets = [
-  // './',
-  // 'index.html',
-  // 'styles.css',
-  // 'js/ui.js',
-  // 'js/app.js',
-  // 'js/controller.js',
+  './',
+  'index.html',
+  'styles.css',
+  'js/ui.js',
+  'js/app.js',
+  'js/controller.js',
   'js/material.min.js',
   'js/materialize.min.js',
   'css/materialize.css',
@@ -70,13 +70,46 @@ self.addEventListener('activate', evt => {
 self.addEventListener('fetch', evt => {
   evt.respondWith(
     caches.match(evt.request).then(res => {
-      return res || fetch(evt.request).then(async fetchRes => {
-        // const cache = await caches.open(dynamicCache);
-        // cache.put(evt.request.url, fetchRes.clone());
-        // limitCache(dynamicCache, 2);
-        return fetchRes;
-      });
-    }).catch(() => {
+      return res ||
+        fetch(evt.request).then(async fetchRes => {
+          const cache = await caches.open(dynamicCache);
+          cache.put(evt.request.url, fetchRes.clone());
+          limitCache(dynamicCache, 10);
+          return fetchRes;
+        });
+    }).catch((err) => {
+      console.log(err);
     })
   );
+
+  if (evt.request.url.includes("openweathermap")) {
+    evt.waitUntil(update(evt.request)
+      .then(data => { refresh(evt.request.url, data) }));
+  }
 });
+
+const update = async (request) => {
+  const response = await fetch(request.url);
+  if (!response.ok) {
+    throw new Error('Network error');
+  }
+  const cache = await caches.open(dynamicCache);
+  await cache.put(request.url, response.clone());
+  return response;
+}
+
+const refresh = (url, response) => {
+  return response.json() // read and parse JSON response
+    .then(jsonResponse => {
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => { // report and send new data to client
+          var type = 'weather';
+          if (url.includes('forecast'))
+            type = 'graph'
+
+          client.postMessage(JSON.stringify({ type: type, data: jsonResponse }))
+        })
+      })
+      return jsonResponse.data; // resolve promise with new data
+    })
+}
