@@ -74,6 +74,11 @@ const changeUnit = () => {
   weatherByCity(choosedLocation);
 }
 
+//Refresh Button
+const refresh = () => {
+  weatherByCity(choosedLocation);
+}
+
 
 // Add Location Fab Animation
 const addLocTextField = document.getElementById("addLocation");
