@@ -27,7 +27,7 @@
                 <img src="images/favicon-32x32.png">
                 <span class="mdl-layout-title">The Weather App</span>
                 <div class="mdl-layout-spacer"></div>
-                <button id="refresh" class="mdl-button mdl-js-button mdl-button--icon main-menu">
+                <button id="refresh" class="mdl-button mdl-js-button mdl-button--icon main-menu" onclick="refresh()">
                     <i class="material-icons">refresh</i>
                 </button>
             </div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <span class="mdl-layout-title site-title" style="margin-top: 10px;">
-                <img src="images/place.png" class="nav-icon2" style="margin-right: 10px;">Locations</span>
+                <img src="images/place.png" class="nav-icon" style="margin-right: 10px;">Locations</span>
             <nav id="locationList" class="mdl-navigation my-nav">
                 <!-- <a class="mdl-navigation__link location-link" place="Kolkata">Kolkata
                     <i class="material-icons">close</i>
@@ -83,47 +83,40 @@
             </nav>
             <nav id="mobileLocation" class="mdl-navigation my-nav hide-on-med-and-up">
                 <span class="mdl-layout-title subtitle">
-                    <img src="images/place.png" class="nav-icon2">Locations</span>
+                    <img src="images/place.png" class="nav-icon">Locations</span>
             </nav>
             <nav class="mdl-navigation my-nav">
                 <span class="mdl-layout-title subtitle">
-                    <img src="images/Gear.png" class="nav-icon2">Settings</span>
+                    <img src="images/Gear.png" class="nav-icon">Settings</span>
                 <a class="mdl-navigation__link" style="cursor: default;">
-                    <img src="images/unit.png" class="nav-icon">Units
-                    <form class="prefs" style="padding-left: 20px;">
+                    Units
+                    <form class="prefs">
                         <p style="margin-bottom: 8px; margin-top: 10px;">
                             <label>
                                 <input name="tempunit" type="radio" checked class="with-gap" value="metric"
-                                    onclick="dataFormat()" />
+                                    onclick="changeUnit()" />
                                 <span>Metric</span>
                             </label>
                         </p>
                         <p style="margin: 0px;">
                             <label>
                                 <input name="tempunit" type="radio" class="with-gap" value="imperial"
-                                    onclick="dataFormat()" />
+                                    onclick="changeUnit()" />
                                 <span>Imperial</span>
                             </label>
                         </p>
                     </form>
                 </a>
                 <a class="mdl-navigation__link" style="cursor: default;">
-                    <img src="images/theme.png" class="nav-icon">Theme
-                    <form style="padding-left: 20px;">
-                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                    Theme
+                    <form>
+                        <div class="switch">
                             <label>
-                                <input id="light" name="theme" type="radio" class="with-gap" value="light"
-                                    onclick="themer()" checked />
-                                <span>Light</span>
+                                Dark Theme
+                                <input name="theme" type="checkbox" onclick="themer()">
+                                <span class="lever"></span>
                             </label>
-                        </p>
-                        <p style="margin: 0px;">
-                            <label>
-                                <input id="dark" name="theme" type="radio" class="with-gap" value="dark"
-                                    onclick="themer()" />
-                                <span>Dark</span>
-                            </label>
-                        </p>
+                        </div>
                     </form>
                 </a>
             </nav>

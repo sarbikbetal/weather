@@ -1,5 +1,6 @@
-const staticCache = 'static-v2';
-const dynamicCache = 'dynamic-v2';
+const staticCache = 'static-v3';
+const dynamicCache = 'dynamic-v3';
+const apiCache = 'apiCache-v3';
 const assets = [
   './',
   'index.html',
@@ -23,8 +24,6 @@ const assets = [
   'images/overview.png',
   'images/place.png',
   'images/show.png',
-  'images/theme.png',
-  'images/unit.png'
 ];
 
 // Cache size limiting functiom
@@ -95,9 +94,9 @@ const update = (request) => {
   return new Promise((resolve, reject) => {
     try {
       fetch(request.url).then(async fetchRes => {
-        const cache = await caches.open(dynamicCache);
+        const cache = await caches.open(apiCache);
         cache.put(request.url, fetchRes.clone());
-        limitCache(dynamicCache, 10);
+        limitCache(apiCache, 10);
         resolve(fetchRes);
       });
 

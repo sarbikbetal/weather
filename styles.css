@@ -174,17 +174,10 @@ body {
 }
 
 .nav-icon {
-    margin-right: 32px;
+    margin: 0 12px;
     vertical-align: middle;
     width: 36px;
     height: 36px;
-}
-
-.nav-icon2 {
-    margin-right: 32px;
-    vertical-align: middle;
-    width: 48px;
-    height: 48px;
 }
 
 .mdl-layout__drawer-button .material-icons {

@@ -1,25 +1,31 @@
 var root = document.querySelector(':root');
 
-// React to theme radio button
+// React to theme switch
 // Get theme data from LocalStorage if available
 if (typeof (Storage) !== "undefined") {
   var theme = localStorage.getItem('theme');
   if (theme) {
     themer(theme);
   }
+  var unit = localStorage.getItem('unit');
+  if (unit) {
+    if (unit == 'imperial') {
+      document.getElementsByName("tempunit")[1].checked = true;
+    }
+  }
 }
 
 // Theme managing function
 function themer(theme) {
   if (!theme) {
-    if (document.getElementsByName("theme")[1].checked) {
+    if (document.getElementsByName("theme")[0].checked) {
       theme = "dark"
     } else {
       theme = "light"
     }
   }
   if (theme == 'dark') {
-    document.getElementsByName("theme")[1].checked = true;
+    document.getElementsByName("theme")[0].checked = true;
   }
   paintTheme(theme);
   if (typeof (Storage) !== "undefined") {
@@ -29,7 +35,7 @@ function themer(theme) {
 
 // Function to actually apply the styles
 function paintTheme(theme) {
-  if (document.getElementsByName("theme")[1].checked || theme == 'dark') {
+  if (document.getElementsByName("theme")[0].checked || theme == 'dark') {
     //dark
     root.style.setProperty('--body', '#121212');
     root.style.setProperty('--widget', '#06b87c');
@@ -52,6 +58,25 @@ function paintTheme(theme) {
     root.style.setProperty('--elevation', '#fff');
     Chart.defaults.global.defaultFontColor = '#585858';
   }
+}
+// unit changing function
+const changeUnit = () => {
+  var unit;
+  if (document.getElementsByName("tempunit")[0].checked)
+    unit = "metric";
+  else
+    unit = "imperial";
+
+  if (typeof (Storage) !== "undefined") {
+    localStorage.setItem("unit", unit);
+  }
+
+  weatherByCity(choosedLocation);
+}
+
+//Refresh Button
+const refresh = () => {
+  weatherByCity(choosedLocation);
 }
 
 
@@ -148,6 +173,7 @@ x.addListener(populateLocs);
 
 // Global array of locations set by user 
 var userLocations = [];
+var choosedLocation;
 
 /////////////////////////////////////////
 // Main Function to update Data in UI
@@ -445,6 +471,16 @@ const fabPushed = () => {
   addClass(addLocFab, 'scale-out');
 }
 
+// Functiom to distribute and set data
+const setData = (data) => {
+  updateUI(data[0]);
+  plot(data[1]);
+  choosedLocation = data[0].name;
+  if (typeof (Storage) !== "undefined") {
+    updateLocalStorage('lastloc', data[0].name);
+  }
+}
+
 // request data from API by city name
 const weatherByCity = (city) => {
 
@@ -456,10 +492,6 @@ const weatherByCity = (city) => {
   loading();
   cload();
 
-  if (typeof (Storage) !== "undefined") {
-    updateLocalStorage('lastloc', city);
-  }
-
   if (document.getElementsByName("tempunit")[0].checked) {
     unit = 'metric';
   } else {
@@ -467,22 +499,17 @@ const weatherByCity = (city) => {
   }
   fetchData({ city: city, unit: unit })
     .then((data) => {
-      enableBtn()
-      updateUI(data[0]);
-      plot(data[1]);
+      locList.forEach(locList => removeClass(locList, "disabled"));
+      setData(data);
     }).catch(err => {
       console.log(err);
       M.toast({ html: err.message });
 
-      enableBtn() //enable buttons
+      locList.forEach(locList => removeClass(locList, "disabled")); //enable buttons
       // Hide Preloaders
       hideLoader();
       hidecLoad();
     })
-
-  function enableBtn() {
-    locList.forEach(locList => removeClass(locList, "disabled"));
-  }
 }
 
 /////////////////////////////  GeoLocation  //////////////////////////////
@@ -511,8 +538,7 @@ async function showPos(position) {
   // request data from API by latitude and longitude
   fetchData({ lat: lat, lon: lon, unit: unit })
     .then((data) => {
-      updateUI(data[0]);
-      plot(data[1]);
+      setData(data);
     }).catch(err => {
       console.log(err);
       M.toast({ html: err.message });
@@ -564,6 +590,7 @@ if (typeof (Storage) !== "undefined") {
           lastLoc = userLocations[0];
         }
       }
+      choosedLocation = lastLoc || userLocations[0];
       weatherByCity(lastLoc || userLocations[0]);
 
     } else // If no locations are stored in locations
