@@ -94,14 +94,14 @@
                         <p style="margin-bottom: 8px; margin-top: 10px;">
                             <label>
                                 <input name="tempunit" type="radio" checked class="with-gap" value="metric"
-                                    onclick="dataFormat()" />
+                                    onclick="changeUnit()" />
                                 <span>Metric</span>
                             </label>
                         </p>
                         <p style="margin: 0px;">
                             <label>
                                 <input name="tempunit" type="radio" class="with-gap" value="imperial"
-                                    onclick="dataFormat()" />
+                                    onclick="changeUnit()" />
                                 <span>Imperial</span>
                             </label>
                         </p>
@@ -110,20 +110,13 @@
                 <a class="mdl-navigation__link" style="cursor: default;">
                     Theme
                     <form>
-                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                        <div class="switch">
                             <label>
-                                <input id="light" name="theme" type="radio" class="with-gap" value="light"
-                                    onclick="themer()" checked />
-                                <span>Light</span>
+                                Dark Theme
+                                <input name="theme" type="checkbox" onclick="themer()">
+                                <span class="lever"></span>
                             </label>
-                        </p>
-                        <p style="margin: 0px;">
-                            <label>
-                                <input id="dark" name="theme" type="radio" class="with-gap" value="dark"
-                                    onclick="themer()" />
-                                <span>Dark</span>
-                            </label>
-                        </p>
+                        </div>
                     </form>
                 </a>
             </nav>

@@ -23,8 +23,6 @@ const assets = [
   'images/overview.png',
   'images/place.png',
   'images/show.png',
-  'images/theme.png',
-  'images/unit.png'
 ];
 
 // Cache size limiting functiom
