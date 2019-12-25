@@ -19,3 +19,7 @@ if ('serviceWorker' in navigator) {
     console.log("Service Worker error", err);
   })
 }
+
+window.addEventListener('offline', function () {
+  M.toast({ html: "Sorry, you're offline", classes: 'red'});
+});

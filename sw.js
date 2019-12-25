@@ -2,12 +2,12 @@ const staticCache = 'static-v3';
 const dynamicCache = 'dynamic-v3';
 const apiCache = 'apiCache-v3';
 const assets = [
-  './',
-  'index.html',
-  'styles.css',
-  'js/ui.js',
-  'js/app.js',
-  'js/controller.js',
+  // './',
+  // 'index.html',
+  // 'styles.css',
+  // 'js/ui.js',
+  // 'js/app.js',
+  // 'js/controller.js',
   'js/material.min.js',
   'js/materialize.min.js',
   'css/materialize.css',
@@ -71,9 +71,9 @@ self.addEventListener('fetch', evt => {
     caches.match(evt.request).then(res => {
       return res ||
         fetch(evt.request).then(async fetchRes => {
-          const cache = await caches.open(dynamicCache);
-          cache.put(evt.request.url, fetchRes.clone());
-          limitCache(dynamicCache, 10);
+          // const cache = await caches.open(dynamicCache);
+          // cache.put(evt.request.url, fetchRes.clone());
+          // limitCache(dynamicCache, 10);
           return fetchRes;
         });
     }).catch((err) => {

@@ -541,7 +541,7 @@ async function showPos(position) {
       setData(data);
     }).catch(err => {
       console.log(err);
-      M.toast({ html: err.message });
+      M.toast({ html: err.message, classes: 'red' });
 
       // Hide Preloaders
       hideLoader();
@@ -550,20 +550,23 @@ async function showPos(position) {
 };
 
 function showError(error) {
+  let text;
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      M.toast({ html: "User denied the request for Geolocation." });
+      text = "User denied the request for Geolocation.";
       break;
     case error.POSITION_UNAVAILABLE:
-      M.toast({ html: "Location information is unavailable." });
+      text = "Location information is unavailable.";
       break;
     case error.TIMEOUT:
-      M.toast({ html: "The request to get user location timed out." });
+      text = "The request to get user location timed out.";
       break;
     case error.UNKNOWN_ERROR:
-      M.toast({ html: "An unknown error occurred." });
+      text = "An unknown error occurred.";
       break;
   }
+  M.toast({ html: text, classes: 'red' });
+  weatherByCity('Kolkata');
 };
 
 // Get Location data from local storage
