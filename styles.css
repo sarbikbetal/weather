@@ -31,6 +31,7 @@
 
 .card {
     background-color: var(--base);
+    border-radius: 30px 30px 10px 10px;
 }
 
 .card .card-title {
@@ -41,20 +42,21 @@
 .card .card-image .card-subtitle {
     color: #fff;
     position: absolute;
-    top: 40;
-    left: 0;
+    top: 40px;
+    font-size:20px;
+    left: 40px;
     max-width: 100%;
-    padding: 18px;
 }
 
 .card .main-temp {
     color: #fff;
     right: 0 !important;
-    font-size: 36px;
+    font-size: 72px;
     position: absolute;
     bottom: 0;
+    left:10;
     max-width: 100%;
-    padding: 21px
+    padding:30px;
 }
 
 .ui .ui_box .stat-text {
@@ -63,11 +65,12 @@
 
 #mainIcon {
     color: #fff;
-    font-size: 50px;
+    font-size: 90px;
     position: absolute;
-    bottom: 0;
-    max-width: 100%;
-    padding: 18px
+    top: 30px;
+    right:30px;
+    max-width:100%;
+    padding: 30px;
 }
 
 @media screen and (max-width: 545px) {
@@ -121,9 +124,10 @@ mobileLocation .location-link .material-icons {
 
 #grad {
     background: var(--bg2);
-    background: -webkit-linear-gradient(to bottom, var(--bg1), var(--bg2));
-    background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+    background: -webkit-linear-gradient(60deg, var(--bg1), var(--bg2));
+    background: linear-gradient(60deg, var(--bg1), var(--bg2));
     height: 200px;
+    border-radius:30px 30px 0px 0px;
 }
 
 .location-link {
@@ -145,9 +149,9 @@ body {
 }
 
 .nav-avatar {
-    width: 120px;
-    height: 120px;
-    margin: auto;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
 }
 
 .nav-drawer-header {
@@ -161,7 +165,7 @@ body {
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    padding: 16px;
+    padding: 2px;
     height: 151px;
 }
 
@@ -178,8 +182,8 @@ body {
 .nav-icon {
     margin: 0 12px;
     vertical-align: middle;
-    width: 36px;
-    height: 36px;
+    width: 26px;
+    height: 26px;
 }
 
 .mdl-layout__drawer-button .material-icons {
@@ -358,6 +362,7 @@ body .ui {
 }
 
 .ui .col {
+   
     padding: 0px;
 }
 
@@ -432,7 +437,7 @@ body .ui_box p {
     margin: 2px 0px 15px 0px;
 }
 
-body .ui_box:hover {
+/* body .ui_box:hover {
     background: var(--theme);
     color: var(--base);
     -webkit-transform: scale(1.1);
@@ -445,7 +450,7 @@ body .ui_box:hover {
     z-index: 1;
     -webkit-box-shadow: 0px 10px 18px -6px var(--theme); 
     box-shadow: 0px 10px 18px -6px var(--theme);
-}
+} */
 
 .ui_box:hover>.ui_box__inner p {
     color: #b3dacb;
@@ -532,7 +537,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     position: relative;
     font-family: "ProductSans", "Roboto", "Helvetica", sans-serif;
     padding-left: 15px;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 1;
     letter-spacing: 0.02em;
@@ -608,7 +613,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     -webkit-align-items: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
-    padding-top: 16px;
+    padding-top: 6px;
 }
 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
@@ -616,7 +621,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     -webkit-flex-shrink: 0;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    padding: 16px 40px;
+    padding: 6px 20px;
     margin: 0;
     color: var(--text);
 }
