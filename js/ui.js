@@ -206,9 +206,7 @@ function updateUI(data) {
 
   //Set Gradient
   gradient(data.weather[0].id);
-
-  document.getElementById("location").innerHTML = data.name + " Forecast";
-  document.getElementById("country").innerHTML = "<i class=\"material-icons\">location_on</i>" + data.name + ", " + data.sys.country;
+  document.getElementById("country").innerHTML = data.name + ", " + data.sys.country;
 
   document.getElementById("title").innerHTML = "<b>" + data.weather[0].main + "</b>";
   document.getElementById("desc").innerHTML = data.weather[0].description.toUpperCase();
