@@ -122,8 +122,8 @@ mobileLocation .location-link .material-icons {
 
 #grad {
     background: var(--bg2);
-    background: -webkit-linear-gradient(to bottom, var(--bg1), var(--bg2));
-    background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+    background: -webkit-linear-gradient(60deg, var(--bg1), var(--bg2));
+    background: linear-gradient(60deg, var(--bg1), var(--bg2));
     height: 200px;
     border-radius:30px 30px 0px 0px;
 }
@@ -147,9 +147,9 @@ body {
 }
 
 .nav-avatar {
-    width: 120px;
-    height: 120px;
-    margin: auto;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
 }
 
 .nav-drawer-header {
@@ -163,7 +163,7 @@ body {
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    padding: 16px;
+    padding: 2px;
     height: 151px;
 }
 
@@ -180,8 +180,8 @@ body {
 .nav-icon {
     margin: 0 12px;
     vertical-align: middle;
-    width: 36px;
-    height: 36px;
+    width: 26px;
+    height: 26px;
 }
 
 .mdl-layout__drawer-button .material-icons {
@@ -535,7 +535,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     position: relative;
     font-family: "ProductSans", "Roboto", "Helvetica", sans-serif;
     padding-left: 15px;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 1;
     letter-spacing: 0.02em;
@@ -611,7 +611,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     -webkit-align-items: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
-    padding-top: 16px;
+    padding-top: 6px;
 }
 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
@@ -619,7 +619,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
     -webkit-flex-shrink: 0;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    padding: 16px 40px;
+    padding: 6px 20px;
     margin: 0;
     color: var(--text);
 }
