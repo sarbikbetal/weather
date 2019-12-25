@@ -187,7 +187,7 @@ function pFormat(weatherData) {
 
     hideLoader();
     document.getElementById("location").innerHTML = weatherData.name + " Forecast";
-    document.getElementById("country").innerHTML = "<i class=\"material-icons\">location_on</i>" + weatherData.name + ", " + weatherData.sys.country;
+    document.getElementById("country").innerHTML = weatherData.name + ", " + weatherData.sys.country;
 
     document.getElementById("title").innerHTML = "<b>" + weatherData.weather[0].main + "</b>";
     document.getElementById("desc").innerHTML = weatherData.weather[0].description.toUpperCase();
