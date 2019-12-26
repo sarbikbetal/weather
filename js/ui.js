@@ -206,12 +206,14 @@ function updateUI(data) {
 
   //Set Gradient
   gradient(data.weather[0].id);
-  document.getElementById("country").innerHTML = data.name + ", " + data.sys.country;
+  document.getElementById("location").innerHTML = data.name + ", " + data.sys.country;
 
   document.getElementById("title").innerHTML = "<b>" + data.weather[0].main + "</b>";
   document.getElementById("desc").innerHTML = data.weather[0].description.toUpperCase();
   document.getElementById("temp").innerHTML = data.main.temp.toFixed(0) + tu;
   document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + data.weather[0].id);
+
+  document.getElementById("fl-temp").innerHTML = data.main.feels_like.toFixed(0) + tu;
 
   document.getElementById("humid").innerHTML = data.main.humidity + "%";
   document.getElementById("humidBar").style.width = data.main.humidity + "%";
@@ -276,7 +278,7 @@ const addToLocationList = (city) => {
   currentLocs.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
 
   currentLocs.childNodes[0].addEventListener('click', function (e) {
-    loc = e.target.getAttribute("place");
+    let loc = e.target.getAttribute("place");
     if (loc != null) {
       weatherByCity(loc);
       locList.forEach(function (locList) {
@@ -458,8 +460,10 @@ addLocTextField.addEventListener('keyup', function (e) {
 }, false);
 
 const fabPushed = () => {
-  loc = addLocTextField.value;
-  weatherByCity(loc)
+  let loc = addLocTextField.value;
+  if (loc) {
+    weatherByCity(loc)
+  }
 
   //Fab animations
   toggleClass(addLocTextField, 'valid');

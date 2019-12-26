@@ -1,29 +1,24 @@
-const staticCache = 'static-v3';
-const dynamicCache = 'dynamic-v3';
-const apiCache = 'apiCache-v3';
+const staticCache = 'static-v4';
+const dynamicCache = 'dynamic-v4';
+const apiCache = 'apiCache';
 const assets = [
-  // './',
-  // 'index.html',
-  // 'styles.css',
-  // 'js/ui.js',
-  // 'js/app.js',
-  // 'js/controller.js',
+  './',
+  'index.html',
+  'styles.css',
+  'js/ui.js',
+  'js/app.js',
+  'js/controller.js',
   'js/material.min.js',
   'js/materialize.min.js',
   'css/materialize.css',
   'https://fonts.googleapis.com/icon?family=Material+Icons',
-  'https://fonts.googleapis.com/css?family=Roboto:300,500',
+  'https://fonts.googleapis.com/css?family=Poppins&display=swap',
   'https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
   'manifest.json',
   'icons/icon144.png',
   'images/favicon.ico',
   'images/favicon-32x32.png',
-  'images/Gear.png',
-  'images/insight.png',
-  'images/map.png',
-  'images/overview.png',
   'images/place.png',
-  'images/show.png',
 ];
 
 // Cache size limiting functiom
@@ -71,9 +66,9 @@ self.addEventListener('fetch', evt => {
     caches.match(evt.request).then(res => {
       return res ||
         fetch(evt.request).then(async fetchRes => {
-          // const cache = await caches.open(dynamicCache);
-          // cache.put(evt.request.url, fetchRes.clone());
-          // limitCache(dynamicCache, 10);
+          const cache = await caches.open(dynamicCache);
+          cache.put(evt.request.url, fetchRes.clone());
+          limitCache(dynamicCache, 8);
           return fetchRes;
         });
     }).catch((err) => {

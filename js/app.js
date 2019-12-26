@@ -2,7 +2,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(reg => {
     console.log("Service Worker registered successfully");
 
-
     navigator.serviceWorker.onmessage = event => {
       const msg = JSON.parse(event.data);
       if (msg.type == 'weather') {
