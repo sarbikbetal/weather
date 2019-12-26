@@ -3,7 +3,6 @@
 <HEAD>
     <TITLE>Weather Forecast</TITLE>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen, projection" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/weather-icons.css" />
@@ -27,7 +26,7 @@
                 <img src="images/favicon-32x32.png">
                 <span class="mdl-layout-title">The Weather App</span>
                 <div class="mdl-layout-spacer"></div>
-                <button id="refresh" class="mdl-button mdl-js-button mdl-button--icon main-menu" onclick="refresh()">
+                <button class="mdl-button mdl-js-button mdl-button--icon main-menu" onclick="refresh()">
                     <i class="material-icons">refresh</i>
                 </button>
             </div>
@@ -41,7 +40,7 @@
 
             <div class="my-date">
                 <p
-                    style="text-align: center; color: #e8e8e89c; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                    style="text-align: center; color: #eee; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
                     Last
                     updated</p>
                 <span id="time" align="center">Time</span>
@@ -52,12 +51,14 @@
                     <span id="year">&nbsp;Year</span>
                 </div>
             </div>
-            <span class="mdl-layout-title site-title" style="margin-top: 10px;">
-                <img src="images/place.png" class="nav-icon" style="margin-right: 10px;">Locations</span>
+            <div class="mdl-layout-title subtitle" style="margin-top: 10px;">
+                <img src="images/place.png" class="nav-icon">
+                <span style="padding: 4 18 0 4;">Locations</span>
+                <button class="mdl-button mdl-js-button mdl-button--icon" onclick="getLocation()">
+                    <i class="material-icons">my_location</i>
+                </button>
+            </div>
             <nav id="locationList" class="mdl-navigation my-nav">
-                <!-- <a class="mdl-navigation__link location-link" place="Kolkata">Kolkata
-                    <i class="material-icons">close</i>
-                </a> -->
                 <form
                     style="margin: 0px 7%; font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
                     <div class="input-field" style="margin-top: 30px;">
@@ -82,12 +83,15 @@
 
             </nav>
             <nav id="mobileLocation" class="mdl-navigation my-nav hide-on-med-and-up">
-                <span class="mdl-layout-title subtitle">
-                    <img src="images/place.png" class="nav-icon">Locations</span>
+                <div class="mdl-layout-title subtitle">
+                    <img src="images/place.png" class="nav-icon">
+                    <span style="padding: 4 18 0 4;">Locations</span>
+                    <button class="mdl-button mdl-js-button mdl-button--icon" onclick="getLocation()">
+                        <i class="material-icons">my_location</i>
+                    </button>
+                </div>
             </nav>
             <nav class="mdl-navigation my-nav">
-                <span class="mdl-layout-title subtitle">
-                    <img src="images/Gear.png" class="nav-icon">Settings</span>
                 <a class="mdl-navigation__link" style="cursor: default;">
                     Units
                     <form class="prefs">
@@ -130,8 +134,7 @@
                     <div class="col s12">
                         <div class="card z-depth-2 main-card loading">
                             <div id="grad" class="card-image">
-                                <span id="location" class="card-title">Weather Forecast</span>
-                                <span id="country" class="card-subtitle"></span>
+                                <span id="location" class="card-subtitle"></span>
                                 <span id="mainIcon"></span>
                                 <span id="temp" class="main-temp">--</span>
                             </div>
@@ -143,32 +146,21 @@
                                 <div style="overflow: hidden;"></div>
                                 <div id="content" class="hide">
                                     <div class="row">
-                                        <div class="col s12" style="font-weight: 400;">
+                                        <div class="col s8">
                                             <h4 style="margin: 0px; margin-top: 5px;">
                                                 <span id="title" class="col s12 card-title ui-text truncate">No data
                                                     available..</span>
                                             </h4>
-                                            <span id="desc" class="col s12 ui-text"
-                                                style="font-weight:300; padding: 0 5%"></span>
+                                            <span id="desc" class="col s12 ui-text" style="padding:0 16px;"></span>
+                                        </div>
+                                        <div class="col s4 feels-like">
+                                            <h6>Feels like</h6>
+                                            <span id="fl-temp"></span>
                                         </div>
                                     </div>
                                     <div class="divider"></div>
                                     <div class="row" style="margin: 0px; padding-bottom: 10px">
                                         <div class='ui'>
-                                            <!--div class="col s12 m4 ">
-                                                <div class='ui_box col s12'>
-                                                    <div style="padding-left: 20%;">
-                                                        <h5>
-                                                            <i class="wi wi-barometer"></i>&nbsp;&nbsp;&nbsp;Pressure</h5>
-                                                        <div class='ui_box__inner' style="padding-top: 60px; padding-left:5% ">
-                                                            <div class='stat'>
-                                                                <span style="float: left;" id="pressure">--</span>
-                                                            </div>
-                                                            <div class='progress' style="height: 0px"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div-->
                                             <div class="col s6 ">
                                                 <div class='ui_box col s12'>
                                                     <div class="stat-text">
@@ -221,12 +213,14 @@
                             </div>
                         </div>
 
-                        <div class="card z-depth-2">
+                        <div class="card z-depth-2" style="border-radius:10px !important;">
 
-                            <div class="row" style="margin: 0px; padding-bottom: 10px">
+                            <div class="row" style="margin: 0px; padding-bottom: 10px;">
                                 <div class="col s12">
                                     <div class="card-content">
-                                        <span class="card-title">Temperature variation over the next 7 days</span>
+                                        <span class="card-title"
+                                            style="padding:10px; font-size:16px; text-align:center;">Temperature
+                                            variation</span>
                                     </div>
                                 </div>
                                 <div class="col s12 chart-wrapper">
@@ -239,10 +233,11 @@
 
                         </div>
 
-                        <div class="card z-depth-2">
+                        <div class="card z-depth-2" style="border-radius:10px !important;">
                             <div class="row" style="margin: 0px; padding-bottom: 10px">
                                 <div class="card-content">
-                                    <span class="card-title">Cloud cover over the next 7 days</span>
+                                    <span class="card-title"
+                                        style="padding:10px; font-size:16px; text-align:center;">Cloud cover</span>
                                     <div id="cload" class="progress">
                                         <div class="indeterminate"></div>
                                     </div>

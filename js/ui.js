@@ -206,14 +206,14 @@ function updateUI(data) {
 
   //Set Gradient
   gradient(data.weather[0].id);
-
-  document.getElementById("location").innerHTML = data.name + " Forecast";
-  document.getElementById("country").innerHTML = "<i class=\"material-icons\">location_on</i>" + data.name + ", " + data.sys.country;
+  document.getElementById("location").innerHTML = data.name + ", " + data.sys.country;
 
   document.getElementById("title").innerHTML = "<b>" + data.weather[0].main + "</b>";
   document.getElementById("desc").innerHTML = data.weather[0].description.toUpperCase();
   document.getElementById("temp").innerHTML = data.main.temp.toFixed(0) + tu;
   document.getElementById("mainIcon").setAttribute("class", "wi wi-owm-" + data.weather[0].id);
+
+  document.getElementById("fl-temp").innerHTML = data.main.feels_like.toFixed(0) + tu;
 
   document.getElementById("humid").innerHTML = data.main.humidity + "%";
   document.getElementById("humidBar").style.width = data.main.humidity + "%";
@@ -278,7 +278,7 @@ const addToLocationList = (city) => {
   currentLocs.childNodes[0].style.setProperty('background-color', 'var(--elevation)')
 
   currentLocs.childNodes[0].addEventListener('click', function (e) {
-    loc = e.target.getAttribute("place");
+    let loc = e.target.getAttribute("place");
     if (loc != null) {
       weatherByCity(loc);
       locList.forEach(function (locList) {
@@ -460,8 +460,10 @@ addLocTextField.addEventListener('keyup', function (e) {
 }, false);
 
 const fabPushed = () => {
-  loc = addLocTextField.value;
-  weatherByCity(loc)
+  let loc = addLocTextField.value;
+  if (loc) {
+    weatherByCity(loc)
+  }
 
   //Fab animations
   toggleClass(addLocTextField, 'valid');
@@ -503,7 +505,7 @@ const weatherByCity = (city) => {
       setData(data);
     }).catch(err => {
       console.log(err);
-      M.toast({ html: err.message });
+      M.toast({ html: err.message, classes: 'red' });
 
       locList.forEach(locList => removeClass(locList, "disabled")); //enable buttons
       // Hide Preloaders
@@ -541,7 +543,7 @@ async function showPos(position) {
       setData(data);
     }).catch(err => {
       console.log(err);
-      M.toast({ html: err.message });
+      M.toast({ html: err.message, classes: 'red' });
 
       // Hide Preloaders
       hideLoader();
@@ -550,20 +552,23 @@ async function showPos(position) {
 };
 
 function showError(error) {
+  let text;
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      M.toast({ html: "User denied the request for Geolocation." });
+      text = "User denied the request for Geolocation.";
       break;
     case error.POSITION_UNAVAILABLE:
-      M.toast({ html: "Location information is unavailable." });
+      text = "Location information is unavailable.";
       break;
     case error.TIMEOUT:
-      M.toast({ html: "The request to get user location timed out." });
+      text = "The request to get user location timed out.";
       break;
     case error.UNKNOWN_ERROR:
-      M.toast({ html: "An unknown error occurred." });
+      text = "An unknown error occurred.";
       break;
   }
+  M.toast({ html: text, classes: 'red' });
+  weatherByCity('Kolkata');
 };
 
 // Get Location data from local storage
