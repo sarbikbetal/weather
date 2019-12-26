@@ -1141,11 +1141,11 @@ a,
 
 #mainIcon {
     color: #fff;
-    font-size: 90px;
+    font-size: 64;
     position: absolute;
-    top: 30px;
-    right:30px;
-    max-width:100%;
+    bottom: 30px;
+    right: 8px;
+    max-width: 100%;
     padding: 30px;
 }
 
