@@ -20,14 +20,14 @@
     --listtext: #bfbfbf;
     */
 }
-.red{
+.red {
     background-color: #e51c23d7;
 }
-/* My Styles */
-@font-face {
-    font-family: 'ProductSans';
-    src: url('fonts/ProductSans.ttf') format('truetype');
+.green {
+    background-color: #01a538;
 }
+/* My Styles */
+
 
 .card {
     background-color: var(--base);
@@ -266,7 +266,7 @@ body {
 }
 
 .mdl-layout__drawer {
-    font-family: 'ProductSans', Fallback, sans-serif;
+    font-family: 'Poppins', Fallback, sans-serif;
 }
 
 .card p {
@@ -535,7 +535,7 @@ body .ui_box:hover .ui_box__inner .progress .progress_bar {
 .mdl-layout-title {
     display: block;
     position: relative;
-    font-family: "ProductSans", "Roboto", "Helvetica", sans-serif;
+    font-family: "Poppins", "Roboto", "Helvetica", sans-serif;
     padding-left: 15px;
     font-size: 18px;
     font-weight: 500;

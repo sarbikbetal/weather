@@ -501,7 +501,7 @@ const weatherByCity = (city) => {
       setData(data);
     }).catch(err => {
       console.log(err);
-      M.toast({ html: err.message });
+      M.toast({ html: err.message, classes: 'red' });
 
       locList.forEach(locList => removeClass(locList, "disabled")); //enable buttons
       // Hide Preloaders

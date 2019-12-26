@@ -21,5 +21,9 @@ if ('serviceWorker' in navigator) {
 }
 
 window.addEventListener('offline', function () {
-  M.toast({ html: "Sorry, you're offline", classes: 'red'});
+  M.toast({ html: "Sorry, you're offline", classes: 'red' });
+});
+window.addEventListener('online', function () {
+  M.toast({ html: "Yaay! connectivity restored", classes: 'green' });
+  refresh();
 });
